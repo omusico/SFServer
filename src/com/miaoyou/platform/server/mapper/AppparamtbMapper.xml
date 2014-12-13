@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.miaoyou.platform.server.mapper.AppparamtbMapper" >
+  <cache />
+  <resultMap id="BaseResultMap" type="com.miaoyou.platform.server.entity.Appparamtb" >
+    <id column="appparam_id" property="appparamId" jdbcType="INTEGER" />
+    <result column="appparam_type" property="appparamType" jdbcType="VARCHAR" />
+    <result column="appparam_name" property="appparamName" jdbcType="VARCHAR" />
+    <result column="appparam_pid" property="appparamPid" jdbcType="INTEGER" />
+    <result column="appparam_desc" property="appparamDesc" jdbcType="VARCHAR" />
+    <result column="systemparam" property="systemparam" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    appparam_id, appparam_type, appparam_name, appparam_pid, appparam_desc, systemparam
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.miaoyou.platform.server.entity.AppparamtbExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from appparamtb
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="groupby != null" >
+      group by ${groupby}
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from appparamtb
+    where appparam_id = #{appparamId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from appparamtb
+    where appparam_id = #{appparamId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.miaoyou.platform.server.entity.AppparamtbExample" >
+    delete from appparamtb
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.miaoyou.platform.server.entity.Appparamtb" >
+    insert into appparamtb (appparam_id, appparam_type, appparam_name, 
+      appparam_pid, appparam_desc, systemparam
+      )
+    values (#{appparamId,jdbcType=INTEGER}, #{appparamType,jdbcType=VARCHAR}, #{appparamName,jdbcType=VARCHAR}, 
+      #{appparamPid,jdbcType=INTEGER}, #{appparamDesc,jdbcType=VARCHAR}, #{systemparam,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.miaoyou.platform.server.entity.Appparamtb" >
+    insert into appparamtb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="appparamId != null" >
+        appparam_id,
+      </if>
+      <if test="appparamType != null" >
+        appparam_type,
+      </if>
+      <if test="appparamName != null" >
+        appparam_name,
+      </if>
+      <if test="appparamPid != null" >
+        appparam_pid,
+      </if>
+      <if test="appparamDesc != null" >
+        appparam_desc,
+      </if>
+      <if test="systemparam != null" >
+        systemparam,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="appparamId != null" >
+        #{appparamId,jdbcType=INTEGER},
+      </if>
+      <if test="appparamType != null" >
+        #{appparamType,jdbcType=VARCHAR},
+      </if>
+      <if test="appparamName != null" >
+        #{appparamName,jdbcType=VARCHAR},
+      </if>
+      <if test="appparamPid != null" >
+        #{appparamPid,jdbcType=INTEGER},
+      </if>
+      <if test="appparamDesc != null" >
+        #{appparamDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="systemparam != null" >
+        #{systemparam,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.miaoyou.platform.server.entity.AppparamtbExample" resultType="java.lang.Integer" >
+    select count(*) from appparamtb
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update appparamtb
+    <set >
+      <if test="record.appparamId != null" >
+        appparam_id = #{record.appparamId,jdbcType=INTEGER},
+      </if>
+      <if test="record.appparamType != null" >
+        appparam_type = #{record.appparamType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appparamName != null" >
+        appparam_name = #{record.appparamName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appparamPid != null" >
+        appparam_pid = #{record.appparamPid,jdbcType=INTEGER},
+      </if>
+      <if test="record.appparamDesc != null" >
+        appparam_desc = #{record.appparamDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.systemparam != null" >
+        systemparam = #{record.systemparam,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update appparamtb
+    set appparam_id = #{record.appparamId,jdbcType=INTEGER},
+      appparam_type = #{record.appparamType,jdbcType=VARCHAR},
+      appparam_name = #{record.appparamName,jdbcType=VARCHAR},
+      appparam_pid = #{record.appparamPid,jdbcType=INTEGER},
+      appparam_desc = #{record.appparamDesc,jdbcType=VARCHAR},
+      systemparam = #{record.systemparam,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.miaoyou.platform.server.entity.Appparamtb" >
+    update appparamtb
+    <set >
+      <if test="appparamType != null" >
+        appparam_type = #{appparamType,jdbcType=VARCHAR},
+      </if>
+      <if test="appparamName != null" >
+        appparam_name = #{appparamName,jdbcType=VARCHAR},
+      </if>
+      <if test="appparamPid != null" >
+        appparam_pid = #{appparamPid,jdbcType=INTEGER},
+      </if>
+      <if test="appparamDesc != null" >
+        appparam_desc = #{appparamDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="systemparam != null" >
+        systemparam = #{systemparam,jdbcType=INTEGER},
+      </if>
+    </set>
+    where appparam_id = #{appparamId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.miaoyou.platform.server.entity.Appparamtb" >
+    update appparamtb
+    set appparam_type = #{appparamType,jdbcType=VARCHAR},
+      appparam_name = #{appparamName,jdbcType=VARCHAR},
+      appparam_pid = #{appparamPid,jdbcType=INTEGER},
+      appparam_desc = #{appparamDesc,jdbcType=VARCHAR},
+      systemparam = #{systemparam,jdbcType=INTEGER}
+    where appparam_id = #{appparamId,jdbcType=INTEGER}
+  </update>
+</mapper>

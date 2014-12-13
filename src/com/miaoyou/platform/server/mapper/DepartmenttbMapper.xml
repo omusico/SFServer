@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.miaoyou.platform.server.mapper.DepartmenttbMapper" >
+  <cache />
+  <resultMap id="BaseResultMap" type="com.miaoyou.platform.server.entity.Departmenttb" >
+    <id column="department_id" property="departmentId" jdbcType="INTEGER" />
+    <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="sftel" property="sftel" jdbcType="VARCHAR" />
+    <result column="department_remark" property="departmentRemark" jdbcType="VARCHAR" />
+    <result column="zujima" property="zujima" jdbcType="VARCHAR" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    department_id, department_name, tel, sftel, department_remark, zujima, delete_flag
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.miaoyou.platform.server.entity.DepartmenttbExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from departmenttb
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="groupby != null" >
+      group by ${groupby}
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from departmenttb
+    where department_id = #{departmentId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from departmenttb
+    where department_id = #{departmentId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.miaoyou.platform.server.entity.DepartmenttbExample" >
+    delete from departmenttb
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.miaoyou.platform.server.entity.Departmenttb" >
+    insert into departmenttb (department_id, department_name, tel, 
+      sftel, department_remark, zujima, 
+      delete_flag)
+    values (#{departmentId,jdbcType=INTEGER}, #{departmentName,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, 
+      #{sftel,jdbcType=VARCHAR}, #{departmentRemark,jdbcType=VARCHAR}, #{zujima,jdbcType=VARCHAR}, 
+      #{deleteFlag,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.miaoyou.platform.server.entity.Departmenttb" >
+    insert into departmenttb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="departmentId != null" >
+        department_id,
+      </if>
+      <if test="departmentName != null" >
+        department_name,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="sftel != null" >
+        sftel,
+      </if>
+      <if test="departmentRemark != null" >
+        department_remark,
+      </if>
+      <if test="zujima != null" >
+        zujima,
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="departmentId != null" >
+        #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="departmentName != null" >
+        #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="sftel != null" >
+        #{sftel,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentRemark != null" >
+        #{departmentRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="zujima != null" >
+        #{zujima,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.miaoyou.platform.server.entity.DepartmenttbExample" resultType="java.lang.Integer" >
+    select count(*) from departmenttb
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update departmenttb
+    <set >
+      <if test="record.departmentId != null" >
+        department_id = #{record.departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.departmentName != null" >
+        department_name = #{record.departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tel != null" >
+        tel = #{record.tel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sftel != null" >
+        sftel = #{record.sftel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departmentRemark != null" >
+        department_remark = #{record.departmentRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zujima != null" >
+        zujima = #{record.zujima,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleteFlag != null" >
+        delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update departmenttb
+    set department_id = #{record.departmentId,jdbcType=INTEGER},
+      department_name = #{record.departmentName,jdbcType=VARCHAR},
+      tel = #{record.tel,jdbcType=VARCHAR},
+      sftel = #{record.sftel,jdbcType=VARCHAR},
+      department_remark = #{record.departmentRemark,jdbcType=VARCHAR},
+      zujima = #{record.zujima,jdbcType=VARCHAR},
+      delete_flag = #{record.deleteFlag,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.miaoyou.platform.server.entity.Departmenttb" >
+    update departmenttb
+    <set >
+      <if test="departmentName != null" >
+        department_name = #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="sftel != null" >
+        sftel = #{sftel,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentRemark != null" >
+        department_remark = #{departmentRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="zujima != null" >
+        zujima = #{zujima,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where department_id = #{departmentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.miaoyou.platform.server.entity.Departmenttb" >
+    update departmenttb
+    set department_name = #{departmentName,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      sftel = #{sftel,jdbcType=VARCHAR},
+      department_remark = #{departmentRemark,jdbcType=VARCHAR},
+      zujima = #{zujima,jdbcType=VARCHAR},
+      delete_flag = #{deleteFlag,jdbcType=INTEGER}
+    where department_id = #{departmentId,jdbcType=INTEGER}
+  </update>
+</mapper>

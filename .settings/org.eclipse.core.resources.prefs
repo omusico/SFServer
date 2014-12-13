@@ -1,0 +1,11 @@
+eclipse.preferences.version=1
+encoding//src/com/miaoyou/platform/server/resource/applicationConfig.properties=UTF-8
+encoding//src/com/miaoyou/platform/server/service/user=UTF-8
+encoding//src/com/miaoyou/platform/server/utils/Arith.java=UTF-8
+encoding//src/com/miaoyou/platform/server/utils/DateHelper.java=UTF-8
+encoding//src/com/miaoyou/platform/server/utils/NetInterceptAdapter.java=UTF-8
+encoding//src/com/miaoyou/platform/server/utils/StringEscapeEditor.java=UTF-8
+encoding//src/com/miaoyou/platform/server/utils/UnicodeConverter.java=UTF-8
+encoding//src/com/miaoyou/platform/server/utils/XMLHelper.java=UTF-8
+encoding//src/com/miaoyou/platform/server/utils/ZXingUtil.java=UTF-8
+encoding/<project>=UTF-8

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+          http://www.springframework.org/schema/security
+          http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+    
+<!--    <security:http create-session="stateless" entry-point-ref="authenticationEntryPoint">
+        <security:intercept-url pattern="/service/**" />
+         <security:intercept-url pattern="/medico/**" />
+        <security:http-basic /> 
+        <security:custom-filter ref="basicAuthenticationFilter" after="BASIC_AUTH_FILTER" />
+    </security:http>
+
+    <bean id="basicAuthenticationFilter"
+          class="org.springframework.security.web.authentication.www.BasicAuthenticationFilter">
+        <property name="authenticationManager" ref="authenticationManager" />
+        <property name="authenticationEntryPoint" ref="authenticationEntryPoint" />
+    </bean>
+
+    
+    <bean id="authenticationEntryPoint" 
+          class="org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint">
+        <property name="realmName" value="test.com" />
+    </bean>-->
+    <security:http pattern="/service/client" security="none"/>
+    <security:http pattern="/service/toppage" security="none"/>
+    <security:http pattern="/service/m/**" security="none"/>
+    <security:http pattern="/service/m/*" security="none"/>
+    <security:http pattern="/service/logout/clear" security="none"/>
+    <security:http pattern="/service/timeout" security="none"/>
+    <security:http pattern="/service/prod/upgrade" security="none"/>
+    <security:http use-expressions="true" auto-config="true" access-denied-page="/view/denied.jsp">
+        <security:intercept-url pattern="/service/admin/allmessage" access="hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')"  />
+        <security:intercept-url pattern="/service/admin/deploy" access="hasRole('ROLE_ADMIN')"  />
+        <security:intercept-url pattern="/service/script" access="hasRole('ROLE_ADMIN')"  />
+        <security:intercept-url pattern="/service/process/list" access="hasRole('ROLE_ADMIN')"  />
+        <security:intercept-url pattern="/service/schedule" access="hasRole('ROLE_ADMIN')"  />
+        <security:intercept-url pattern="/service/schedule/his" access="hasRole('ROLE_ADMIN')"  />
+        <security:intercept-url pattern="/service/barcode" access="hasRole('ROLE_ADMIN')"  />
+        
+        <security:intercept-url pattern="/service/**" access="isAuthenticated()" />
+        <security:http-basic />
+ 
+        <security:logout invalidate-session="true" logout-success-url="/service/logout/clear" logout-url="/service/logout" delete-cookies="JSESSIONID"/>
+        <security:session-management>
+            <security:concurrency-control max-sessions="1" error-if-maximum-exceeded="false" expired-url="/service/timeout"/>
+        </security:session-management>
+    </security:http>
+    <!-- It is responsible for validating the user's credentials -->
+    <security:authentication-manager alias="authenticationManager"> 
+        <security:authentication-provider
+            ref="authenticationProvider" > 
+        </security:authentication-provider> 
+    </security:authentication-manager> 
+
+    <bean id="authenticationProvider" class="com.miaoyou.platform.server.service.user.CommUserDetailsService"> 
+        <property name="userDetailsService" ref="userDetailsService" /> 
+        <property name="passwordEncoder" ref="passwordEncoder" />
+        <property name="saltSource" ref="saltSource"/>     <!-- 注入加密盐 -->
+    </bean>
+
+    <bean id="saltSource"  class="org.springframework.security.authentication.dao.ReflectionSaltSource">                  
+        <property name="userPropertyToUse" value="getUsername" />          
+    </bean>
+    
+    <bean class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" id="passwordEncoder" />
+    
+    <bean class="com.miaoyou.platform.server.service.user.LoginUserDetailsServiceImpl" id="userDetailsService" />
+
+</beans>
