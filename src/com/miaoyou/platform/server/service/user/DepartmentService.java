@@ -3,7 +3,6 @@
  */
 package com.miaoyou.platform.server.service.user;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;

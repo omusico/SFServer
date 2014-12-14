@@ -14,7 +14,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
 import com.miaoyou.platform.server.entity.Departmenttb;
-import com.miaoyou.platform.server.entity.Roletb;
 import com.miaoyou.platform.server.entity.Usertb;
 import com.miaoyou.platform.server.entity.UsertbExample;
 import com.miaoyou.platform.server.entity.child.UserAll;

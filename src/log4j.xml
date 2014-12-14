@@ -24,7 +24,7 @@
         <appender-ref ref="console" />
     </category>
     <category name="org.springframework">
-        <priority value="debug" />
+        <priority value="info" />
         <appender-ref ref="console" />
     </category>
     <!-- for iBatis  -->
@@ -37,11 +37,11 @@
         <appender-ref ref="console" />
     </category>
     <category name="java.sql.Statement">
-        <priority value="error" />
+        <priority value="debug" />
         <appender-ref ref="console" />
     </category>
     <category name="java.sql.ResultSet">
-        <priority value="error" />
+        <priority value="debug" />
         <appender-ref ref="console" />
     </category>	
     <category name="java.sql.Connection">

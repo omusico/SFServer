@@ -186,7 +186,7 @@ public class UserController {
             comResponse.setErrorMessage(e.getMessage());
         }
         log.debug("UserController,update department:" + comResponse.getResponseStatus());
-         logService.saveLog("���²�����Ϣ");
+         logService.saveLog("更新部门");
         return comResponse;
     }
 
@@ -205,7 +205,7 @@ public class UserController {
             comResponse.setErrorMessage(e.getMessage());
         }
         log.debug("UserController,delete department:" + comResponse.getResponseStatus());
-         logService.saveLog("ɾ��������Ϣ");
+         logService.saveLog("删除部门");
         return comResponse;
     }
     

@@ -17,7 +17,6 @@ import com.miaoyou.platform.server.entity.Departmenttb;
 import com.miaoyou.platform.server.entity.Logtb;
 import com.miaoyou.platform.server.entity.LogtbExample;
 import com.miaoyou.platform.server.entity.LogtbExample.Criteria;
-import com.miaoyou.platform.server.entity.Usertb;
 import com.miaoyou.platform.server.entity.child.UserAll;
 import com.miaoyou.platform.server.entity.common.CommFindEntity;
 import com.miaoyou.platform.server.entity.common.CommUserDetails;
