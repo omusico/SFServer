@@ -47,8 +47,8 @@ public class UserController {
     @RequestMapping(method = RequestMethod.GET, value = "/user")
     public @ResponseBody
     CommFindEntity<UserAll> getAllUsers(
-            @RequestParam(value = "pageindex", defaultValue = "1") int page,
-            @RequestParam(value = "pagesize", defaultValue = "10") int perPage,
+            @RequestParam(value = "psi", defaultValue = "0") int page,
+            @RequestParam(value = "pst", defaultValue = "10") int perPage,
             @RequestParam(value = "conditionSql", defaultValue = "") String conditionSql) {
         log.debug("UserController,getAllUser.pageindex" + page + ",perPage:" + perPage);
         Pager pager = new Pager(page, perPage);
@@ -75,13 +75,15 @@ public class UserController {
             int result = userService.saveUser(user);
             comResponse.setResponseStatus(ComResponse.STATUS_OK);
             comResponse.setResponseEntity(user);
+            logService.saveLog("新建用户");
+            comResponse.setExtendResponseContext("创建用户成功.");
         } catch (Exception e) {
-            log.equals(e);
+            log.error(e);
             comResponse.setResponseStatus(ComResponse.STATUS_FAIL);
-            comResponse.setErrorMessage(e.getMessage());
+            comResponse.setErrorMessage("新建用户失败."+e.getMessage());
         }
         log.debug("UserController,added user:" + comResponse.getResponseStatus());
-        logService.saveLog("新建用户");
+        
         return comResponse;
     }
 
@@ -98,13 +100,15 @@ public class UserController {
             int result = userService.updateUser(user);
             comResponse.setResponseStatus(ComResponse.STATUS_OK);
             comResponse.setResponseEntity(user);
+            logService.saveLog("更新用户");
+            comResponse.setExtendResponseContext("更新用户成功.");
         } catch (Exception e) {
-            log.equals(e);
+        	log.error(e);
             comResponse.setResponseStatus(ComResponse.STATUS_FAIL);
-            comResponse.setErrorMessage(e.getMessage());
+            comResponse.setErrorMessage("更新用户失败."+e.getMessage());
         }
         log.debug("UserController,update user:" + comResponse.getResponseStatus());
-        logService.saveLog("更新用户");
+        
         return comResponse;
     }
 
@@ -116,13 +120,15 @@ public class UserController {
         try {
             int result = userService.deleteUser(id);
             comResponse.setResponseStatus(ComResponse.STATUS_OK);
+            logService.saveLog("删除用户");
+            comResponse.setExtendResponseContext("删除用户成功.");
         } catch (Exception e) {
-            log.equals(e);
+        	log.error(e);
             comResponse.setResponseStatus(ComResponse.STATUS_FAIL);
-            comResponse.setErrorMessage(e.getMessage());
+            comResponse.setErrorMessage("删除用户失败."+e.getMessage());
         }
         log.debug("UserController,delete user:" + comResponse.getResponseStatus());
-         logService.saveLog("删除用户");
+         
         return comResponse;
     }
 

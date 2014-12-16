@@ -10,11 +10,12 @@ public class Pager {
     
     private int pageindex;
     
-    public Pager(int pageindex,int pagesize){
+    public Pager(int startDataIndex,int pagesize){
         this.pageSize = pagesize;
-        pageindex=pageindex<=0?1:pageindex;
-        startDataIndex=(pageindex - 1) * pagesize;
-        this.pageindex = pageindex;
+        startDataIndex = startDataIndex<0?0:startDataIndex;
+        this.startDataIndex=startDataIndex;
+        
+        this.pageindex = startDataIndex%pagesize;
     }
 
     /**
