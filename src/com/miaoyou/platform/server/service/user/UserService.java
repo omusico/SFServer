@@ -36,7 +36,7 @@ public class UserService implements UserServiceIF {
     @Resource
     private UsertbMapper mapper;
     @Resource
-    private RolesServiceIF roleIF;
+    private RolesServiceIF roleService;
 
     @Resource
     DepartmentServiceIF departmentService;
@@ -101,6 +101,11 @@ public class UserService implements UserServiceIF {
             if (user.getDepartmentId() != null) {
                 userAll.setDepartmenttb(departmentService.findDepartmentById(user.getDepartmentId()));
             }
+            
+            if(userAll.getUserRoles()!=null){
+            	userAll.setUserRolestb(roleService.findUsersRoles(userAll.getUserRoles()));
+            }
+            
             userAll.setUserPassword(new String(ToolHelper.decryptBASE64(user.getUserPassword().getBytes())));
             usersAll.add(userAll);
         }
@@ -137,6 +142,11 @@ public class UserService implements UserServiceIF {
             if (user.getDepartmentId() != null) {
                 userAll.setDepartmenttb(departmentService.findDepartmentById(user.getDepartmentId()));
             }
+            
+            if(userAll.getUserRoles()!=null){
+            	userAll.setUserRolestb(roleService.findUsersRoles(userAll.getUserRoles()));
+            }
+            
             userAll.setUserPassword(new String(ToolHelper.decryptBASE64(user.getUserPassword().getBytes())));
             usersAll.add(userAll);
         }

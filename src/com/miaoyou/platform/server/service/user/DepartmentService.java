@@ -35,7 +35,7 @@ public class DepartmentService implements DepartmentServiceIF {
 	public int saveDepartment(Departmenttb departmenttb) {
 		log.debug("insert departmenttb:" + departmenttb.getDepartmentName());
 
-		return departmenttbMapper.insert(departmenttb);
+		return departmenttbMapper.insertSelective(departmenttb);
 	}
 
 	@Override
@@ -58,7 +58,9 @@ public class DepartmentService implements DepartmentServiceIF {
 			String conditionSql) {
 		DepartmenttbExample example = new DepartmenttbExample();
 		CommFindEntity<Departmenttb> allEntity = new CommFindEntity<Departmenttb>();
-		example.createCriteria().addConditionSql(conditionSql);
+		if (conditionSql != null && !conditionSql.trim().equals("")) {
+			example.createCriteria().addConditionSql(conditionSql);
+		}
 
 		int count = departmenttbMapper.countByExample(example);
 

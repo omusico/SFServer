@@ -140,11 +140,11 @@ public class UserController {
         return allDepartment;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/findDepartment")
+    @RequestMapping(method = RequestMethod.GET, value = "/finddp")
     public @ResponseBody
     CommFindEntity<Departmenttb> findDepartments(
-            @RequestParam(value = "pageindex", defaultValue = "1") int page,
-            @RequestParam(value = "pagesize", defaultValue = "100") int perPage,
+            @RequestParam(value = "psi", defaultValue = "1") int page,
+            @RequestParam(value = "pst", defaultValue = "100") int perPage,
             @RequestParam(value = "conditionSql", defaultValue = "") String conditionSql) {
         log.debug("UserController,findDepartments.pageindex" + page + ",perPage:" + perPage);
         Pager pager = new Pager(page, perPage);
