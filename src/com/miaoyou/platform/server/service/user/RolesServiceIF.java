@@ -6,6 +6,7 @@ package com.miaoyou.platform.server.service.user;
 
 import com.miaoyou.platform.server.entity.Roletb;
 import com.miaoyou.platform.server.entity.common.CommFindEntity;
+import com.miaoyou.platform.server.utils.Pager;
 
 /**
  *
@@ -21,7 +22,9 @@ public interface RolesServiceIF {
     
     public int updateUserRoles(Roletb newRoles);
     
-    public CommFindEntity<Roletb> findUsersRoles(Roletb roles);
+    public CommFindEntity<Roletb> findUsersRoles(Pager page);
+    
+    public CommFindEntity<Roletb> findUsersRoles(Pager page,String conditionSql);
     
     public Roletb findUsersRoles(Integer roleId);
     
