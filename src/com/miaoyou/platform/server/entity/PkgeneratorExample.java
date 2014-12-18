@@ -344,52 +344,52 @@ public class PkgeneratorExample {
             return (Criteria) this;
         }
 
-        public Criteria andInitialvalueEqualTo(Integer value) {
+        public Criteria andInitialvalueEqualTo(Long value) {
             addCriterion("initialValue =", value, "initialvalue");
             return (Criteria) this;
         }
 
-        public Criteria andInitialvalueNotEqualTo(Integer value) {
+        public Criteria andInitialvalueNotEqualTo(Long value) {
             addCriterion("initialValue <>", value, "initialvalue");
             return (Criteria) this;
         }
 
-        public Criteria andInitialvalueGreaterThan(Integer value) {
+        public Criteria andInitialvalueGreaterThan(Long value) {
             addCriterion("initialValue >", value, "initialvalue");
             return (Criteria) this;
         }
 
-        public Criteria andInitialvalueGreaterThanOrEqualTo(Integer value) {
+        public Criteria andInitialvalueGreaterThanOrEqualTo(Long value) {
             addCriterion("initialValue >=", value, "initialvalue");
             return (Criteria) this;
         }
 
-        public Criteria andInitialvalueLessThan(Integer value) {
+        public Criteria andInitialvalueLessThan(Long value) {
             addCriterion("initialValue <", value, "initialvalue");
             return (Criteria) this;
         }
 
-        public Criteria andInitialvalueLessThanOrEqualTo(Integer value) {
+        public Criteria andInitialvalueLessThanOrEqualTo(Long value) {
             addCriterion("initialValue <=", value, "initialvalue");
             return (Criteria) this;
         }
 
-        public Criteria andInitialvalueIn(List<Integer> values) {
+        public Criteria andInitialvalueIn(List<Long> values) {
             addCriterion("initialValue in", values, "initialvalue");
             return (Criteria) this;
         }
 
-        public Criteria andInitialvalueNotIn(List<Integer> values) {
+        public Criteria andInitialvalueNotIn(List<Long> values) {
             addCriterion("initialValue not in", values, "initialvalue");
             return (Criteria) this;
         }
 
-        public Criteria andInitialvalueBetween(Integer value1, Integer value2) {
+        public Criteria andInitialvalueBetween(Long value1, Long value2) {
             addCriterion("initialValue between", value1, value2, "initialvalue");
             return (Criteria) this;
         }
 
-        public Criteria andInitialvalueNotBetween(Integer value1, Integer value2) {
+        public Criteria andInitialvalueNotBetween(Long value1, Long value2) {
             addCriterion("initialValue not between", value1, value2, "initialvalue");
             return (Criteria) this;
         }
@@ -404,52 +404,52 @@ public class PkgeneratorExample {
             return (Criteria) this;
         }
 
-        public Criteria andAllocationsizeEqualTo(Integer value) {
+        public Criteria andAllocationsizeEqualTo(Long value) {
             addCriterion("allocationSize =", value, "allocationsize");
             return (Criteria) this;
         }
 
-        public Criteria andAllocationsizeNotEqualTo(Integer value) {
+        public Criteria andAllocationsizeNotEqualTo(Long value) {
             addCriterion("allocationSize <>", value, "allocationsize");
             return (Criteria) this;
         }
 
-        public Criteria andAllocationsizeGreaterThan(Integer value) {
+        public Criteria andAllocationsizeGreaterThan(Long value) {
             addCriterion("allocationSize >", value, "allocationsize");
             return (Criteria) this;
         }
 
-        public Criteria andAllocationsizeGreaterThanOrEqualTo(Integer value) {
+        public Criteria andAllocationsizeGreaterThanOrEqualTo(Long value) {
             addCriterion("allocationSize >=", value, "allocationsize");
             return (Criteria) this;
         }
 
-        public Criteria andAllocationsizeLessThan(Integer value) {
+        public Criteria andAllocationsizeLessThan(Long value) {
             addCriterion("allocationSize <", value, "allocationsize");
             return (Criteria) this;
         }
 
-        public Criteria andAllocationsizeLessThanOrEqualTo(Integer value) {
+        public Criteria andAllocationsizeLessThanOrEqualTo(Long value) {
             addCriterion("allocationSize <=", value, "allocationsize");
             return (Criteria) this;
         }
 
-        public Criteria andAllocationsizeIn(List<Integer> values) {
+        public Criteria andAllocationsizeIn(List<Long> values) {
             addCriterion("allocationSize in", values, "allocationsize");
             return (Criteria) this;
         }
 
-        public Criteria andAllocationsizeNotIn(List<Integer> values) {
+        public Criteria andAllocationsizeNotIn(List<Long> values) {
             addCriterion("allocationSize not in", values, "allocationsize");
             return (Criteria) this;
         }
 
-        public Criteria andAllocationsizeBetween(Integer value1, Integer value2) {
+        public Criteria andAllocationsizeBetween(Long value1, Long value2) {
             addCriterion("allocationSize between", value1, value2, "allocationsize");
             return (Criteria) this;
         }
 
-        public Criteria andAllocationsizeNotBetween(Integer value1, Integer value2) {
+        public Criteria andAllocationsizeNotBetween(Long value1, Long value2) {
             addCriterion("allocationSize not between", value1, value2, "allocationsize");
             return (Criteria) this;
         }

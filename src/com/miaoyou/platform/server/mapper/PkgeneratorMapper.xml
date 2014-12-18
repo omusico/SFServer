@@ -6,8 +6,8 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="targetTable" property="targettable" jdbcType="VARCHAR" />
     <result column="pkColumnName" property="pkcolumnname" jdbcType="VARCHAR" />
-    <result column="initialValue" property="initialvalue" jdbcType="INTEGER" />
-    <result column="allocationSize" property="allocationsize" jdbcType="INTEGER" />
+    <result column="initialValue" property="initialvalue" jdbcType="BIGINT" />
+    <result column="allocationSize" property="allocationsize" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -110,7 +110,7 @@
     insert into pkgenerator (id, targetTable, pkColumnName, 
       initialValue, allocationSize)
     values (#{id,jdbcType=INTEGER}, #{targettable,jdbcType=VARCHAR}, #{pkcolumnname,jdbcType=VARCHAR}, 
-      #{initialvalue,jdbcType=INTEGER}, #{allocationsize,jdbcType=INTEGER})
+      #{initialvalue,jdbcType=BIGINT}, #{allocationsize,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.miaoyou.platform.server.entity.Pkgenerator" >
     insert into pkgenerator
@@ -142,10 +142,10 @@
         #{pkcolumnname,jdbcType=VARCHAR},
       </if>
       <if test="initialvalue != null" >
-        #{initialvalue,jdbcType=INTEGER},
+        #{initialvalue,jdbcType=BIGINT},
       </if>
       <if test="allocationsize != null" >
-        #{allocationsize,jdbcType=INTEGER},
+        #{allocationsize,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -168,10 +168,10 @@
         pkColumnName = #{record.pkcolumnname,jdbcType=VARCHAR},
       </if>
       <if test="record.initialvalue != null" >
-        initialValue = #{record.initialvalue,jdbcType=INTEGER},
+        initialValue = #{record.initialvalue,jdbcType=BIGINT},
       </if>
       <if test="record.allocationsize != null" >
-        allocationSize = #{record.allocationsize,jdbcType=INTEGER},
+        allocationSize = #{record.allocationsize,jdbcType=BIGINT},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -183,8 +183,8 @@
     set id = #{record.id,jdbcType=INTEGER},
       targetTable = #{record.targettable,jdbcType=VARCHAR},
       pkColumnName = #{record.pkcolumnname,jdbcType=VARCHAR},
-      initialValue = #{record.initialvalue,jdbcType=INTEGER},
-      allocationSize = #{record.allocationsize,jdbcType=INTEGER}
+      initialValue = #{record.initialvalue,jdbcType=BIGINT},
+      allocationSize = #{record.allocationsize,jdbcType=BIGINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -199,10 +199,10 @@
         pkColumnName = #{pkcolumnname,jdbcType=VARCHAR},
       </if>
       <if test="initialvalue != null" >
-        initialValue = #{initialvalue,jdbcType=INTEGER},
+        initialValue = #{initialvalue,jdbcType=BIGINT},
       </if>
       <if test="allocationsize != null" >
-        allocationSize = #{allocationsize,jdbcType=INTEGER},
+        allocationSize = #{allocationsize,jdbcType=BIGINT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -211,8 +211,8 @@
     update pkgenerator
     set targetTable = #{targettable,jdbcType=VARCHAR},
       pkColumnName = #{pkcolumnname,jdbcType=VARCHAR},
-      initialValue = #{initialvalue,jdbcType=INTEGER},
-      allocationSize = #{allocationsize,jdbcType=INTEGER}
+      initialValue = #{initialvalue,jdbcType=BIGINT},
+      allocationSize = #{allocationsize,jdbcType=BIGINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -26,8 +26,8 @@ CREATE TABLE `pkgenerator` (
   `id` int(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `targetTable` varchar(50) DEFAULT NULL COMMENT '目标表',
   `pkColumnName` varchar(50) DEFAULT NULL COMMENT '主键字段名',
-  `initialValue` int(11) DEFAULT '1' COMMENT '初始化主键值',
-  `allocationSize` int(11) DEFAULT '1' COMMENT '每次递增值',
+  `initialValue` BIGINT DEFAULT '1' COMMENT '初始化主键值',
+  `allocationSize` BIGINT DEFAULT '1' COMMENT '每次递增值',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
@@ -39,6 +39,10 @@ CREATE TABLE `appparamtb` (
   `appparam_pid` int(20) DEFAULT NULL COMMENT '父参数',
   `appparam_desc` varchar(200) DEFAULT NULL COMMENT '参数描述',
   `systemparam` int(11) DEFAULT '0' COMMENT '是否是系统参数,0:是，1:用户定义的参数',
+  `createdate` DATE COMMENT '创建时间',
+  `createperson` varchar(50) COMMENT '创建时间',
+  `updatedate` DATE COMMENT '创建时间',
+  `updateperson` varchar(50) COMMENT '创建时间',
   PRIMARY KEY (`appparam_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -52,6 +56,10 @@ CREATE TABLE `roletb` (
   `role_desc` varchar(200) DEFAULT '' COMMENT '角色描述',
   `zujima` varchar(100) DEFAULT '' COMMENT '助记码',
   `delete_flag` int(2) DEFAULT 0 COMMENT '是否删除标志，1，已经删除，0：没有删除',
+  `createdate` DATE COMMENT '创建时间',
+  `createperson` varchar(50) COMMENT '创建时间',
+  `updatedate` DATE COMMENT '创建时间',
+  `updateperson` varchar(50) COMMENT '创建时间',
    PRIMARY KEY (`role_id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -64,6 +72,10 @@ CREATE TABLE `departmenttb` (
   `department_remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `zujima` varchar(100) DEFAULT '' COMMENT '助记码',
   `delete_flag` int(2) DEFAULT 0 COMMENT '是否删除标志，1，已经删除，0：没有删除',
+  `createdate` DATE COMMENT '创建时间',
+  `createperson` varchar(50) COMMENT '创建时间',
+  `updatedate` DATE COMMENT '创建时间',
+  `updateperson` varchar(50) COMMENT '创建时间',
   PRIMARY KEY (`department_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -85,12 +97,147 @@ CREATE TABLE `usertb` (
   `ext2` varchar(1000) DEFAULT '' COMMENT '扩展字段2',
   `ext3` varchar(500) DEFAULT '' COMMENT '扩展字段3',
   `delete_flag` int(2) DEFAULT 0 COMMENT '是否删除标志，1，已经删除，0：没有删除',
+  `createdate` DATE COMMENT '创建时间',
+  `createperson` varchar(50) COMMENT '创建时间',
+  `updatedate` DATE COMMENT '创建时间',
+  `updateperson` varchar(50) COMMENT '创建时间',
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
+DROP TABLE IF EXISTS `diagnosistb`;
+CREATE TABLE `diagnosistb` (
+  `diagnosis_id` BIGINT NOT NULL COMMENT '诊断ID',
+  `diagnosis_name` varchar(50) NOT NULL COMMENT '诊断名',
+  `suitabledp` varchar(200) DEFAULT '' COMMENT '部门列表',
+  `department_remark` varchar(500) DEFAULT NULL COMMENT '诊断描述',
+  `zujima` varchar(100) DEFAULT '' COMMENT '助记码',
+  `delete_flag` int(2) DEFAULT 0 COMMENT '是否删除标志，1，已经删除，0：没有删除',
+  `createdate` DATE COMMENT '创建时间',
+  `createperson` varchar(50) COMMENT '创建时间',
+  `updatedate` DATE COMMENT '创建时间',
+  `updateperson` varchar(50) COMMENT '创建时间',
+  PRIMARY KEY (`diagnosis_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `patienttb`;
+CREATE TABLE `patienttb` (
+  `patientid` BIGINT NOT NULL COMMENT '病案D',
+  `name` varchar(50) NOT NULL COMMENT '病人姓名',
+  `nianling` varchar(5) DEFAULT '' COMMENT '病人年龄',
+  `xingbie` varchar(4) DEFAULT '男' COMMENT '病人性别',
+  `zhengjianhaoma` varchar(100) DEFAULT '' COMMENT '证件号码',
+  `telphone` varchar(50) DEFAULT '' COMMENT '座机',
+  `address` varchar(50) DEFAULT '' COMMENT '地址',
+  `phone` varchar(50) DEFAULT '' COMMENT '移动电话',
+  `ophone` varchar(50) DEFAULT '' COMMENT '其他电话号码',
+  `oname` varchar(50) DEFAULT '' COMMENT '其他电话号码主人',
+  `orelationship` varchar(50) DEFAULT '' COMMENT '与病人的关系',
+  `keshi` varchar(50) DEFAULT '' COMMENT '科室',
+  `zhuyuanhao` varchar(100) DEFAULT '' COMMENT '住院号',
+  `zhuyuancishu` varchar(50) DEFAULT '' COMMENT '住院次数',
+  `ruyuanriqi` DATE  COMMENT '住院日期',
+  `chuyuanzhengduan` varchar(100) DEFAULT '' COMMENT '出院诊断',
+  `chuyuanriqi` DATE COMMENT '出院日期',
+  `zhurenyisheng` varchar(50) DEFAULT '' COMMENT '主任医生',
+  `zhuzhiyisheng` varchar(50) DEFAULT '' COMMENT '主治医生',
+  `zhuyuanyisheng` varchar(50) DEFAULT '' COMMENT '住院医生',
+  `shoushumingcheng` varchar(200) DEFAULT '' COMMENT '手术明细',
+  `zhudaoyisheng` varchar(50) DEFAULT '' COMMENT '主要医生',
+  `shoushuriqi` DATE COMMENT '手术日期',
+  `zhuyuantianshu` varchar(20) DEFAULT '' COMMENT '住院天数',
+  `zhiyuqingkuang` TEXT  COMMENT '治愈情况',
+  `chuyuanxiaojie` TEXT  COMMENT '出院小结',
+  `chuyuanyizhu` TEXT  COMMENT '出院遗嘱',
+  `suifangbeizhu` varchar(1000)  COMMENT '随访备注',
+  `bingliezhuangtai` varchar(20) DEFAULT '' COMMENT '病历状态',
+  `zujima` varchar(100) DEFAULT '' COMMENT '助记码',
+  `delete_flag` int(2) DEFAULT 0 COMMENT '是否删除标志，1，已经删除，0：没有删除',
+  `createdate` DATE COMMENT '创建时间',
+  `createperson` varchar(50) COMMENT '创建时间',
+  `updatedate` DATE COMMENT '创建时间',
+  `updateperson` varchar(50) COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 
+
+DROP TABLE IF EXISTS `surveytb`;
+CREATE TABLE `surveytb` (
+  `survery_id` BIGINT NOT NULL COMMENT '问卷ID',
+  `survery_name` varchar(100) NOT NULL COMMENT '问卷名',
+  `survery_remark` varchar(500) DEFAULT NULL COMMENT '问卷描述',
+  `zujima` varchar(100) DEFAULT '' COMMENT '助记码',
+  `delete_flag` int(2) DEFAULT 0 COMMENT '是否删除标志，1，已经删除，0：没有删除',
+  `createdate` DATE COMMENT '创建时间',
+  `createperson` varchar(50) COMMENT '创建时间',
+  `updatedate` DATE COMMENT '创建时间',
+  `updateperson` varchar(50) COMMENT '创建时间',
+  PRIMARY KEY (`survery_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `surveydetailtb`;
+CREATE TABLE `surveydetailtb` (
+  `surverydetail_id` BIGINT NOT NULL COMMENT '详细问卷内容ID',
+  `surverydetail_name` varchar(500) NOT NULL COMMENT '详细问卷内容',
+  `surverydetail_remark` varchar(500) DEFAULT NULL COMMENT '问卷备注',
+  `surverydetail_answer` varchar(100) DEFAULT NULL COMMENT '默认问卷答案,#号分割',
+  `zujima` varchar(500) DEFAULT '' COMMENT '助记码',
+  `delete_flag` int(2) DEFAULT 0 COMMENT '是否删除标志，1，已经删除，0：没有删除',
+  `createdate` DATE COMMENT '创建时间',
+  `createperson` varchar(50) COMMENT '创建时间',
+  `updatedate` DATE COMMENT '创建时间',
+  `updateperson` varchar(50) COMMENT '创建时间',
+  PRIMARY KEY (`surverydetail_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `rs_sv_svd`;
+CREATE TABLE `rs_sv_svd` (
+  `survery_id` BIGINT NOT NULL COMMENT '问卷ID',
+  `surverydetail_id` BIGINT NOT NULL COMMENT '诊断ID',
+  PRIMARY KEY (`survery_id`,`surverydetail_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `rs_dns_sv`;
+CREATE TABLE `rs_dns_sv` (
+  `diagnosis_id` BIGINT NOT NULL COMMENT '诊断ID'
+  `survery_id` BIGINT NOT NULL COMMENT '问卷ID',
+  `addsvdetail_name` varchar(500) DEFAULT '' COMMENT '添加详细问卷内容',
+  `addsvdetail_answer` varchar(100) DEFAULT '' COMMENT '添加问卷默认答案,#号分割',
+   PRIMARY KEY (`diagnosis_id`,`survery_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `sfplan`;
+CREATE TABLE `sfplan` (
+  `plan_id` BIGINT NOT NULL COMMENT '计划ID',
+  `patientid` BIGINT NOT NULL COMMENT '病案D',
+  `planname` varchar(500) NOT NULL  COMMENT '计划名'
+  `remark` varchar(500) DEFAULT '' COMMENT '描述',
+  `zujima` varchar(500) DEFAULT '' COMMENT '助记码',
+  `delete_flag` int(2) DEFAULT 0 COMMENT '是否删除标志，1，已经删除，0：没有删除',
+  `createdate` DATE COMMENT '创建时间',
+  `createperson` varchar(50) COMMENT '创建时间',
+  `updatedate` DATE COMMENT '创建时间',
+  `updateperson` varchar(50) COMMENT '创建时间',
+  PRIMARY KEY (`plan_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `sfplan_detail`;
+CREATE TABLE `sfplan_detail` (
+  `detail_id` BIGINT NOT NULL COMMENT '计划ID',
+  `plan_id` BIGINT NOT NULL COMMENT '计划ID',
+  `diagnosis` varchar(100) DEFAULT '' COMMENT '诊断ID数组,#号分割',
+  `zujima` varchar(500) DEFAULT '' COMMENT '助记码',
+  `delete_flag` int(2) DEFAULT 0 COMMENT '是否删除标志，1，已经删除，0：没有删除',
+  `createdate` DATE COMMENT '创建时间',
+  `createperson` varchar(50) COMMENT '创建时间',
+  `updatedate` DATE COMMENT '创建时间',
+  `updateperson` varchar(50) COMMENT '创建时间',
+  PRIMARY KEY (`detail_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 /*init value*/
 insert  into `roletb`(`role_id`,`role_type`,`role_name`,`role_scope`,`zujima`,`role_desc`)

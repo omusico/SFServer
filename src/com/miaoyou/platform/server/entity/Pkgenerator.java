@@ -11,9 +11,9 @@ public class Pkgenerator implements Serializable {
 
     private String pkcolumnname;
 
-    private Integer initialvalue;
+    private Long initialvalue;
 
-    private Integer allocationsize;
+    private Long allocationsize;
 
     public Integer getId() {
         return id;
@@ -39,19 +39,19 @@ public class Pkgenerator implements Serializable {
         this.pkcolumnname = pkcolumnname == null ? null : pkcolumnname.trim();
     }
 
-    public Integer getInitialvalue() {
+    public Long getInitialvalue() {
         return initialvalue;
     }
 
-    public void setInitialvalue(Integer initialvalue) {
+    public void setInitialvalue(Long initialvalue) {
         this.initialvalue = initialvalue;
     }
 
-    public Integer getAllocationsize() {
+    public Long getAllocationsize() {
         return allocationsize;
     }
 
-    public void setAllocationsize(Integer allocationsize) {
+    public void setAllocationsize(Long allocationsize) {
         this.allocationsize = allocationsize;
     }
 }
