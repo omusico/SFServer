@@ -19,6 +19,10 @@
     <result column="ext2" property="ext2" jdbcType="VARCHAR" />
     <result column="ext3" property="ext3" jdbcType="VARCHAR" />
     <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
+    <result column="createdate" property="createdate" jdbcType="DATE" />
+    <result column="createperson" property="createperson" jdbcType="VARCHAR" />
+    <result column="updatedate" property="updatedate" jdbcType="DATE" />
+    <result column="updateperson" property="updateperson" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -81,7 +85,7 @@
   <sql id="Base_Column_List" >
     user_id, user_name, user_password, user_roles, user_sex, user_entryDate, user_phone, 
     department_id, user_email, user_position, user_remark, zujima, ext1, ext2, ext3, 
-    delete_flag
+    delete_flag, createdate, createperson, updatedate, updateperson
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.miaoyou.platform.server.entity.UsertbExample" >
     select
@@ -124,14 +128,16 @@
       user_roles, user_sex, user_entryDate, 
       user_phone, department_id, user_email, 
       user_position, user_remark, zujima, 
-      ext1, ext2, ext3, delete_flag
-      )
+      ext1, ext2, ext3, delete_flag, 
+      createdate, createperson, updatedate, 
+      updateperson)
     values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, 
       #{userRoles,jdbcType=INTEGER}, #{userSex,jdbcType=CHAR}, #{userEntrydate,jdbcType=TIMESTAMP}, 
       #{userPhone,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, #{userEmail,jdbcType=VARCHAR}, 
       #{userPosition,jdbcType=VARCHAR}, #{userRemark,jdbcType=VARCHAR}, #{zujima,jdbcType=VARCHAR}, 
-      #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=INTEGER}
-      )
+      #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=INTEGER}, 
+      #{createdate,jdbcType=DATE}, #{createperson,jdbcType=VARCHAR}, #{updatedate,jdbcType=DATE}, 
+      #{updateperson,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.miaoyou.platform.server.entity.Usertb" >
     insert into usertb
@@ -184,6 +190,18 @@
       <if test="deleteFlag != null" >
         delete_flag,
       </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+      <if test="createperson != null" >
+        createperson,
+      </if>
+      <if test="updatedate != null" >
+        updatedate,
+      </if>
+      <if test="updateperson != null" >
+        updateperson,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
@@ -233,6 +251,18 @@
       </if>
       <if test="deleteFlag != null" >
         #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=DATE},
+      </if>
+      <if test="createperson != null" >
+        #{createperson,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedate != null" >
+        #{updatedate,jdbcType=DATE},
+      </if>
+      <if test="updateperson != null" >
+        #{updateperson,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -293,6 +323,18 @@
       <if test="record.deleteFlag != null" >
         delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
       </if>
+      <if test="record.createdate != null" >
+        createdate = #{record.createdate,jdbcType=DATE},
+      </if>
+      <if test="record.createperson != null" >
+        createperson = #{record.createperson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedate != null" >
+        updatedate = #{record.updatedate,jdbcType=DATE},
+      </if>
+      <if test="record.updateperson != null" >
+        updateperson = #{record.updateperson,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -315,7 +357,11 @@
       ext1 = #{record.ext1,jdbcType=VARCHAR},
       ext2 = #{record.ext2,jdbcType=VARCHAR},
       ext3 = #{record.ext3,jdbcType=VARCHAR},
-      delete_flag = #{record.deleteFlag,jdbcType=INTEGER}
+      delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
+      createdate = #{record.createdate,jdbcType=DATE},
+      createperson = #{record.createperson,jdbcType=VARCHAR},
+      updatedate = #{record.updatedate,jdbcType=DATE},
+      updateperson = #{record.updateperson,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -368,6 +414,18 @@
       <if test="deleteFlag != null" >
         delete_flag = #{deleteFlag,jdbcType=INTEGER},
       </if>
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=DATE},
+      </if>
+      <if test="createperson != null" >
+        createperson = #{createperson,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedate != null" >
+        updatedate = #{updatedate,jdbcType=DATE},
+      </if>
+      <if test="updateperson != null" >
+        updateperson = #{updateperson,jdbcType=VARCHAR},
+      </if>
     </set>
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
@@ -387,7 +445,11 @@
       ext1 = #{ext1,jdbcType=VARCHAR},
       ext2 = #{ext2,jdbcType=VARCHAR},
       ext3 = #{ext3,jdbcType=VARCHAR},
-      delete_flag = #{deleteFlag,jdbcType=INTEGER}
+      delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      createdate = #{createdate,jdbcType=DATE},
+      createperson = #{createperson,jdbcType=VARCHAR},
+      updatedate = #{updatedate,jdbcType=DATE},
+      updateperson = #{updateperson,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
 </mapper>

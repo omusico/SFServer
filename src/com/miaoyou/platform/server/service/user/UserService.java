@@ -6,6 +6,7 @@
 package com.miaoyou.platform.server.service.user;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -14,14 +15,17 @@ import net.sf.cglib.beans.BeanCopier;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.miaoyou.platform.server.entity.Usertb;
 import com.miaoyou.platform.server.entity.UsertbExample;
 import com.miaoyou.platform.server.entity.child.UserAll;
 import com.miaoyou.platform.server.entity.common.CommFindEntity;
+import com.miaoyou.platform.server.entity.common.CommUserDetails;
 import com.miaoyou.platform.server.mapper.UsertbMapper;
 import com.miaoyou.platform.server.utils.Pager;
+import com.miaoyou.platform.server.utils.PingYinUtil;
 import com.miaoyou.platform.server.utils.ToolHelper;
 
 /**
@@ -160,6 +164,26 @@ public class UserService implements UserServiceIF {
     @Override
     public int saveUser(Usertb user) {
         log.debug("insert user:" + user.getUserName());
+        
+		//得到汉字的首字母。，这里还有bug，一些多音字不好区分，以后improve
+		String zujima = PingYinUtil.getFirstSpell(user.getUserName());
+		user.setZujima(zujima);
+		
+		user.setCreatedate(new Date());
+
+		/* 从session里面获取当前操作的用户 */
+		Object principal = SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		if (principal != null) {
+			if (principal instanceof CommUserDetails) {
+				CommUserDetails sessionuser = (CommUserDetails) principal;
+				UserAll session = sessionuser.getUserSessionEntity();
+				if (session != null) {
+					user.setCreateperson(session.getUserName());
+				}
+			}
+		}
+		
         user.setUserPassword(new String(ToolHelper.encryptBASE64(user.getUserPassword().getBytes())));
         return mapper.insertSelective(user);
     }
@@ -174,6 +198,24 @@ public class UserService implements UserServiceIF {
 
     @Override
     public int updateUser(Usertb user) {
+		//得到汉字的首字母。，这里还有bug，一些多音字不好区分，以后improve
+		String zujima = PingYinUtil.getFirstSpell(user.getUserName());
+		user.setZujima(zujima);
+		user.setUpdatedate(new Date());
+		/* 从session里面获取当前操作的用户 */
+		Object principal = SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		if (principal != null) {
+			if (principal instanceof CommUserDetails) {
+				CommUserDetails userSession = (CommUserDetails) principal;
+				UserAll session = userSession.getUserSessionEntity();
+				if (session != null) {
+					user.setUpdateperson(session.getUserName());
+				}
+			}
+		}
+		
+		
         user.setUserPassword(new String(ToolHelper.encryptBASE64(user.getUserPassword().getBytes())));
         log.debug("update user:" + user.getUserId());
         return mapper.updateByPrimaryKeySelective(user);

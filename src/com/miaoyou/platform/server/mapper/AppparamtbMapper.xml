@@ -9,6 +9,10 @@
     <result column="appparam_pid" property="appparamPid" jdbcType="INTEGER" />
     <result column="appparam_desc" property="appparamDesc" jdbcType="VARCHAR" />
     <result column="systemparam" property="systemparam" jdbcType="INTEGER" />
+    <result column="createdate" property="createdate" jdbcType="DATE" />
+    <result column="createperson" property="createperson" jdbcType="VARCHAR" />
+    <result column="updatedate" property="updatedate" jdbcType="DATE" />
+    <result column="updateperson" property="updateperson" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -69,7 +73,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    appparam_id, appparam_type, appparam_name, appparam_pid, appparam_desc, systemparam
+    appparam_id, appparam_type, appparam_name, appparam_pid, appparam_desc, systemparam, 
+    createdate, createperson, updatedate, updateperson
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.miaoyou.platform.server.entity.AppparamtbExample" >
     select
@@ -109,11 +114,13 @@
   </delete>
   <insert id="insert" parameterType="com.miaoyou.platform.server.entity.Appparamtb" >
     insert into appparamtb (appparam_id, appparam_type, appparam_name, 
-      appparam_pid, appparam_desc, systemparam
-      )
+      appparam_pid, appparam_desc, systemparam, 
+      createdate, createperson, updatedate, 
+      updateperson)
     values (#{appparamId,jdbcType=INTEGER}, #{appparamType,jdbcType=VARCHAR}, #{appparamName,jdbcType=VARCHAR}, 
-      #{appparamPid,jdbcType=INTEGER}, #{appparamDesc,jdbcType=VARCHAR}, #{systemparam,jdbcType=INTEGER}
-      )
+      #{appparamPid,jdbcType=INTEGER}, #{appparamDesc,jdbcType=VARCHAR}, #{systemparam,jdbcType=INTEGER}, 
+      #{createdate,jdbcType=DATE}, #{createperson,jdbcType=VARCHAR}, #{updatedate,jdbcType=DATE}, 
+      #{updateperson,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.miaoyou.platform.server.entity.Appparamtb" >
     insert into appparamtb
@@ -136,6 +143,18 @@
       <if test="systemparam != null" >
         systemparam,
       </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+      <if test="createperson != null" >
+        createperson,
+      </if>
+      <if test="updatedate != null" >
+        updatedate,
+      </if>
+      <if test="updateperson != null" >
+        updateperson,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="appparamId != null" >
@@ -155,6 +174,18 @@
       </if>
       <if test="systemparam != null" >
         #{systemparam,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=DATE},
+      </if>
+      <if test="createperson != null" >
+        #{createperson,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedate != null" >
+        #{updatedate,jdbcType=DATE},
+      </if>
+      <if test="updateperson != null" >
+        #{updateperson,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -185,6 +216,18 @@
       <if test="record.systemparam != null" >
         systemparam = #{record.systemparam,jdbcType=INTEGER},
       </if>
+      <if test="record.createdate != null" >
+        createdate = #{record.createdate,jdbcType=DATE},
+      </if>
+      <if test="record.createperson != null" >
+        createperson = #{record.createperson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedate != null" >
+        updatedate = #{record.updatedate,jdbcType=DATE},
+      </if>
+      <if test="record.updateperson != null" >
+        updateperson = #{record.updateperson,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -197,7 +240,11 @@
       appparam_name = #{record.appparamName,jdbcType=VARCHAR},
       appparam_pid = #{record.appparamPid,jdbcType=INTEGER},
       appparam_desc = #{record.appparamDesc,jdbcType=VARCHAR},
-      systemparam = #{record.systemparam,jdbcType=INTEGER}
+      systemparam = #{record.systemparam,jdbcType=INTEGER},
+      createdate = #{record.createdate,jdbcType=DATE},
+      createperson = #{record.createperson,jdbcType=VARCHAR},
+      updatedate = #{record.updatedate,jdbcType=DATE},
+      updateperson = #{record.updateperson,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -220,6 +267,18 @@
       <if test="systemparam != null" >
         systemparam = #{systemparam,jdbcType=INTEGER},
       </if>
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=DATE},
+      </if>
+      <if test="createperson != null" >
+        createperson = #{createperson,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedate != null" >
+        updatedate = #{updatedate,jdbcType=DATE},
+      </if>
+      <if test="updateperson != null" >
+        updateperson = #{updateperson,jdbcType=VARCHAR},
+      </if>
     </set>
     where appparam_id = #{appparamId,jdbcType=INTEGER}
   </update>
@@ -229,7 +288,11 @@
       appparam_name = #{appparamName,jdbcType=VARCHAR},
       appparam_pid = #{appparamPid,jdbcType=INTEGER},
       appparam_desc = #{appparamDesc,jdbcType=VARCHAR},
-      systemparam = #{systemparam,jdbcType=INTEGER}
+      systemparam = #{systemparam,jdbcType=INTEGER},
+      createdate = #{createdate,jdbcType=DATE},
+      createperson = #{createperson,jdbcType=VARCHAR},
+      updatedate = #{updatedate,jdbcType=DATE},
+      updateperson = #{updateperson,jdbcType=VARCHAR}
     where appparam_id = #{appparamId,jdbcType=INTEGER}
   </update>
 </mapper>

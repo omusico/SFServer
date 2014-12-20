@@ -10,6 +10,13 @@
     <result column="department_remark" property="departmentRemark" jdbcType="VARCHAR" />
     <result column="zujima" property="zujima" jdbcType="VARCHAR" />
     <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
+    <result column="createdate" property="createdate" jdbcType="DATE" />
+    <result column="createperson" property="createperson" jdbcType="VARCHAR" />
+    <result column="updatedate" property="updatedate" jdbcType="DATE" />
+    <result column="updateperson" property="updateperson" jdbcType="VARCHAR" />
+    <result column="ext1" property="ext1" jdbcType="VARCHAR" />
+    <result column="ext2" property="ext2" jdbcType="VARCHAR" />
+    <result column="ext3" property="ext3" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -70,7 +77,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    department_id, department_name, tel, sftel, department_remark, zujima, delete_flag
+    department_id, department_name, tel, sftel, department_remark, zujima, delete_flag, 
+    createdate, createperson, updatedate, updateperson, ext1, ext2, ext3
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.miaoyou.platform.server.entity.DepartmenttbExample" >
     select
@@ -111,10 +119,14 @@
   <insert id="insert" parameterType="com.miaoyou.platform.server.entity.Departmenttb" >
     insert into departmenttb (department_id, department_name, tel, 
       sftel, department_remark, zujima, 
-      delete_flag)
+      delete_flag, createdate, createperson, 
+      updatedate, updateperson, ext1, 
+      ext2, ext3)
     values (#{departmentId,jdbcType=INTEGER}, #{departmentName,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, 
       #{sftel,jdbcType=VARCHAR}, #{departmentRemark,jdbcType=VARCHAR}, #{zujima,jdbcType=VARCHAR}, 
-      #{deleteFlag,jdbcType=INTEGER})
+      #{deleteFlag,jdbcType=INTEGER}, #{createdate,jdbcType=DATE}, #{createperson,jdbcType=VARCHAR}, 
+      #{updatedate,jdbcType=DATE}, #{updateperson,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, 
+      #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.miaoyou.platform.server.entity.Departmenttb" >
     insert into departmenttb
@@ -140,6 +152,27 @@
       <if test="deleteFlag != null" >
         delete_flag,
       </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+      <if test="createperson != null" >
+        createperson,
+      </if>
+      <if test="updatedate != null" >
+        updatedate,
+      </if>
+      <if test="updateperson != null" >
+        updateperson,
+      </if>
+      <if test="ext1 != null" >
+        ext1,
+      </if>
+      <if test="ext2 != null" >
+        ext2,
+      </if>
+      <if test="ext3 != null" >
+        ext3,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="departmentId != null" >
@@ -162,6 +195,27 @@
       </if>
       <if test="deleteFlag != null" >
         #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=DATE},
+      </if>
+      <if test="createperson != null" >
+        #{createperson,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedate != null" >
+        #{updatedate,jdbcType=DATE},
+      </if>
+      <if test="updateperson != null" >
+        #{updateperson,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        #{ext3,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -195,6 +249,27 @@
       <if test="record.deleteFlag != null" >
         delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
       </if>
+      <if test="record.createdate != null" >
+        createdate = #{record.createdate,jdbcType=DATE},
+      </if>
+      <if test="record.createperson != null" >
+        createperson = #{record.createperson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedate != null" >
+        updatedate = #{record.updatedate,jdbcType=DATE},
+      </if>
+      <if test="record.updateperson != null" >
+        updateperson = #{record.updateperson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ext1 != null" >
+        ext1 = #{record.ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ext2 != null" >
+        ext2 = #{record.ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ext3 != null" >
+        ext3 = #{record.ext3,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -208,7 +283,14 @@
       sftel = #{record.sftel,jdbcType=VARCHAR},
       department_remark = #{record.departmentRemark,jdbcType=VARCHAR},
       zujima = #{record.zujima,jdbcType=VARCHAR},
-      delete_flag = #{record.deleteFlag,jdbcType=INTEGER}
+      delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
+      createdate = #{record.createdate,jdbcType=DATE},
+      createperson = #{record.createperson,jdbcType=VARCHAR},
+      updatedate = #{record.updatedate,jdbcType=DATE},
+      updateperson = #{record.updateperson,jdbcType=VARCHAR},
+      ext1 = #{record.ext1,jdbcType=VARCHAR},
+      ext2 = #{record.ext2,jdbcType=VARCHAR},
+      ext3 = #{record.ext3,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -234,6 +316,27 @@
       <if test="deleteFlag != null" >
         delete_flag = #{deleteFlag,jdbcType=INTEGER},
       </if>
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=DATE},
+      </if>
+      <if test="createperson != null" >
+        createperson = #{createperson,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedate != null" >
+        updatedate = #{updatedate,jdbcType=DATE},
+      </if>
+      <if test="updateperson != null" >
+        updateperson = #{updateperson,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        ext1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        ext2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        ext3 = #{ext3,jdbcType=VARCHAR},
+      </if>
     </set>
     where department_id = #{departmentId,jdbcType=INTEGER}
   </update>
@@ -244,7 +347,14 @@
       sftel = #{sftel,jdbcType=VARCHAR},
       department_remark = #{departmentRemark,jdbcType=VARCHAR},
       zujima = #{zujima,jdbcType=VARCHAR},
-      delete_flag = #{deleteFlag,jdbcType=INTEGER}
+      delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      createdate = #{createdate,jdbcType=DATE},
+      createperson = #{createperson,jdbcType=VARCHAR},
+      updatedate = #{updatedate,jdbcType=DATE},
+      updateperson = #{updateperson,jdbcType=VARCHAR},
+      ext1 = #{ext1,jdbcType=VARCHAR},
+      ext2 = #{ext2,jdbcType=VARCHAR},
+      ext3 = #{ext3,jdbcType=VARCHAR}
     where department_id = #{departmentId,jdbcType=INTEGER}
   </update>
 </mapper>

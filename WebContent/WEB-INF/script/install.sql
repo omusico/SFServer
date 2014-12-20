@@ -60,6 +60,9 @@ CREATE TABLE `roletb` (
   `createperson` varchar(50) COMMENT '创建时间',
   `updatedate` DATE COMMENT '创建时间',
   `updateperson` varchar(50) COMMENT '创建时间',
+  `ext1` varchar(1000) DEFAULT '' COMMENT '扩展字段1',
+  `ext2` varchar(1000) DEFAULT '' COMMENT '扩展字段2',
+  `ext3` varchar(500) DEFAULT '' COMMENT '扩展字段3',
    PRIMARY KEY (`role_id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -76,6 +79,9 @@ CREATE TABLE `departmenttb` (
   `createperson` varchar(50) COMMENT '创建时间',
   `updatedate` DATE COMMENT '创建时间',
   `updateperson` varchar(50) COMMENT '创建时间',
+  `ext1` varchar(1000) DEFAULT '' COMMENT '扩展字段1',
+  `ext2` varchar(1000) DEFAULT '' COMMENT '扩展字段2',
+  `ext3` varchar(500) DEFAULT '' COMMENT '扩展字段3',
   PRIMARY KEY (`department_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -117,6 +123,9 @@ CREATE TABLE `diagnosistb` (
   `createperson` varchar(50) COMMENT '创建时间',
   `updatedate` DATE COMMENT '创建时间',
   `updateperson` varchar(50) COMMENT '创建时间',
+  `ext1` varchar(1000) DEFAULT '' COMMENT '扩展字段1',
+  `ext2` varchar(1000) DEFAULT '' COMMENT '扩展字段2',
+  `ext3` varchar(500) DEFAULT '' COMMENT '扩展字段3',
   PRIMARY KEY (`diagnosis_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
@@ -157,10 +166,11 @@ CREATE TABLE `patienttb` (
   `createperson` varchar(50) COMMENT '创建时间',
   `updatedate` DATE COMMENT '创建时间',
   `updateperson` varchar(50) COMMENT '创建时间',
-  PRIMARY KEY (`id`)
+  `ext1` varchar(1000) DEFAULT '' COMMENT '扩展字段1',
+  `ext2` varchar(1000) DEFAULT '' COMMENT '扩展字段2',
+  `ext3` varchar(500) DEFAULT '' COMMENT '扩展字段3',
+  PRIMARY KEY (`patientid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-
-
 
 DROP TABLE IF EXISTS `surveytb`;
 CREATE TABLE `surveytb` (
@@ -173,6 +183,9 @@ CREATE TABLE `surveytb` (
   `createperson` varchar(50) COMMENT '创建时间',
   `updatedate` DATE COMMENT '创建时间',
   `updateperson` varchar(50) COMMENT '创建时间',
+  `ext1` varchar(1000) DEFAULT '' COMMENT '扩展字段1',
+  `ext2` varchar(1000) DEFAULT '' COMMENT '扩展字段2',
+  `ext3` varchar(500) DEFAULT '' COMMENT '扩展字段3',
   PRIMARY KEY (`survery_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
@@ -188,6 +201,9 @@ CREATE TABLE `surveydetailtb` (
   `createperson` varchar(50) COMMENT '创建时间',
   `updatedate` DATE COMMENT '创建时间',
   `updateperson` varchar(50) COMMENT '创建时间',
+  `ext1` varchar(1000) DEFAULT '' COMMENT '扩展字段1',
+  `ext2` varchar(1000) DEFAULT '' COMMENT '扩展字段2',
+  `ext3` varchar(500) DEFAULT '' COMMENT '扩展字段3',
   PRIMARY KEY (`surverydetail_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
@@ -201,42 +217,78 @@ CREATE TABLE `rs_sv_svd` (
 
 DROP TABLE IF EXISTS `rs_dns_sv`;
 CREATE TABLE `rs_dns_sv` (
-  `diagnosis_id` BIGINT NOT NULL COMMENT '诊断ID'
+  `diagnosis_id` BIGINT NOT NULL COMMENT '诊断ID',
   `survery_id` BIGINT NOT NULL COMMENT '问卷ID',
-  `addsvdetail_name` varchar(500) DEFAULT '' COMMENT '添加详细问卷内容',
-  `addsvdetail_answer` varchar(100) DEFAULT '' COMMENT '添加问卷默认答案,#号分割',
    PRIMARY KEY (`diagnosis_id`,`survery_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `rs_dns_sv_add`;
+CREATE TABLE `rs_dns_sv_add` (
+  `diagnosis_id` BIGINT NOT NULL COMMENT '诊断ID',
+  `survery_id` BIGINT NOT NULL COMMENT '问卷ID',
+  `surverydetail_id` BIGINT NOT NULL COMMENT '增加的问题',
+   PRIMARY KEY (`diagnosis_id`,`survery_id`,`surverydetail_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `sfplan`;
-CREATE TABLE `sfplan` (
+DROP TABLE IF EXISTS `rs_plan_tel_sv`;
+CREATE TABLE `rs_plan_tel_sv` (
+  `plan_id` BIGINT NOT NULL COMMENT '计划ID',
+  `diagnosis_id` BIGINT NOT NULL COMMENT '问卷ID',
+   PRIMARY KEY (`plan_id`,`diagnosis_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `sfplantb`;
+CREATE TABLE `sfplantb` (
   `plan_id` BIGINT NOT NULL COMMENT '计划ID',
   `patientid` BIGINT NOT NULL COMMENT '病案D',
-  `planname` varchar(500) NOT NULL  COMMENT '计划名'
+  `planname` varchar(500) NOT NULL  COMMENT '计划名',
+  `plantype` int(2) DEFAULT 0 COMMENT '计划类型  1.短信，0。电话',
+  `status` int(2) DEFAULT 0 COMMENT '状态，3.自动过期。2.手动作废。  1.已经完成，0。计划中',
+  `planfreq` int(5) DEFAULT 0 COMMENT '计划执行的频率',
+  `plannumber` int(5) DEFAULT 0 COMMENT '计划执行的次数',
+  `plannexttime` DATE COMMENT '下一次计划开始的时间',
   `remark` varchar(500) DEFAULT '' COMMENT '描述',
   `zujima` varchar(500) DEFAULT '' COMMENT '助记码',
-  `delete_flag` int(2) DEFAULT 0 COMMENT '是否删除标志，1，已经删除，0：没有删除',
+  `delete_flag` int(2) DEFAULT 0 COMMENT '是否删除标志，1.已经删除，0.没有删除',
   `createdate` DATE COMMENT '创建时间',
   `createperson` varchar(50) COMMENT '创建时间',
   `updatedate` DATE COMMENT '创建时间',
   `updateperson` varchar(50) COMMENT '创建时间',
+  `ext1` varchar(1000) DEFAULT '' COMMENT '扩展字段1',
+  `ext2` varchar(1000) DEFAULT '' COMMENT '扩展字段2',
+  `ext3` varchar(500) DEFAULT '' COMMENT '扩展字段3',
   PRIMARY KEY (`plan_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `sfplan_detail`;
-CREATE TABLE `sfplan_detail` (
-  `detail_id` BIGINT NOT NULL COMMENT '计划ID',
-  `plan_id` BIGINT NOT NULL COMMENT '计划ID',
-  `diagnosis` varchar(100) DEFAULT '' COMMENT '诊断ID数组,#号分割',
+DROP TABLE IF EXISTS `patientsurveytb`;
+CREATE TABLE `patientsurveytb` (
+  `patientsurvey_id` BIGINT NOT NULL COMMENT '调查ID',
+  `survery_name` varchar(100) DEFAULT '' COMMENT '问卷名',
+  `survery_id` BIGINT DEFAULT 0 COMMENT '问卷ID',
+  `patientid` BIGINT  DEFAULT 0 COMMENT '病案ID',
+  `status` int(2) DEFAULT 0 COMMENT '状态，1:随访完成，0:随访中，-1:异常',
+  `plan_id` BIGINT DEFAULT 0  COMMENT '计划ID',
+  `department_id` int(20) DEFAULT 0 COMMENT '科室编号',
+  `user_id` int(20) DEFAULT 0 COMMENT '创建人ID',
+  `remark` varchar(500) DEFAULT '' COMMENT '描述',
   `zujima` varchar(500) DEFAULT '' COMMENT '助记码',
-  `delete_flag` int(2) DEFAULT 0 COMMENT '是否删除标志，1，已经删除，0：没有删除',
+  `delete_flag` int(2) DEFAULT 0 COMMENT '是否删除标志，1.已经删除，0.没有删除',
   `createdate` DATE COMMENT '创建时间',
   `createperson` varchar(50) COMMENT '创建时间',
   `updatedate` DATE COMMENT '创建时间',
   `updateperson` varchar(50) COMMENT '创建时间',
-  PRIMARY KEY (`detail_id`)
+  `ext1` varchar(1000) DEFAULT '' COMMENT '扩展字段1',
+  `ext2` varchar(1000) DEFAULT '' COMMENT '扩展字段2',
+  `ext3` varchar(500) DEFAULT '' COMMENT '扩展字段3',
+  PRIMARY KEY (`patientsurvey_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `rs_patient_survey_sv`;
+CREATE TABLE `rs_patient_survey_sv` (
+  `patientsurvey_id` BIGINT NOT NULL COMMENT '调查ID',
+  `surverydetail_name` varchar(500) NOT NULL COMMENT '详细问卷内容',
+  `surverydetail_answer` varchar(100) DEFAULT NULL COMMENT '问卷答案'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 /*init value*/

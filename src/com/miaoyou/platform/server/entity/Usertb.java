@@ -38,6 +38,14 @@ public class Usertb implements Serializable {
 
     private Integer deleteFlag;
 
+    private Date createdate;
+
+    private String createperson;
+
+    private Date updatedate;
+
+    private String updateperson;
+
     public Integer getUserId() {
         return userId;
     }
@@ -164,5 +172,37 @@ public class Usertb implements Serializable {
 
     public void setDeleteFlag(Integer deleteFlag) {
         this.deleteFlag = deleteFlag;
+    }
+
+    public Date getCreatedate() {
+        return createdate;
+    }
+
+    public void setCreatedate(Date createdate) {
+        this.createdate = createdate;
+    }
+
+    public String getCreateperson() {
+        return createperson;
+    }
+
+    public void setCreateperson(String createperson) {
+        this.createperson = createperson == null ? null : createperson.trim();
+    }
+
+    public Date getUpdatedate() {
+        return updatedate;
+    }
+
+    public void setUpdatedate(Date updatedate) {
+        this.updatedate = updatedate;
+    }
+
+    public String getUpdateperson() {
+        return updateperson;
+    }
+
+    public void setUpdateperson(String updateperson) {
+        this.updateperson = updateperson == null ? null : updateperson.trim();
     }
 }

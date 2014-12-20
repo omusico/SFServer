@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.miaoyou.platform.server.mapper.SurveyDetailtbMapper" >
+  <cache />
+  <resultMap id="BaseResultMap" type="com.miaoyou.platform.server.entity.SurveyDetailtb" >
+    <id column="surverydetail_id" property="surverydetailId" jdbcType="BIGINT" />
+    <result column="surverydetail_name" property="surverydetailName" jdbcType="VARCHAR" />
+    <result column="surverydetail_remark" property="surverydetailRemark" jdbcType="VARCHAR" />
+    <result column="surverydetail_answer" property="surverydetailAnswer" jdbcType="VARCHAR" />
+    <result column="zujima" property="zujima" jdbcType="VARCHAR" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
+    <result column="createdate" property="createdate" jdbcType="DATE" />
+    <result column="createperson" property="createperson" jdbcType="VARCHAR" />
+    <result column="updatedate" property="updatedate" jdbcType="DATE" />
+    <result column="updateperson" property="updateperson" jdbcType="VARCHAR" />
+    <result column="ext1" property="ext1" jdbcType="VARCHAR" />
+    <result column="ext2" property="ext2" jdbcType="VARCHAR" />
+    <result column="ext3" property="ext3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    surverydetail_id, surverydetail_name, surverydetail_remark, surverydetail_answer, 
+    zujima, delete_flag, createdate, createperson, updatedate, updateperson, ext1, ext2, 
+    ext3
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.miaoyou.platform.server.entity.SurveyDetailtbExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from surveydetailtb
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="groupby != null" >
+      group by ${groupby}
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from surveydetailtb
+    where surverydetail_id = #{surverydetailId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from surveydetailtb
+    where surverydetail_id = #{surverydetailId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.miaoyou.platform.server.entity.SurveyDetailtbExample" >
+    delete from surveydetailtb
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.miaoyou.platform.server.entity.SurveyDetailtb" >
+    insert into surveydetailtb (surverydetail_id, surverydetail_name, 
+      surverydetail_remark, surverydetail_answer, 
+      zujima, delete_flag, createdate, 
+      createperson, updatedate, updateperson, 
+      ext1, ext2, ext3)
+    values (#{surverydetailId,jdbcType=BIGINT}, #{surverydetailName,jdbcType=VARCHAR}, 
+      #{surverydetailRemark,jdbcType=VARCHAR}, #{surverydetailAnswer,jdbcType=VARCHAR}, 
+      #{zujima,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=INTEGER}, #{createdate,jdbcType=DATE}, 
+      #{createperson,jdbcType=VARCHAR}, #{updatedate,jdbcType=DATE}, #{updateperson,jdbcType=VARCHAR}, 
+      #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.miaoyou.platform.server.entity.SurveyDetailtb" >
+    insert into surveydetailtb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="surverydetailId != null" >
+        surverydetail_id,
+      </if>
+      <if test="surverydetailName != null" >
+        surverydetail_name,
+      </if>
+      <if test="surverydetailRemark != null" >
+        surverydetail_remark,
+      </if>
+      <if test="surverydetailAnswer != null" >
+        surverydetail_answer,
+      </if>
+      <if test="zujima != null" >
+        zujima,
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag,
+      </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+      <if test="createperson != null" >
+        createperson,
+      </if>
+      <if test="updatedate != null" >
+        updatedate,
+      </if>
+      <if test="updateperson != null" >
+        updateperson,
+      </if>
+      <if test="ext1 != null" >
+        ext1,
+      </if>
+      <if test="ext2 != null" >
+        ext2,
+      </if>
+      <if test="ext3 != null" >
+        ext3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="surverydetailId != null" >
+        #{surverydetailId,jdbcType=BIGINT},
+      </if>
+      <if test="surverydetailName != null" >
+        #{surverydetailName,jdbcType=VARCHAR},
+      </if>
+      <if test="surverydetailRemark != null" >
+        #{surverydetailRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="surverydetailAnswer != null" >
+        #{surverydetailAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="zujima != null" >
+        #{zujima,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=DATE},
+      </if>
+      <if test="createperson != null" >
+        #{createperson,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedate != null" >
+        #{updatedate,jdbcType=DATE},
+      </if>
+      <if test="updateperson != null" >
+        #{updateperson,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        #{ext3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.miaoyou.platform.server.entity.SurveyDetailtbExample" resultType="java.lang.Integer" >
+    select count(*) from surveydetailtb
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update surveydetailtb
+    <set >
+      <if test="record.surverydetailId != null" >
+        surverydetail_id = #{record.surverydetailId,jdbcType=BIGINT},
+      </if>
+      <if test="record.surverydetailName != null" >
+        surverydetail_name = #{record.surverydetailName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.surverydetailRemark != null" >
+        surverydetail_remark = #{record.surverydetailRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.surverydetailAnswer != null" >
+        surverydetail_answer = #{record.surverydetailAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zujima != null" >
+        zujima = #{record.zujima,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleteFlag != null" >
+        delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.createdate != null" >
+        createdate = #{record.createdate,jdbcType=DATE},
+      </if>
+      <if test="record.createperson != null" >
+        createperson = #{record.createperson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedate != null" >
+        updatedate = #{record.updatedate,jdbcType=DATE},
+      </if>
+      <if test="record.updateperson != null" >
+        updateperson = #{record.updateperson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ext1 != null" >
+        ext1 = #{record.ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ext2 != null" >
+        ext2 = #{record.ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ext3 != null" >
+        ext3 = #{record.ext3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update surveydetailtb
+    set surverydetail_id = #{record.surverydetailId,jdbcType=BIGINT},
+      surverydetail_name = #{record.surverydetailName,jdbcType=VARCHAR},
+      surverydetail_remark = #{record.surverydetailRemark,jdbcType=VARCHAR},
+      surverydetail_answer = #{record.surverydetailAnswer,jdbcType=VARCHAR},
+      zujima = #{record.zujima,jdbcType=VARCHAR},
+      delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
+      createdate = #{record.createdate,jdbcType=DATE},
+      createperson = #{record.createperson,jdbcType=VARCHAR},
+      updatedate = #{record.updatedate,jdbcType=DATE},
+      updateperson = #{record.updateperson,jdbcType=VARCHAR},
+      ext1 = #{record.ext1,jdbcType=VARCHAR},
+      ext2 = #{record.ext2,jdbcType=VARCHAR},
+      ext3 = #{record.ext3,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.miaoyou.platform.server.entity.SurveyDetailtb" >
+    update surveydetailtb
+    <set >
+      <if test="surverydetailName != null" >
+        surverydetail_name = #{surverydetailName,jdbcType=VARCHAR},
+      </if>
+      <if test="surverydetailRemark != null" >
+        surverydetail_remark = #{surverydetailRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="surverydetailAnswer != null" >
+        surverydetail_answer = #{surverydetailAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="zujima != null" >
+        zujima = #{zujima,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=DATE},
+      </if>
+      <if test="createperson != null" >
+        createperson = #{createperson,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedate != null" >
+        updatedate = #{updatedate,jdbcType=DATE},
+      </if>
+      <if test="updateperson != null" >
+        updateperson = #{updateperson,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        ext1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        ext2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        ext3 = #{ext3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where surverydetail_id = #{surverydetailId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.miaoyou.platform.server.entity.SurveyDetailtb" >
+    update surveydetailtb
+    set surverydetail_name = #{surverydetailName,jdbcType=VARCHAR},
+      surverydetail_remark = #{surverydetailRemark,jdbcType=VARCHAR},
+      surverydetail_answer = #{surverydetailAnswer,jdbcType=VARCHAR},
+      zujima = #{zujima,jdbcType=VARCHAR},
+      delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      createdate = #{createdate,jdbcType=DATE},
+      createperson = #{createperson,jdbcType=VARCHAR},
+      updatedate = #{updatedate,jdbcType=DATE},
+      updateperson = #{updateperson,jdbcType=VARCHAR},
+      ext1 = #{ext1,jdbcType=VARCHAR},
+      ext2 = #{ext2,jdbcType=VARCHAR},
+      ext3 = #{ext3,jdbcType=VARCHAR}
+    where surverydetail_id = #{surverydetailId,jdbcType=BIGINT}
+  </update>
+</mapper>

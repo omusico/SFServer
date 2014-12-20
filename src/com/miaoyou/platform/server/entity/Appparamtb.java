@@ -2,6 +2,7 @@ package com.miaoyou.platform.server.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Appparamtb implements Serializable {
@@ -16,6 +17,14 @@ public class Appparamtb implements Serializable {
     private String appparamDesc;
 
     private Integer systemparam;
+
+    private Date createdate;
+
+    private String createperson;
+
+    private Date updatedate;
+
+    private String updateperson;
 
     public Integer getAppparamId() {
         return appparamId;
@@ -63,5 +72,37 @@ public class Appparamtb implements Serializable {
 
     public void setSystemparam(Integer systemparam) {
         this.systemparam = systemparam;
+    }
+
+    public Date getCreatedate() {
+        return createdate;
+    }
+
+    public void setCreatedate(Date createdate) {
+        this.createdate = createdate;
+    }
+
+    public String getCreateperson() {
+        return createperson;
+    }
+
+    public void setCreateperson(String createperson) {
+        this.createperson = createperson == null ? null : createperson.trim();
+    }
+
+    public Date getUpdatedate() {
+        return updatedate;
+    }
+
+    public void setUpdatedate(Date updatedate) {
+        this.updatedate = updatedate;
+    }
+
+    public String getUpdateperson() {
+        return updateperson;
+    }
+
+    public void setUpdateperson(String updateperson) {
+        this.updateperson = updateperson == null ? null : updateperson.trim();
     }
 }

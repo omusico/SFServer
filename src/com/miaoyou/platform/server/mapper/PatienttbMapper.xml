@@ -1,0 +1,841 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.miaoyou.platform.server.mapper.PatienttbMapper" >
+  <cache />
+  <resultMap id="BaseResultMap" type="com.miaoyou.platform.server.entity.Patienttb" >
+    <id column="patientid" property="patientid" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="nianling" property="nianling" jdbcType="VARCHAR" />
+    <result column="xingbie" property="xingbie" jdbcType="VARCHAR" />
+    <result column="zhengjianhaoma" property="zhengjianhaoma" jdbcType="VARCHAR" />
+    <result column="telphone" property="telphone" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="ophone" property="ophone" jdbcType="VARCHAR" />
+    <result column="oname" property="oname" jdbcType="VARCHAR" />
+    <result column="orelationship" property="orelationship" jdbcType="VARCHAR" />
+    <result column="keshi" property="keshi" jdbcType="VARCHAR" />
+    <result column="zhuyuanhao" property="zhuyuanhao" jdbcType="VARCHAR" />
+    <result column="zhuyuancishu" property="zhuyuancishu" jdbcType="VARCHAR" />
+    <result column="ruyuanriqi" property="ruyuanriqi" jdbcType="DATE" />
+    <result column="chuyuanzhengduan" property="chuyuanzhengduan" jdbcType="VARCHAR" />
+    <result column="chuyuanriqi" property="chuyuanriqi" jdbcType="DATE" />
+    <result column="zhurenyisheng" property="zhurenyisheng" jdbcType="VARCHAR" />
+    <result column="zhuzhiyisheng" property="zhuzhiyisheng" jdbcType="VARCHAR" />
+    <result column="zhuyuanyisheng" property="zhuyuanyisheng" jdbcType="VARCHAR" />
+    <result column="shoushumingcheng" property="shoushumingcheng" jdbcType="VARCHAR" />
+    <result column="zhudaoyisheng" property="zhudaoyisheng" jdbcType="VARCHAR" />
+    <result column="shoushuriqi" property="shoushuriqi" jdbcType="DATE" />
+    <result column="zhuyuantianshu" property="zhuyuantianshu" jdbcType="VARCHAR" />
+    <result column="suifangbeizhu" property="suifangbeizhu" jdbcType="VARCHAR" />
+    <result column="bingliezhuangtai" property="bingliezhuangtai" jdbcType="VARCHAR" />
+    <result column="zujima" property="zujima" jdbcType="VARCHAR" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
+    <result column="createdate" property="createdate" jdbcType="DATE" />
+    <result column="createperson" property="createperson" jdbcType="VARCHAR" />
+    <result column="updatedate" property="updatedate" jdbcType="DATE" />
+    <result column="updateperson" property="updateperson" jdbcType="VARCHAR" />
+    <result column="ext1" property="ext1" jdbcType="VARCHAR" />
+    <result column="ext2" property="ext2" jdbcType="VARCHAR" />
+    <result column="ext3" property="ext3" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.miaoyou.platform.server.entity.PatienttbWithBLOBs" extends="BaseResultMap" >
+    <result column="zhiyuqingkuang" property="zhiyuqingkuang" jdbcType="LONGVARCHAR" />
+    <result column="chuyuanxiaojie" property="chuyuanxiaojie" jdbcType="LONGVARCHAR" />
+    <result column="chuyuanyizhu" property="chuyuanyizhu" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    patientid, name, nianling, xingbie, zhengjianhaoma, telphone, address, phone, ophone, 
+    oname, orelationship, keshi, zhuyuanhao, zhuyuancishu, ruyuanriqi, chuyuanzhengduan, 
+    chuyuanriqi, zhurenyisheng, zhuzhiyisheng, zhuyuanyisheng, shoushumingcheng, zhudaoyisheng, 
+    shoushuriqi, zhuyuantianshu, suifangbeizhu, bingliezhuangtai, zujima, delete_flag, 
+    createdate, createperson, updatedate, updateperson, ext1, ext2, ext3
+  </sql>
+  <sql id="Blob_Column_List" >
+    zhiyuqingkuang, chuyuanxiaojie, chuyuanyizhu
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.miaoyou.platform.server.entity.PatienttbExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from patienttb
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.miaoyou.platform.server.entity.PatienttbExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from patienttb
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="groupby != null" >
+      group by ${groupby}
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from patienttb
+    where patientid = #{patientid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from patienttb
+    where patientid = #{patientid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.miaoyou.platform.server.entity.PatienttbExample" >
+    delete from patienttb
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.miaoyou.platform.server.entity.PatienttbWithBLOBs" >
+    insert into patienttb (patientid, name, nianling, 
+      xingbie, zhengjianhaoma, telphone, 
+      address, phone, ophone, 
+      oname, orelationship, keshi, 
+      zhuyuanhao, zhuyuancishu, ruyuanriqi, 
+      chuyuanzhengduan, chuyuanriqi, zhurenyisheng, 
+      zhuzhiyisheng, zhuyuanyisheng, shoushumingcheng, 
+      zhudaoyisheng, shoushuriqi, zhuyuantianshu, 
+      suifangbeizhu, bingliezhuangtai, zujima, 
+      delete_flag, createdate, createperson, 
+      updatedate, updateperson, ext1, 
+      ext2, ext3, zhiyuqingkuang, 
+      chuyuanxiaojie, chuyuanyizhu)
+    values (#{patientid,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{nianling,jdbcType=VARCHAR}, 
+      #{xingbie,jdbcType=VARCHAR}, #{zhengjianhaoma,jdbcType=VARCHAR}, #{telphone,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{ophone,jdbcType=VARCHAR}, 
+      #{oname,jdbcType=VARCHAR}, #{orelationship,jdbcType=VARCHAR}, #{keshi,jdbcType=VARCHAR}, 
+      #{zhuyuanhao,jdbcType=VARCHAR}, #{zhuyuancishu,jdbcType=VARCHAR}, #{ruyuanriqi,jdbcType=DATE}, 
+      #{chuyuanzhengduan,jdbcType=VARCHAR}, #{chuyuanriqi,jdbcType=DATE}, #{zhurenyisheng,jdbcType=VARCHAR}, 
+      #{zhuzhiyisheng,jdbcType=VARCHAR}, #{zhuyuanyisheng,jdbcType=VARCHAR}, #{shoushumingcheng,jdbcType=VARCHAR}, 
+      #{zhudaoyisheng,jdbcType=VARCHAR}, #{shoushuriqi,jdbcType=DATE}, #{zhuyuantianshu,jdbcType=VARCHAR}, 
+      #{suifangbeizhu,jdbcType=VARCHAR}, #{bingliezhuangtai,jdbcType=VARCHAR}, #{zujima,jdbcType=VARCHAR}, 
+      #{deleteFlag,jdbcType=INTEGER}, #{createdate,jdbcType=DATE}, #{createperson,jdbcType=VARCHAR}, 
+      #{updatedate,jdbcType=DATE}, #{updateperson,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, 
+      #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{zhiyuqingkuang,jdbcType=LONGVARCHAR}, 
+      #{chuyuanxiaojie,jdbcType=LONGVARCHAR}, #{chuyuanyizhu,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.miaoyou.platform.server.entity.PatienttbWithBLOBs" >
+    insert into patienttb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="patientid != null" >
+        patientid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="nianling != null" >
+        nianling,
+      </if>
+      <if test="xingbie != null" >
+        xingbie,
+      </if>
+      <if test="zhengjianhaoma != null" >
+        zhengjianhaoma,
+      </if>
+      <if test="telphone != null" >
+        telphone,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="ophone != null" >
+        ophone,
+      </if>
+      <if test="oname != null" >
+        oname,
+      </if>
+      <if test="orelationship != null" >
+        orelationship,
+      </if>
+      <if test="keshi != null" >
+        keshi,
+      </if>
+      <if test="zhuyuanhao != null" >
+        zhuyuanhao,
+      </if>
+      <if test="zhuyuancishu != null" >
+        zhuyuancishu,
+      </if>
+      <if test="ruyuanriqi != null" >
+        ruyuanriqi,
+      </if>
+      <if test="chuyuanzhengduan != null" >
+        chuyuanzhengduan,
+      </if>
+      <if test="chuyuanriqi != null" >
+        chuyuanriqi,
+      </if>
+      <if test="zhurenyisheng != null" >
+        zhurenyisheng,
+      </if>
+      <if test="zhuzhiyisheng != null" >
+        zhuzhiyisheng,
+      </if>
+      <if test="zhuyuanyisheng != null" >
+        zhuyuanyisheng,
+      </if>
+      <if test="shoushumingcheng != null" >
+        shoushumingcheng,
+      </if>
+      <if test="zhudaoyisheng != null" >
+        zhudaoyisheng,
+      </if>
+      <if test="shoushuriqi != null" >
+        shoushuriqi,
+      </if>
+      <if test="zhuyuantianshu != null" >
+        zhuyuantianshu,
+      </if>
+      <if test="suifangbeizhu != null" >
+        suifangbeizhu,
+      </if>
+      <if test="bingliezhuangtai != null" >
+        bingliezhuangtai,
+      </if>
+      <if test="zujima != null" >
+        zujima,
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag,
+      </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+      <if test="createperson != null" >
+        createperson,
+      </if>
+      <if test="updatedate != null" >
+        updatedate,
+      </if>
+      <if test="updateperson != null" >
+        updateperson,
+      </if>
+      <if test="ext1 != null" >
+        ext1,
+      </if>
+      <if test="ext2 != null" >
+        ext2,
+      </if>
+      <if test="ext3 != null" >
+        ext3,
+      </if>
+      <if test="zhiyuqingkuang != null" >
+        zhiyuqingkuang,
+      </if>
+      <if test="chuyuanxiaojie != null" >
+        chuyuanxiaojie,
+      </if>
+      <if test="chuyuanyizhu != null" >
+        chuyuanyizhu,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="patientid != null" >
+        #{patientid,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nianling != null" >
+        #{nianling,jdbcType=VARCHAR},
+      </if>
+      <if test="xingbie != null" >
+        #{xingbie,jdbcType=VARCHAR},
+      </if>
+      <if test="zhengjianhaoma != null" >
+        #{zhengjianhaoma,jdbcType=VARCHAR},
+      </if>
+      <if test="telphone != null" >
+        #{telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="ophone != null" >
+        #{ophone,jdbcType=VARCHAR},
+      </if>
+      <if test="oname != null" >
+        #{oname,jdbcType=VARCHAR},
+      </if>
+      <if test="orelationship != null" >
+        #{orelationship,jdbcType=VARCHAR},
+      </if>
+      <if test="keshi != null" >
+        #{keshi,jdbcType=VARCHAR},
+      </if>
+      <if test="zhuyuanhao != null" >
+        #{zhuyuanhao,jdbcType=VARCHAR},
+      </if>
+      <if test="zhuyuancishu != null" >
+        #{zhuyuancishu,jdbcType=VARCHAR},
+      </if>
+      <if test="ruyuanriqi != null" >
+        #{ruyuanriqi,jdbcType=DATE},
+      </if>
+      <if test="chuyuanzhengduan != null" >
+        #{chuyuanzhengduan,jdbcType=VARCHAR},
+      </if>
+      <if test="chuyuanriqi != null" >
+        #{chuyuanriqi,jdbcType=DATE},
+      </if>
+      <if test="zhurenyisheng != null" >
+        #{zhurenyisheng,jdbcType=VARCHAR},
+      </if>
+      <if test="zhuzhiyisheng != null" >
+        #{zhuzhiyisheng,jdbcType=VARCHAR},
+      </if>
+      <if test="zhuyuanyisheng != null" >
+        #{zhuyuanyisheng,jdbcType=VARCHAR},
+      </if>
+      <if test="shoushumingcheng != null" >
+        #{shoushumingcheng,jdbcType=VARCHAR},
+      </if>
+      <if test="zhudaoyisheng != null" >
+        #{zhudaoyisheng,jdbcType=VARCHAR},
+      </if>
+      <if test="shoushuriqi != null" >
+        #{shoushuriqi,jdbcType=DATE},
+      </if>
+      <if test="zhuyuantianshu != null" >
+        #{zhuyuantianshu,jdbcType=VARCHAR},
+      </if>
+      <if test="suifangbeizhu != null" >
+        #{suifangbeizhu,jdbcType=VARCHAR},
+      </if>
+      <if test="bingliezhuangtai != null" >
+        #{bingliezhuangtai,jdbcType=VARCHAR},
+      </if>
+      <if test="zujima != null" >
+        #{zujima,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=DATE},
+      </if>
+      <if test="createperson != null" >
+        #{createperson,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedate != null" >
+        #{updatedate,jdbcType=DATE},
+      </if>
+      <if test="updateperson != null" >
+        #{updateperson,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="zhiyuqingkuang != null" >
+        #{zhiyuqingkuang,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="chuyuanxiaojie != null" >
+        #{chuyuanxiaojie,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="chuyuanyizhu != null" >
+        #{chuyuanyizhu,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.miaoyou.platform.server.entity.PatienttbExample" resultType="java.lang.Integer" >
+    select count(*) from patienttb
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update patienttb
+    <set >
+      <if test="record.patientid != null" >
+        patientid = #{record.patientid,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nianling != null" >
+        nianling = #{record.nianling,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xingbie != null" >
+        xingbie = #{record.xingbie,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zhengjianhaoma != null" >
+        zhengjianhaoma = #{record.zhengjianhaoma,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telphone != null" >
+        telphone = #{record.telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ophone != null" >
+        ophone = #{record.ophone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oname != null" >
+        oname = #{record.oname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orelationship != null" >
+        orelationship = #{record.orelationship,jdbcType=VARCHAR},
+      </if>
+      <if test="record.keshi != null" >
+        keshi = #{record.keshi,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zhuyuanhao != null" >
+        zhuyuanhao = #{record.zhuyuanhao,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zhuyuancishu != null" >
+        zhuyuancishu = #{record.zhuyuancishu,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ruyuanriqi != null" >
+        ruyuanriqi = #{record.ruyuanriqi,jdbcType=DATE},
+      </if>
+      <if test="record.chuyuanzhengduan != null" >
+        chuyuanzhengduan = #{record.chuyuanzhengduan,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chuyuanriqi != null" >
+        chuyuanriqi = #{record.chuyuanriqi,jdbcType=DATE},
+      </if>
+      <if test="record.zhurenyisheng != null" >
+        zhurenyisheng = #{record.zhurenyisheng,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zhuzhiyisheng != null" >
+        zhuzhiyisheng = #{record.zhuzhiyisheng,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zhuyuanyisheng != null" >
+        zhuyuanyisheng = #{record.zhuyuanyisheng,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shoushumingcheng != null" >
+        shoushumingcheng = #{record.shoushumingcheng,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zhudaoyisheng != null" >
+        zhudaoyisheng = #{record.zhudaoyisheng,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shoushuriqi != null" >
+        shoushuriqi = #{record.shoushuriqi,jdbcType=DATE},
+      </if>
+      <if test="record.zhuyuantianshu != null" >
+        zhuyuantianshu = #{record.zhuyuantianshu,jdbcType=VARCHAR},
+      </if>
+      <if test="record.suifangbeizhu != null" >
+        suifangbeizhu = #{record.suifangbeizhu,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bingliezhuangtai != null" >
+        bingliezhuangtai = #{record.bingliezhuangtai,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zujima != null" >
+        zujima = #{record.zujima,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleteFlag != null" >
+        delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.createdate != null" >
+        createdate = #{record.createdate,jdbcType=DATE},
+      </if>
+      <if test="record.createperson != null" >
+        createperson = #{record.createperson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedate != null" >
+        updatedate = #{record.updatedate,jdbcType=DATE},
+      </if>
+      <if test="record.updateperson != null" >
+        updateperson = #{record.updateperson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ext1 != null" >
+        ext1 = #{record.ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ext2 != null" >
+        ext2 = #{record.ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ext3 != null" >
+        ext3 = #{record.ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zhiyuqingkuang != null" >
+        zhiyuqingkuang = #{record.zhiyuqingkuang,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.chuyuanxiaojie != null" >
+        chuyuanxiaojie = #{record.chuyuanxiaojie,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.chuyuanyizhu != null" >
+        chuyuanyizhu = #{record.chuyuanyizhu,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update patienttb
+    set patientid = #{record.patientid,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      nianling = #{record.nianling,jdbcType=VARCHAR},
+      xingbie = #{record.xingbie,jdbcType=VARCHAR},
+      zhengjianhaoma = #{record.zhengjianhaoma,jdbcType=VARCHAR},
+      telphone = #{record.telphone,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      ophone = #{record.ophone,jdbcType=VARCHAR},
+      oname = #{record.oname,jdbcType=VARCHAR},
+      orelationship = #{record.orelationship,jdbcType=VARCHAR},
+      keshi = #{record.keshi,jdbcType=VARCHAR},
+      zhuyuanhao = #{record.zhuyuanhao,jdbcType=VARCHAR},
+      zhuyuancishu = #{record.zhuyuancishu,jdbcType=VARCHAR},
+      ruyuanriqi = #{record.ruyuanriqi,jdbcType=DATE},
+      chuyuanzhengduan = #{record.chuyuanzhengduan,jdbcType=VARCHAR},
+      chuyuanriqi = #{record.chuyuanriqi,jdbcType=DATE},
+      zhurenyisheng = #{record.zhurenyisheng,jdbcType=VARCHAR},
+      zhuzhiyisheng = #{record.zhuzhiyisheng,jdbcType=VARCHAR},
+      zhuyuanyisheng = #{record.zhuyuanyisheng,jdbcType=VARCHAR},
+      shoushumingcheng = #{record.shoushumingcheng,jdbcType=VARCHAR},
+      zhudaoyisheng = #{record.zhudaoyisheng,jdbcType=VARCHAR},
+      shoushuriqi = #{record.shoushuriqi,jdbcType=DATE},
+      zhuyuantianshu = #{record.zhuyuantianshu,jdbcType=VARCHAR},
+      suifangbeizhu = #{record.suifangbeizhu,jdbcType=VARCHAR},
+      bingliezhuangtai = #{record.bingliezhuangtai,jdbcType=VARCHAR},
+      zujima = #{record.zujima,jdbcType=VARCHAR},
+      delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
+      createdate = #{record.createdate,jdbcType=DATE},
+      createperson = #{record.createperson,jdbcType=VARCHAR},
+      updatedate = #{record.updatedate,jdbcType=DATE},
+      updateperson = #{record.updateperson,jdbcType=VARCHAR},
+      ext1 = #{record.ext1,jdbcType=VARCHAR},
+      ext2 = #{record.ext2,jdbcType=VARCHAR},
+      ext3 = #{record.ext3,jdbcType=VARCHAR},
+      zhiyuqingkuang = #{record.zhiyuqingkuang,jdbcType=LONGVARCHAR},
+      chuyuanxiaojie = #{record.chuyuanxiaojie,jdbcType=LONGVARCHAR},
+      chuyuanyizhu = #{record.chuyuanyizhu,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update patienttb
+    set patientid = #{record.patientid,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      nianling = #{record.nianling,jdbcType=VARCHAR},
+      xingbie = #{record.xingbie,jdbcType=VARCHAR},
+      zhengjianhaoma = #{record.zhengjianhaoma,jdbcType=VARCHAR},
+      telphone = #{record.telphone,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      ophone = #{record.ophone,jdbcType=VARCHAR},
+      oname = #{record.oname,jdbcType=VARCHAR},
+      orelationship = #{record.orelationship,jdbcType=VARCHAR},
+      keshi = #{record.keshi,jdbcType=VARCHAR},
+      zhuyuanhao = #{record.zhuyuanhao,jdbcType=VARCHAR},
+      zhuyuancishu = #{record.zhuyuancishu,jdbcType=VARCHAR},
+      ruyuanriqi = #{record.ruyuanriqi,jdbcType=DATE},
+      chuyuanzhengduan = #{record.chuyuanzhengduan,jdbcType=VARCHAR},
+      chuyuanriqi = #{record.chuyuanriqi,jdbcType=DATE},
+      zhurenyisheng = #{record.zhurenyisheng,jdbcType=VARCHAR},
+      zhuzhiyisheng = #{record.zhuzhiyisheng,jdbcType=VARCHAR},
+      zhuyuanyisheng = #{record.zhuyuanyisheng,jdbcType=VARCHAR},
+      shoushumingcheng = #{record.shoushumingcheng,jdbcType=VARCHAR},
+      zhudaoyisheng = #{record.zhudaoyisheng,jdbcType=VARCHAR},
+      shoushuriqi = #{record.shoushuriqi,jdbcType=DATE},
+      zhuyuantianshu = #{record.zhuyuantianshu,jdbcType=VARCHAR},
+      suifangbeizhu = #{record.suifangbeizhu,jdbcType=VARCHAR},
+      bingliezhuangtai = #{record.bingliezhuangtai,jdbcType=VARCHAR},
+      zujima = #{record.zujima,jdbcType=VARCHAR},
+      delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
+      createdate = #{record.createdate,jdbcType=DATE},
+      createperson = #{record.createperson,jdbcType=VARCHAR},
+      updatedate = #{record.updatedate,jdbcType=DATE},
+      updateperson = #{record.updateperson,jdbcType=VARCHAR},
+      ext1 = #{record.ext1,jdbcType=VARCHAR},
+      ext2 = #{record.ext2,jdbcType=VARCHAR},
+      ext3 = #{record.ext3,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.miaoyou.platform.server.entity.PatienttbWithBLOBs" >
+    update patienttb
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nianling != null" >
+        nianling = #{nianling,jdbcType=VARCHAR},
+      </if>
+      <if test="xingbie != null" >
+        xingbie = #{xingbie,jdbcType=VARCHAR},
+      </if>
+      <if test="zhengjianhaoma != null" >
+        zhengjianhaoma = #{zhengjianhaoma,jdbcType=VARCHAR},
+      </if>
+      <if test="telphone != null" >
+        telphone = #{telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="ophone != null" >
+        ophone = #{ophone,jdbcType=VARCHAR},
+      </if>
+      <if test="oname != null" >
+        oname = #{oname,jdbcType=VARCHAR},
+      </if>
+      <if test="orelationship != null" >
+        orelationship = #{orelationship,jdbcType=VARCHAR},
+      </if>
+      <if test="keshi != null" >
+        keshi = #{keshi,jdbcType=VARCHAR},
+      </if>
+      <if test="zhuyuanhao != null" >
+        zhuyuanhao = #{zhuyuanhao,jdbcType=VARCHAR},
+      </if>
+      <if test="zhuyuancishu != null" >
+        zhuyuancishu = #{zhuyuancishu,jdbcType=VARCHAR},
+      </if>
+      <if test="ruyuanriqi != null" >
+        ruyuanriqi = #{ruyuanriqi,jdbcType=DATE},
+      </if>
+      <if test="chuyuanzhengduan != null" >
+        chuyuanzhengduan = #{chuyuanzhengduan,jdbcType=VARCHAR},
+      </if>
+      <if test="chuyuanriqi != null" >
+        chuyuanriqi = #{chuyuanriqi,jdbcType=DATE},
+      </if>
+      <if test="zhurenyisheng != null" >
+        zhurenyisheng = #{zhurenyisheng,jdbcType=VARCHAR},
+      </if>
+      <if test="zhuzhiyisheng != null" >
+        zhuzhiyisheng = #{zhuzhiyisheng,jdbcType=VARCHAR},
+      </if>
+      <if test="zhuyuanyisheng != null" >
+        zhuyuanyisheng = #{zhuyuanyisheng,jdbcType=VARCHAR},
+      </if>
+      <if test="shoushumingcheng != null" >
+        shoushumingcheng = #{shoushumingcheng,jdbcType=VARCHAR},
+      </if>
+      <if test="zhudaoyisheng != null" >
+        zhudaoyisheng = #{zhudaoyisheng,jdbcType=VARCHAR},
+      </if>
+      <if test="shoushuriqi != null" >
+        shoushuriqi = #{shoushuriqi,jdbcType=DATE},
+      </if>
+      <if test="zhuyuantianshu != null" >
+        zhuyuantianshu = #{zhuyuantianshu,jdbcType=VARCHAR},
+      </if>
+      <if test="suifangbeizhu != null" >
+        suifangbeizhu = #{suifangbeizhu,jdbcType=VARCHAR},
+      </if>
+      <if test="bingliezhuangtai != null" >
+        bingliezhuangtai = #{bingliezhuangtai,jdbcType=VARCHAR},
+      </if>
+      <if test="zujima != null" >
+        zujima = #{zujima,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=DATE},
+      </if>
+      <if test="createperson != null" >
+        createperson = #{createperson,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedate != null" >
+        updatedate = #{updatedate,jdbcType=DATE},
+      </if>
+      <if test="updateperson != null" >
+        updateperson = #{updateperson,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        ext1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        ext2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        ext3 = #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="zhiyuqingkuang != null" >
+        zhiyuqingkuang = #{zhiyuqingkuang,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="chuyuanxiaojie != null" >
+        chuyuanxiaojie = #{chuyuanxiaojie,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="chuyuanyizhu != null" >
+        chuyuanyizhu = #{chuyuanyizhu,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where patientid = #{patientid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.miaoyou.platform.server.entity.PatienttbWithBLOBs" >
+    update patienttb
+    set name = #{name,jdbcType=VARCHAR},
+      nianling = #{nianling,jdbcType=VARCHAR},
+      xingbie = #{xingbie,jdbcType=VARCHAR},
+      zhengjianhaoma = #{zhengjianhaoma,jdbcType=VARCHAR},
+      telphone = #{telphone,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      ophone = #{ophone,jdbcType=VARCHAR},
+      oname = #{oname,jdbcType=VARCHAR},
+      orelationship = #{orelationship,jdbcType=VARCHAR},
+      keshi = #{keshi,jdbcType=VARCHAR},
+      zhuyuanhao = #{zhuyuanhao,jdbcType=VARCHAR},
+      zhuyuancishu = #{zhuyuancishu,jdbcType=VARCHAR},
+      ruyuanriqi = #{ruyuanriqi,jdbcType=DATE},
+      chuyuanzhengduan = #{chuyuanzhengduan,jdbcType=VARCHAR},
+      chuyuanriqi = #{chuyuanriqi,jdbcType=DATE},
+      zhurenyisheng = #{zhurenyisheng,jdbcType=VARCHAR},
+      zhuzhiyisheng = #{zhuzhiyisheng,jdbcType=VARCHAR},
+      zhuyuanyisheng = #{zhuyuanyisheng,jdbcType=VARCHAR},
+      shoushumingcheng = #{shoushumingcheng,jdbcType=VARCHAR},
+      zhudaoyisheng = #{zhudaoyisheng,jdbcType=VARCHAR},
+      shoushuriqi = #{shoushuriqi,jdbcType=DATE},
+      zhuyuantianshu = #{zhuyuantianshu,jdbcType=VARCHAR},
+      suifangbeizhu = #{suifangbeizhu,jdbcType=VARCHAR},
+      bingliezhuangtai = #{bingliezhuangtai,jdbcType=VARCHAR},
+      zujima = #{zujima,jdbcType=VARCHAR},
+      delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      createdate = #{createdate,jdbcType=DATE},
+      createperson = #{createperson,jdbcType=VARCHAR},
+      updatedate = #{updatedate,jdbcType=DATE},
+      updateperson = #{updateperson,jdbcType=VARCHAR},
+      ext1 = #{ext1,jdbcType=VARCHAR},
+      ext2 = #{ext2,jdbcType=VARCHAR},
+      ext3 = #{ext3,jdbcType=VARCHAR},
+      zhiyuqingkuang = #{zhiyuqingkuang,jdbcType=LONGVARCHAR},
+      chuyuanxiaojie = #{chuyuanxiaojie,jdbcType=LONGVARCHAR},
+      chuyuanyizhu = #{chuyuanyizhu,jdbcType=LONGVARCHAR}
+    where patientid = #{patientid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.miaoyou.platform.server.entity.Patienttb" >
+    update patienttb
+    set name = #{name,jdbcType=VARCHAR},
+      nianling = #{nianling,jdbcType=VARCHAR},
+      xingbie = #{xingbie,jdbcType=VARCHAR},
+      zhengjianhaoma = #{zhengjianhaoma,jdbcType=VARCHAR},
+      telphone = #{telphone,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      ophone = #{ophone,jdbcType=VARCHAR},
+      oname = #{oname,jdbcType=VARCHAR},
+      orelationship = #{orelationship,jdbcType=VARCHAR},
+      keshi = #{keshi,jdbcType=VARCHAR},
+      zhuyuanhao = #{zhuyuanhao,jdbcType=VARCHAR},
+      zhuyuancishu = #{zhuyuancishu,jdbcType=VARCHAR},
+      ruyuanriqi = #{ruyuanriqi,jdbcType=DATE},
+      chuyuanzhengduan = #{chuyuanzhengduan,jdbcType=VARCHAR},
+      chuyuanriqi = #{chuyuanriqi,jdbcType=DATE},
+      zhurenyisheng = #{zhurenyisheng,jdbcType=VARCHAR},
+      zhuzhiyisheng = #{zhuzhiyisheng,jdbcType=VARCHAR},
+      zhuyuanyisheng = #{zhuyuanyisheng,jdbcType=VARCHAR},
+      shoushumingcheng = #{shoushumingcheng,jdbcType=VARCHAR},
+      zhudaoyisheng = #{zhudaoyisheng,jdbcType=VARCHAR},
+      shoushuriqi = #{shoushuriqi,jdbcType=DATE},
+      zhuyuantianshu = #{zhuyuantianshu,jdbcType=VARCHAR},
+      suifangbeizhu = #{suifangbeizhu,jdbcType=VARCHAR},
+      bingliezhuangtai = #{bingliezhuangtai,jdbcType=VARCHAR},
+      zujima = #{zujima,jdbcType=VARCHAR},
+      delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      createdate = #{createdate,jdbcType=DATE},
+      createperson = #{createperson,jdbcType=VARCHAR},
+      updatedate = #{updatedate,jdbcType=DATE},
+      updateperson = #{updateperson,jdbcType=VARCHAR},
+      ext1 = #{ext1,jdbcType=VARCHAR},
+      ext2 = #{ext2,jdbcType=VARCHAR},
+      ext3 = #{ext3,jdbcType=VARCHAR}
+    where patientid = #{patientid,jdbcType=BIGINT}
+  </update>
+</mapper>
