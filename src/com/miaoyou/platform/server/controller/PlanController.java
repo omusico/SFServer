@@ -64,17 +64,17 @@ public class PlanController {
 		return sFPlaneService.findSurveyByDns(planId);
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/plan")
-	public @ResponseBody CommFindEntity<Sfplantb> getAll(
-			@RequestParam(value = "psi", defaultValue = "0") int page,
-			@RequestParam(value = "pst", defaultValue = "20") int perPage,
-			@RequestParam(value = "conditionSql", defaultValue = "") String conditionSql) {
-		log.debug("getAll.pageindex" + page + ",perPage:" + perPage);
-		Pager pager = new Pager(page, perPage);
-		CommFindEntity<Sfplantb> result = sFPlaneService.findAll(pager,
-				conditionSql);
-		return result;
-	}
+//	@RequestMapping(method = RequestMethod.GET, value = "/plan")
+//	public @ResponseBody CommFindEntity<Sfplantb> getAll(
+//			@RequestParam(value = "psi", defaultValue = "0") int page,
+//			@RequestParam(value = "pst", defaultValue = "20") int perPage,
+//			@RequestParam(value = "conditionSql", defaultValue = "") String conditionSql) {
+//		log.debug("getAll.pageindex" + page + ",perPage:" + perPage);
+//		Pager pager = new Pager(page, perPage);
+//		CommFindEntity<Sfplantb> result = sFPlaneService.findAll(pager,
+//				conditionSql);
+//		return result;
+//	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/plan")
 	public @ResponseBody CommFindEntity<Sfplantb> getAll(
@@ -84,7 +84,7 @@ public class PlanController {
 			@RequestParam(value = "status", defaultValue = "0") int status,
 			@RequestParam(value = "startDate", defaultValue = "") String startDate,
 			@RequestParam(value = "endDate", defaultValue = "") String endDate,
-			@RequestParam(value = "name", defaultValue = "") String name) {
+			@RequestParam(value = "key", defaultValue = "") String name) {
 		log.debug("getAll.pageindex" + page + ",perPage:" + perPage);
 		Pager pager = new Pager(page, perPage);
 
@@ -119,7 +119,7 @@ public class PlanController {
 		}
 
 		if (sb.length() > andSplit.length()) {
-			sb.delete((sb.length() - andSplit.length()) - 1, sb.length() - 1);
+			sb.delete((sb.length() - andSplit.length()), sb.length() - 1);
 		}
 
 		CommFindEntity<Sfplantb> result = sFPlaneService.findAll(pager,

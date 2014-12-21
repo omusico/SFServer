@@ -114,14 +114,14 @@ public class DnsSurveyModelController {
 	}
 
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/rsdnssv/add/{diagnosisId}/{surveryId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, value = "/rsdnssv/adddt/{diagnosisId}/{surveryId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ComResponse saveDnsSurveyModelQuestion(@RequestBody SurveyDetailtb surveyDetailtb,@PathVariable Long diagnosisId,@PathVariable Long surveryId) {
 
 			log.debug("add:diagnosisId:" + diagnosisId+",surveryId:"+surveryId);
 
 		ComResponse comResponse = new ComResponse();
 		try {
-			int result = diagnosisSurveyService.saveDnsSurveyModel(surveryId, diagnosisId);
+			int result = diagnosisSurveyService.saveDnsSurveyModelQuestion(surveyDetailtb, diagnosisId, surveryId);
 			comResponse.setResponseStatus(ComResponse.STATUS_OK);
 			comResponse.setResponseEntity(null);
 			logService.saveLog("新建问卷新增问题");
@@ -137,7 +137,7 @@ public class DnsSurveyModelController {
 	}
 
 
-	@RequestMapping(method = RequestMethod.POST, value = "/rsdnssv/delete/{diagnosisId}/{surveryId}/{surverydetailId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, value = "/rsdnssv/deletedt/{diagnosisId}/{surveryId}/{surverydetailId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ComResponse deleteDnsSurveyModelAddedQuestion( @PathVariable Long diagnosisId,@PathVariable Long surveryId,@PathVariable Long surverydetailId) {
 		log.debug("delete:diagnosisId:" + diagnosisId+",surveryId:"+surveryId);
 		ComResponse comResponse = new ComResponse();

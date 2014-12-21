@@ -63,7 +63,7 @@ public class PatientSurveyController {
 	public @ResponseBody CommFindEntity<Patientsurveytb> getAll(
 			@RequestParam(value = "psi", defaultValue = "0") int page,
 			@RequestParam(value = "pst", defaultValue = "20") int perPage,
-            @RequestParam(value = "name", defaultValue = "") String name,
+            @RequestParam(value = "key", defaultValue = "") String name,
             @RequestParam(value = "patientid", defaultValue = "0") Long patientid,
             @RequestParam(value = "surveryid", defaultValue = "0") Long surveryid,
             @RequestParam(value = "status", defaultValue = "0") int status) {
@@ -87,7 +87,7 @@ public class PatientSurveyController {
         }
         
         if(sb.length()>andSplit.length()){
-        	sb.delete((sb.length()-andSplit.length())-1, sb.length()-1);
+        	sb.delete((sb.length()-andSplit.length()), sb.length()-1);
         }
         
 		CommFindEntity<Patientsurveytb> result = patientSurveyService.findAll(pager,

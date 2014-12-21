@@ -61,7 +61,7 @@ public class UserController {
 	public @ResponseBody CommFindEntity<UserAll> getAllUsers(
 			@RequestParam(value = "psi", defaultValue = "0") int page,
 			@RequestParam(value = "pst", defaultValue = "10") int perPage,
-			@RequestParam(value = "name", defaultValue = "") String name) {
+			@RequestParam(value = "key", defaultValue = "") String name) {
 		log.debug("UserController,getAllUser.pageindex" + page + ",perPage:"
 				+ perPage);
 		Pager pager = new Pager(page, perPage);

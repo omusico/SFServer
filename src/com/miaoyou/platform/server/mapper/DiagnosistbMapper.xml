@@ -9,9 +9,9 @@
     <result column="department_remark" property="departmentRemark" jdbcType="VARCHAR" />
     <result column="zujima" property="zujima" jdbcType="VARCHAR" />
     <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
-    <result column="createdate" property="createdate" jdbcType="DATE" />
+    <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
     <result column="createperson" property="createperson" jdbcType="VARCHAR" />
-    <result column="updatedate" property="updatedate" jdbcType="DATE" />
+    <result column="updatedate" property="updatedate" jdbcType="TIMESTAMP" />
     <result column="updateperson" property="updateperson" jdbcType="VARCHAR" />
     <result column="ext1" property="ext1" jdbcType="VARCHAR" />
     <result column="ext2" property="ext2" jdbcType="VARCHAR" />
@@ -123,7 +123,7 @@
       ext3)
     values (#{diagnosisId,jdbcType=BIGINT}, #{diagnosisName,jdbcType=VARCHAR}, #{suitabledp,jdbcType=VARCHAR}, 
       #{departmentRemark,jdbcType=VARCHAR}, #{zujima,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=INTEGER}, 
-      #{createdate,jdbcType=DATE}, #{createperson,jdbcType=VARCHAR}, #{updatedate,jdbcType=DATE}, 
+      #{createdate,jdbcType=TIMESTAMP}, #{createperson,jdbcType=VARCHAR}, #{updatedate,jdbcType=TIMESTAMP}, 
       #{updateperson,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, 
       #{ext3,jdbcType=VARCHAR})
   </insert>
@@ -190,13 +190,13 @@
         #{deleteFlag,jdbcType=INTEGER},
       </if>
       <if test="createdate != null" >
-        #{createdate,jdbcType=DATE},
+        #{createdate,jdbcType=TIMESTAMP},
       </if>
       <if test="createperson != null" >
         #{createperson,jdbcType=VARCHAR},
       </if>
       <if test="updatedate != null" >
-        #{updatedate,jdbcType=DATE},
+        #{updatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="updateperson != null" >
         #{updateperson,jdbcType=VARCHAR},
@@ -240,13 +240,13 @@
         delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
       </if>
       <if test="record.createdate != null" >
-        createdate = #{record.createdate,jdbcType=DATE},
+        createdate = #{record.createdate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.createperson != null" >
         createperson = #{record.createperson,jdbcType=VARCHAR},
       </if>
       <if test="record.updatedate != null" >
-        updatedate = #{record.updatedate,jdbcType=DATE},
+        updatedate = #{record.updatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.updateperson != null" >
         updateperson = #{record.updateperson,jdbcType=VARCHAR},
@@ -273,9 +273,9 @@
       department_remark = #{record.departmentRemark,jdbcType=VARCHAR},
       zujima = #{record.zujima,jdbcType=VARCHAR},
       delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
-      createdate = #{record.createdate,jdbcType=DATE},
+      createdate = #{record.createdate,jdbcType=TIMESTAMP},
       createperson = #{record.createperson,jdbcType=VARCHAR},
-      updatedate = #{record.updatedate,jdbcType=DATE},
+      updatedate = #{record.updatedate,jdbcType=TIMESTAMP},
       updateperson = #{record.updateperson,jdbcType=VARCHAR},
       ext1 = #{record.ext1,jdbcType=VARCHAR},
       ext2 = #{record.ext2,jdbcType=VARCHAR},
@@ -303,13 +303,13 @@
         delete_flag = #{deleteFlag,jdbcType=INTEGER},
       </if>
       <if test="createdate != null" >
-        createdate = #{createdate,jdbcType=DATE},
+        createdate = #{createdate,jdbcType=TIMESTAMP},
       </if>
       <if test="createperson != null" >
         createperson = #{createperson,jdbcType=VARCHAR},
       </if>
       <if test="updatedate != null" >
-        updatedate = #{updatedate,jdbcType=DATE},
+        updatedate = #{updatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="updateperson != null" >
         updateperson = #{updateperson,jdbcType=VARCHAR},
@@ -333,9 +333,9 @@
       department_remark = #{departmentRemark,jdbcType=VARCHAR},
       zujima = #{zujima,jdbcType=VARCHAR},
       delete_flag = #{deleteFlag,jdbcType=INTEGER},
-      createdate = #{createdate,jdbcType=DATE},
+      createdate = #{createdate,jdbcType=TIMESTAMP},
       createperson = #{createperson,jdbcType=VARCHAR},
-      updatedate = #{updatedate,jdbcType=DATE},
+      updatedate = #{updatedate,jdbcType=TIMESTAMP},
       updateperson = #{updateperson,jdbcType=VARCHAR},
       ext1 = #{ext1,jdbcType=VARCHAR},
       ext2 = #{ext2,jdbcType=VARCHAR},

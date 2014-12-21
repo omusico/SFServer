@@ -19,21 +19,21 @@
     <result column="zhuyuancishu" property="zhuyuancishu" jdbcType="VARCHAR" />
     <result column="ruyuanriqi" property="ruyuanriqi" jdbcType="DATE" />
     <result column="chuyuanzhengduan" property="chuyuanzhengduan" jdbcType="VARCHAR" />
-    <result column="chuyuanriqi" property="chuyuanriqi" jdbcType="DATE" />
+    <result column="chuyuanriqi" property="chuyuanriqi" jdbcType="TIMESTAMP" />
     <result column="zhurenyisheng" property="zhurenyisheng" jdbcType="VARCHAR" />
     <result column="zhuzhiyisheng" property="zhuzhiyisheng" jdbcType="VARCHAR" />
     <result column="zhuyuanyisheng" property="zhuyuanyisheng" jdbcType="VARCHAR" />
     <result column="shoushumingcheng" property="shoushumingcheng" jdbcType="VARCHAR" />
     <result column="zhudaoyisheng" property="zhudaoyisheng" jdbcType="VARCHAR" />
-    <result column="shoushuriqi" property="shoushuriqi" jdbcType="DATE" />
+    <result column="shoushuriqi" property="shoushuriqi" jdbcType="TIMESTAMP" />
     <result column="zhuyuantianshu" property="zhuyuantianshu" jdbcType="VARCHAR" />
     <result column="suifangbeizhu" property="suifangbeizhu" jdbcType="VARCHAR" />
     <result column="bingliezhuangtai" property="bingliezhuangtai" jdbcType="VARCHAR" />
     <result column="zujima" property="zujima" jdbcType="VARCHAR" />
     <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
-    <result column="createdate" property="createdate" jdbcType="DATE" />
+    <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
     <result column="createperson" property="createperson" jdbcType="VARCHAR" />
-    <result column="updatedate" property="updatedate" jdbcType="DATE" />
+    <result column="updatedate" property="updatedate" jdbcType="TIMESTAMP" />
     <result column="updateperson" property="updateperson" jdbcType="VARCHAR" />
     <result column="ext1" property="ext1" jdbcType="VARCHAR" />
     <result column="ext2" property="ext2" jdbcType="VARCHAR" />
@@ -185,12 +185,12 @@
       #{address,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{ophone,jdbcType=VARCHAR}, 
       #{oname,jdbcType=VARCHAR}, #{orelationship,jdbcType=VARCHAR}, #{keshi,jdbcType=VARCHAR}, 
       #{zhuyuanhao,jdbcType=VARCHAR}, #{zhuyuancishu,jdbcType=VARCHAR}, #{ruyuanriqi,jdbcType=DATE}, 
-      #{chuyuanzhengduan,jdbcType=VARCHAR}, #{chuyuanriqi,jdbcType=DATE}, #{zhurenyisheng,jdbcType=VARCHAR}, 
+      #{chuyuanzhengduan,jdbcType=VARCHAR}, #{chuyuanriqi,jdbcType=TIMESTAMP}, #{zhurenyisheng,jdbcType=VARCHAR}, 
       #{zhuzhiyisheng,jdbcType=VARCHAR}, #{zhuyuanyisheng,jdbcType=VARCHAR}, #{shoushumingcheng,jdbcType=VARCHAR}, 
-      #{zhudaoyisheng,jdbcType=VARCHAR}, #{shoushuriqi,jdbcType=DATE}, #{zhuyuantianshu,jdbcType=VARCHAR}, 
+      #{zhudaoyisheng,jdbcType=VARCHAR}, #{shoushuriqi,jdbcType=TIMESTAMP}, #{zhuyuantianshu,jdbcType=VARCHAR}, 
       #{suifangbeizhu,jdbcType=VARCHAR}, #{bingliezhuangtai,jdbcType=VARCHAR}, #{zujima,jdbcType=VARCHAR}, 
-      #{deleteFlag,jdbcType=INTEGER}, #{createdate,jdbcType=DATE}, #{createperson,jdbcType=VARCHAR}, 
-      #{updatedate,jdbcType=DATE}, #{updateperson,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, 
+      #{deleteFlag,jdbcType=INTEGER}, #{createdate,jdbcType=TIMESTAMP}, #{createperson,jdbcType=VARCHAR}, 
+      #{updatedate,jdbcType=TIMESTAMP}, #{updateperson,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, 
       #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{zhiyuqingkuang,jdbcType=LONGVARCHAR}, 
       #{chuyuanxiaojie,jdbcType=LONGVARCHAR}, #{chuyuanyizhu,jdbcType=LONGVARCHAR})
   </insert>
@@ -362,7 +362,7 @@
         #{chuyuanzhengduan,jdbcType=VARCHAR},
       </if>
       <if test="chuyuanriqi != null" >
-        #{chuyuanriqi,jdbcType=DATE},
+        #{chuyuanriqi,jdbcType=TIMESTAMP},
       </if>
       <if test="zhurenyisheng != null" >
         #{zhurenyisheng,jdbcType=VARCHAR},
@@ -380,7 +380,7 @@
         #{zhudaoyisheng,jdbcType=VARCHAR},
       </if>
       <if test="shoushuriqi != null" >
-        #{shoushuriqi,jdbcType=DATE},
+        #{shoushuriqi,jdbcType=TIMESTAMP},
       </if>
       <if test="zhuyuantianshu != null" >
         #{zhuyuantianshu,jdbcType=VARCHAR},
@@ -398,13 +398,13 @@
         #{deleteFlag,jdbcType=INTEGER},
       </if>
       <if test="createdate != null" >
-        #{createdate,jdbcType=DATE},
+        #{createdate,jdbcType=TIMESTAMP},
       </if>
       <if test="createperson != null" >
         #{createperson,jdbcType=VARCHAR},
       </if>
       <if test="updatedate != null" >
-        #{updatedate,jdbcType=DATE},
+        #{updatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="updateperson != null" >
         #{updateperson,jdbcType=VARCHAR},
@@ -487,7 +487,7 @@
         chuyuanzhengduan = #{record.chuyuanzhengduan,jdbcType=VARCHAR},
       </if>
       <if test="record.chuyuanriqi != null" >
-        chuyuanriqi = #{record.chuyuanriqi,jdbcType=DATE},
+        chuyuanriqi = #{record.chuyuanriqi,jdbcType=TIMESTAMP},
       </if>
       <if test="record.zhurenyisheng != null" >
         zhurenyisheng = #{record.zhurenyisheng,jdbcType=VARCHAR},
@@ -505,7 +505,7 @@
         zhudaoyisheng = #{record.zhudaoyisheng,jdbcType=VARCHAR},
       </if>
       <if test="record.shoushuriqi != null" >
-        shoushuriqi = #{record.shoushuriqi,jdbcType=DATE},
+        shoushuriqi = #{record.shoushuriqi,jdbcType=TIMESTAMP},
       </if>
       <if test="record.zhuyuantianshu != null" >
         zhuyuantianshu = #{record.zhuyuantianshu,jdbcType=VARCHAR},
@@ -523,13 +523,13 @@
         delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
       </if>
       <if test="record.createdate != null" >
-        createdate = #{record.createdate,jdbcType=DATE},
+        createdate = #{record.createdate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.createperson != null" >
         createperson = #{record.createperson,jdbcType=VARCHAR},
       </if>
       <if test="record.updatedate != null" >
-        updatedate = #{record.updatedate,jdbcType=DATE},
+        updatedate = #{record.updatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.updateperson != null" >
         updateperson = #{record.updateperson,jdbcType=VARCHAR},
@@ -575,21 +575,21 @@
       zhuyuancishu = #{record.zhuyuancishu,jdbcType=VARCHAR},
       ruyuanriqi = #{record.ruyuanriqi,jdbcType=DATE},
       chuyuanzhengduan = #{record.chuyuanzhengduan,jdbcType=VARCHAR},
-      chuyuanriqi = #{record.chuyuanriqi,jdbcType=DATE},
+      chuyuanriqi = #{record.chuyuanriqi,jdbcType=TIMESTAMP},
       zhurenyisheng = #{record.zhurenyisheng,jdbcType=VARCHAR},
       zhuzhiyisheng = #{record.zhuzhiyisheng,jdbcType=VARCHAR},
       zhuyuanyisheng = #{record.zhuyuanyisheng,jdbcType=VARCHAR},
       shoushumingcheng = #{record.shoushumingcheng,jdbcType=VARCHAR},
       zhudaoyisheng = #{record.zhudaoyisheng,jdbcType=VARCHAR},
-      shoushuriqi = #{record.shoushuriqi,jdbcType=DATE},
+      shoushuriqi = #{record.shoushuriqi,jdbcType=TIMESTAMP},
       zhuyuantianshu = #{record.zhuyuantianshu,jdbcType=VARCHAR},
       suifangbeizhu = #{record.suifangbeizhu,jdbcType=VARCHAR},
       bingliezhuangtai = #{record.bingliezhuangtai,jdbcType=VARCHAR},
       zujima = #{record.zujima,jdbcType=VARCHAR},
       delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
-      createdate = #{record.createdate,jdbcType=DATE},
+      createdate = #{record.createdate,jdbcType=TIMESTAMP},
       createperson = #{record.createperson,jdbcType=VARCHAR},
-      updatedate = #{record.updatedate,jdbcType=DATE},
+      updatedate = #{record.updatedate,jdbcType=TIMESTAMP},
       updateperson = #{record.updateperson,jdbcType=VARCHAR},
       ext1 = #{record.ext1,jdbcType=VARCHAR},
       ext2 = #{record.ext2,jdbcType=VARCHAR},
@@ -619,21 +619,21 @@
       zhuyuancishu = #{record.zhuyuancishu,jdbcType=VARCHAR},
       ruyuanriqi = #{record.ruyuanriqi,jdbcType=DATE},
       chuyuanzhengduan = #{record.chuyuanzhengduan,jdbcType=VARCHAR},
-      chuyuanriqi = #{record.chuyuanriqi,jdbcType=DATE},
+      chuyuanriqi = #{record.chuyuanriqi,jdbcType=TIMESTAMP},
       zhurenyisheng = #{record.zhurenyisheng,jdbcType=VARCHAR},
       zhuzhiyisheng = #{record.zhuzhiyisheng,jdbcType=VARCHAR},
       zhuyuanyisheng = #{record.zhuyuanyisheng,jdbcType=VARCHAR},
       shoushumingcheng = #{record.shoushumingcheng,jdbcType=VARCHAR},
       zhudaoyisheng = #{record.zhudaoyisheng,jdbcType=VARCHAR},
-      shoushuriqi = #{record.shoushuriqi,jdbcType=DATE},
+      shoushuriqi = #{record.shoushuriqi,jdbcType=TIMESTAMP},
       zhuyuantianshu = #{record.zhuyuantianshu,jdbcType=VARCHAR},
       suifangbeizhu = #{record.suifangbeizhu,jdbcType=VARCHAR},
       bingliezhuangtai = #{record.bingliezhuangtai,jdbcType=VARCHAR},
       zujima = #{record.zujima,jdbcType=VARCHAR},
       delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
-      createdate = #{record.createdate,jdbcType=DATE},
+      createdate = #{record.createdate,jdbcType=TIMESTAMP},
       createperson = #{record.createperson,jdbcType=VARCHAR},
-      updatedate = #{record.updatedate,jdbcType=DATE},
+      updatedate = #{record.updatedate,jdbcType=TIMESTAMP},
       updateperson = #{record.updateperson,jdbcType=VARCHAR},
       ext1 = #{record.ext1,jdbcType=VARCHAR},
       ext2 = #{record.ext2,jdbcType=VARCHAR},
@@ -691,7 +691,7 @@
         chuyuanzhengduan = #{chuyuanzhengduan,jdbcType=VARCHAR},
       </if>
       <if test="chuyuanriqi != null" >
-        chuyuanriqi = #{chuyuanriqi,jdbcType=DATE},
+        chuyuanriqi = #{chuyuanriqi,jdbcType=TIMESTAMP},
       </if>
       <if test="zhurenyisheng != null" >
         zhurenyisheng = #{zhurenyisheng,jdbcType=VARCHAR},
@@ -709,7 +709,7 @@
         zhudaoyisheng = #{zhudaoyisheng,jdbcType=VARCHAR},
       </if>
       <if test="shoushuriqi != null" >
-        shoushuriqi = #{shoushuriqi,jdbcType=DATE},
+        shoushuriqi = #{shoushuriqi,jdbcType=TIMESTAMP},
       </if>
       <if test="zhuyuantianshu != null" >
         zhuyuantianshu = #{zhuyuantianshu,jdbcType=VARCHAR},
@@ -727,13 +727,13 @@
         delete_flag = #{deleteFlag,jdbcType=INTEGER},
       </if>
       <if test="createdate != null" >
-        createdate = #{createdate,jdbcType=DATE},
+        createdate = #{createdate,jdbcType=TIMESTAMP},
       </if>
       <if test="createperson != null" >
         createperson = #{createperson,jdbcType=VARCHAR},
       </if>
       <if test="updatedate != null" >
-        updatedate = #{updatedate,jdbcType=DATE},
+        updatedate = #{updatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="updateperson != null" >
         updateperson = #{updateperson,jdbcType=VARCHAR},
@@ -776,21 +776,21 @@
       zhuyuancishu = #{zhuyuancishu,jdbcType=VARCHAR},
       ruyuanriqi = #{ruyuanriqi,jdbcType=DATE},
       chuyuanzhengduan = #{chuyuanzhengduan,jdbcType=VARCHAR},
-      chuyuanriqi = #{chuyuanriqi,jdbcType=DATE},
+      chuyuanriqi = #{chuyuanriqi,jdbcType=TIMESTAMP},
       zhurenyisheng = #{zhurenyisheng,jdbcType=VARCHAR},
       zhuzhiyisheng = #{zhuzhiyisheng,jdbcType=VARCHAR},
       zhuyuanyisheng = #{zhuyuanyisheng,jdbcType=VARCHAR},
       shoushumingcheng = #{shoushumingcheng,jdbcType=VARCHAR},
       zhudaoyisheng = #{zhudaoyisheng,jdbcType=VARCHAR},
-      shoushuriqi = #{shoushuriqi,jdbcType=DATE},
+      shoushuriqi = #{shoushuriqi,jdbcType=TIMESTAMP},
       zhuyuantianshu = #{zhuyuantianshu,jdbcType=VARCHAR},
       suifangbeizhu = #{suifangbeizhu,jdbcType=VARCHAR},
       bingliezhuangtai = #{bingliezhuangtai,jdbcType=VARCHAR},
       zujima = #{zujima,jdbcType=VARCHAR},
       delete_flag = #{deleteFlag,jdbcType=INTEGER},
-      createdate = #{createdate,jdbcType=DATE},
+      createdate = #{createdate,jdbcType=TIMESTAMP},
       createperson = #{createperson,jdbcType=VARCHAR},
-      updatedate = #{updatedate,jdbcType=DATE},
+      updatedate = #{updatedate,jdbcType=TIMESTAMP},
       updateperson = #{updateperson,jdbcType=VARCHAR},
       ext1 = #{ext1,jdbcType=VARCHAR},
       ext2 = #{ext2,jdbcType=VARCHAR},
@@ -817,21 +817,21 @@
       zhuyuancishu = #{zhuyuancishu,jdbcType=VARCHAR},
       ruyuanriqi = #{ruyuanriqi,jdbcType=DATE},
       chuyuanzhengduan = #{chuyuanzhengduan,jdbcType=VARCHAR},
-      chuyuanriqi = #{chuyuanriqi,jdbcType=DATE},
+      chuyuanriqi = #{chuyuanriqi,jdbcType=TIMESTAMP},
       zhurenyisheng = #{zhurenyisheng,jdbcType=VARCHAR},
       zhuzhiyisheng = #{zhuzhiyisheng,jdbcType=VARCHAR},
       zhuyuanyisheng = #{zhuyuanyisheng,jdbcType=VARCHAR},
       shoushumingcheng = #{shoushumingcheng,jdbcType=VARCHAR},
       zhudaoyisheng = #{zhudaoyisheng,jdbcType=VARCHAR},
-      shoushuriqi = #{shoushuriqi,jdbcType=DATE},
+      shoushuriqi = #{shoushuriqi,jdbcType=TIMESTAMP},
       zhuyuantianshu = #{zhuyuantianshu,jdbcType=VARCHAR},
       suifangbeizhu = #{suifangbeizhu,jdbcType=VARCHAR},
       bingliezhuangtai = #{bingliezhuangtai,jdbcType=VARCHAR},
       zujima = #{zujima,jdbcType=VARCHAR},
       delete_flag = #{deleteFlag,jdbcType=INTEGER},
-      createdate = #{createdate,jdbcType=DATE},
+      createdate = #{createdate,jdbcType=TIMESTAMP},
       createperson = #{createperson,jdbcType=VARCHAR},
-      updatedate = #{updatedate,jdbcType=DATE},
+      updatedate = #{updatedate,jdbcType=TIMESTAMP},
       updateperson = #{updateperson,jdbcType=VARCHAR},
       ext1 = #{ext1,jdbcType=VARCHAR},
       ext2 = #{ext2,jdbcType=VARCHAR},

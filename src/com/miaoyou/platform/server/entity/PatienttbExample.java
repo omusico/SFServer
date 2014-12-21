@@ -1273,52 +1273,52 @@ public class PatienttbExample {
         }
 
         public Criteria andChuyuanriqiEqualTo(Date value) {
-            addCriterionForJDBCDate("chuyuanriqi =", value, "chuyuanriqi");
+            addCriterion("chuyuanriqi =", value, "chuyuanriqi");
             return (Criteria) this;
         }
 
         public Criteria andChuyuanriqiNotEqualTo(Date value) {
-            addCriterionForJDBCDate("chuyuanriqi <>", value, "chuyuanriqi");
+            addCriterion("chuyuanriqi <>", value, "chuyuanriqi");
             return (Criteria) this;
         }
 
         public Criteria andChuyuanriqiGreaterThan(Date value) {
-            addCriterionForJDBCDate("chuyuanriqi >", value, "chuyuanriqi");
+            addCriterion("chuyuanriqi >", value, "chuyuanriqi");
             return (Criteria) this;
         }
 
         public Criteria andChuyuanriqiGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("chuyuanriqi >=", value, "chuyuanriqi");
+            addCriterion("chuyuanriqi >=", value, "chuyuanriqi");
             return (Criteria) this;
         }
 
         public Criteria andChuyuanriqiLessThan(Date value) {
-            addCriterionForJDBCDate("chuyuanriqi <", value, "chuyuanriqi");
+            addCriterion("chuyuanriqi <", value, "chuyuanriqi");
             return (Criteria) this;
         }
 
         public Criteria andChuyuanriqiLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("chuyuanriqi <=", value, "chuyuanriqi");
+            addCriterion("chuyuanriqi <=", value, "chuyuanriqi");
             return (Criteria) this;
         }
 
         public Criteria andChuyuanriqiIn(List<Date> values) {
-            addCriterionForJDBCDate("chuyuanriqi in", values, "chuyuanriqi");
+            addCriterion("chuyuanriqi in", values, "chuyuanriqi");
             return (Criteria) this;
         }
 
         public Criteria andChuyuanriqiNotIn(List<Date> values) {
-            addCriterionForJDBCDate("chuyuanriqi not in", values, "chuyuanriqi");
+            addCriterion("chuyuanriqi not in", values, "chuyuanriqi");
             return (Criteria) this;
         }
 
         public Criteria andChuyuanriqiBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("chuyuanriqi between", value1, value2, "chuyuanriqi");
+            addCriterion("chuyuanriqi between", value1, value2, "chuyuanriqi");
             return (Criteria) this;
         }
 
         public Criteria andChuyuanriqiNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("chuyuanriqi not between", value1, value2, "chuyuanriqi");
+            addCriterion("chuyuanriqi not between", value1, value2, "chuyuanriqi");
             return (Criteria) this;
         }
 
@@ -1683,52 +1683,52 @@ public class PatienttbExample {
         }
 
         public Criteria andShoushuriqiEqualTo(Date value) {
-            addCriterionForJDBCDate("shoushuriqi =", value, "shoushuriqi");
+            addCriterion("shoushuriqi =", value, "shoushuriqi");
             return (Criteria) this;
         }
 
         public Criteria andShoushuriqiNotEqualTo(Date value) {
-            addCriterionForJDBCDate("shoushuriqi <>", value, "shoushuriqi");
+            addCriterion("shoushuriqi <>", value, "shoushuriqi");
             return (Criteria) this;
         }
 
         public Criteria andShoushuriqiGreaterThan(Date value) {
-            addCriterionForJDBCDate("shoushuriqi >", value, "shoushuriqi");
+            addCriterion("shoushuriqi >", value, "shoushuriqi");
             return (Criteria) this;
         }
 
         public Criteria andShoushuriqiGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("shoushuriqi >=", value, "shoushuriqi");
+            addCriterion("shoushuriqi >=", value, "shoushuriqi");
             return (Criteria) this;
         }
 
         public Criteria andShoushuriqiLessThan(Date value) {
-            addCriterionForJDBCDate("shoushuriqi <", value, "shoushuriqi");
+            addCriterion("shoushuriqi <", value, "shoushuriqi");
             return (Criteria) this;
         }
 
         public Criteria andShoushuriqiLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("shoushuriqi <=", value, "shoushuriqi");
+            addCriterion("shoushuriqi <=", value, "shoushuriqi");
             return (Criteria) this;
         }
 
         public Criteria andShoushuriqiIn(List<Date> values) {
-            addCriterionForJDBCDate("shoushuriqi in", values, "shoushuriqi");
+            addCriterion("shoushuriqi in", values, "shoushuriqi");
             return (Criteria) this;
         }
 
         public Criteria andShoushuriqiNotIn(List<Date> values) {
-            addCriterionForJDBCDate("shoushuriqi not in", values, "shoushuriqi");
+            addCriterion("shoushuriqi not in", values, "shoushuriqi");
             return (Criteria) this;
         }
 
         public Criteria andShoushuriqiBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("shoushuriqi between", value1, value2, "shoushuriqi");
+            addCriterion("shoushuriqi between", value1, value2, "shoushuriqi");
             return (Criteria) this;
         }
 
         public Criteria andShoushuriqiNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("shoushuriqi not between", value1, value2, "shoushuriqi");
+            addCriterion("shoushuriqi not between", value1, value2, "shoushuriqi");
             return (Criteria) this;
         }
 
@@ -2083,52 +2083,52 @@ public class PatienttbExample {
         }
 
         public Criteria andCreatedateEqualTo(Date value) {
-            addCriterionForJDBCDate("createdate =", value, "createdate");
+            addCriterion("createdate =", value, "createdate");
             return (Criteria) this;
         }
 
         public Criteria andCreatedateNotEqualTo(Date value) {
-            addCriterionForJDBCDate("createdate <>", value, "createdate");
+            addCriterion("createdate <>", value, "createdate");
             return (Criteria) this;
         }
 
         public Criteria andCreatedateGreaterThan(Date value) {
-            addCriterionForJDBCDate("createdate >", value, "createdate");
+            addCriterion("createdate >", value, "createdate");
             return (Criteria) this;
         }
 
         public Criteria andCreatedateGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("createdate >=", value, "createdate");
+            addCriterion("createdate >=", value, "createdate");
             return (Criteria) this;
         }
 
         public Criteria andCreatedateLessThan(Date value) {
-            addCriterionForJDBCDate("createdate <", value, "createdate");
+            addCriterion("createdate <", value, "createdate");
             return (Criteria) this;
         }
 
         public Criteria andCreatedateLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("createdate <=", value, "createdate");
+            addCriterion("createdate <=", value, "createdate");
             return (Criteria) this;
         }
 
         public Criteria andCreatedateIn(List<Date> values) {
-            addCriterionForJDBCDate("createdate in", values, "createdate");
+            addCriterion("createdate in", values, "createdate");
             return (Criteria) this;
         }
 
         public Criteria andCreatedateNotIn(List<Date> values) {
-            addCriterionForJDBCDate("createdate not in", values, "createdate");
+            addCriterion("createdate not in", values, "createdate");
             return (Criteria) this;
         }
 
         public Criteria andCreatedateBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("createdate between", value1, value2, "createdate");
+            addCriterion("createdate between", value1, value2, "createdate");
             return (Criteria) this;
         }
 
         public Criteria andCreatedateNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("createdate not between", value1, value2, "createdate");
+            addCriterion("createdate not between", value1, value2, "createdate");
             return (Criteria) this;
         }
 
@@ -2213,52 +2213,52 @@ public class PatienttbExample {
         }
 
         public Criteria andUpdatedateEqualTo(Date value) {
-            addCriterionForJDBCDate("updatedate =", value, "updatedate");
+            addCriterion("updatedate =", value, "updatedate");
             return (Criteria) this;
         }
 
         public Criteria andUpdatedateNotEqualTo(Date value) {
-            addCriterionForJDBCDate("updatedate <>", value, "updatedate");
+            addCriterion("updatedate <>", value, "updatedate");
             return (Criteria) this;
         }
 
         public Criteria andUpdatedateGreaterThan(Date value) {
-            addCriterionForJDBCDate("updatedate >", value, "updatedate");
+            addCriterion("updatedate >", value, "updatedate");
             return (Criteria) this;
         }
 
         public Criteria andUpdatedateGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("updatedate >=", value, "updatedate");
+            addCriterion("updatedate >=", value, "updatedate");
             return (Criteria) this;
         }
 
         public Criteria andUpdatedateLessThan(Date value) {
-            addCriterionForJDBCDate("updatedate <", value, "updatedate");
+            addCriterion("updatedate <", value, "updatedate");
             return (Criteria) this;
         }
 
         public Criteria andUpdatedateLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("updatedate <=", value, "updatedate");
+            addCriterion("updatedate <=", value, "updatedate");
             return (Criteria) this;
         }
 
         public Criteria andUpdatedateIn(List<Date> values) {
-            addCriterionForJDBCDate("updatedate in", values, "updatedate");
+            addCriterion("updatedate in", values, "updatedate");
             return (Criteria) this;
         }
 
         public Criteria andUpdatedateNotIn(List<Date> values) {
-            addCriterionForJDBCDate("updatedate not in", values, "updatedate");
+            addCriterion("updatedate not in", values, "updatedate");
             return (Criteria) this;
         }
 
         public Criteria andUpdatedateBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("updatedate between", value1, value2, "updatedate");
+            addCriterion("updatedate between", value1, value2, "updatedate");
             return (Criteria) this;
         }
 
         public Criteria andUpdatedateNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("updatedate not between", value1, value2, "updatedate");
+            addCriterion("updatedate not between", value1, value2, "updatedate");
             return (Criteria) this;
         }
 

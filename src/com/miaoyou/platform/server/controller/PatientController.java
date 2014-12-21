@@ -58,17 +58,17 @@ public class PatientController {
 	        return bean;
 	    }
 
-	    @RequestMapping(method = RequestMethod.GET, value = "/patient")
-	    public @ResponseBody
-	    CommFindEntity<PatienttbWithBLOBs> getAll(
-	            @RequestParam(value = "psi", defaultValue = "0") int page,
-	            @RequestParam(value = "pst", defaultValue = "20") int perPage,
-	            @RequestParam(value = "conditionSql", defaultValue = "") String conditionSql) {
-	        log.debug("getAll.pageindex" + page + ",perPage:" + perPage);
-	        Pager pager = new Pager(page, perPage);
-	        CommFindEntity<PatienttbWithBLOBs> result = patientService.findAll(pager, conditionSql);
-	        return result;
-	    }
+//	    @RequestMapping(method = RequestMethod.GET, value = "/patient")
+//	    public @ResponseBody
+//	    CommFindEntity<PatienttbWithBLOBs> getAll(
+//	            @RequestParam(value = "psi", defaultValue = "0") int page,
+//	            @RequestParam(value = "pst", defaultValue = "20") int perPage,
+//	            @RequestParam(value = "conditionSql", defaultValue = "") String conditionSql) {
+//	        log.debug("getAll.pageindex" + page + ",perPage:" + perPage);
+//	        Pager pager = new Pager(page, perPage);
+//	        CommFindEntity<PatienttbWithBLOBs> result = patientService.findAll(pager, conditionSql);
+//	        return result;
+//	    }
 	    
 
 	    /**
@@ -112,7 +112,7 @@ public class PatientController {
 	       
 	        
 	        if(sb.length()>andSplit.length()){
-	        	sb.delete((sb.length()-andSplit.length())-1, sb.length()-1);
+	        	sb.delete((sb.length()-andSplit.length()), sb.length()-1);
 	        }
 	        
 	        CommFindEntity<PatienttbWithBLOBs> result = patientService.findAll(pager, sb.toString());

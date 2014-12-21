@@ -55,7 +55,7 @@ public class RoleController {
 	public @ResponseBody CommFindEntity<Roletb> getAll(
 			@RequestParam(value = "psi", defaultValue = "0") int page,
 			@RequestParam(value = "pst", defaultValue = "10") int perPage,
-			@RequestParam(value = "name", defaultValue = "") String name) {
+			@RequestParam(value = "key", defaultValue = "") String name) {
 		log.debug("RoleController,getAll.pageindex" + page + ",perPage:"
 				+ perPage);
 		Pager pager = new Pager(page, perPage);
@@ -66,7 +66,7 @@ public class RoleController {
         	sb.append("(role_name").append(" like ").append("\"%"+name+"%\"").append(" or ").append("zujima").append(" like ").append("\""+name+"%\")").append(andSplit);
         }
         if(sb.length()>andSplit.length()){
-        	sb.delete((sb.length()-andSplit.length())-1, sb.length()-1);
+        	sb.delete((sb.length()-andSplit.length()), sb.length()-1);
         }
 		CommFindEntity<Roletb> roles = roleService.findUsersRoles(pager,
 				sb.toString());

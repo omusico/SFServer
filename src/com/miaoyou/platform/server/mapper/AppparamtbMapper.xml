@@ -9,9 +9,9 @@
     <result column="appparam_pid" property="appparamPid" jdbcType="INTEGER" />
     <result column="appparam_desc" property="appparamDesc" jdbcType="VARCHAR" />
     <result column="systemparam" property="systemparam" jdbcType="INTEGER" />
-    <result column="createdate" property="createdate" jdbcType="DATE" />
+    <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
     <result column="createperson" property="createperson" jdbcType="VARCHAR" />
-    <result column="updatedate" property="updatedate" jdbcType="DATE" />
+    <result column="updatedate" property="updatedate" jdbcType="TIMESTAMP" />
     <result column="updateperson" property="updateperson" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -119,7 +119,7 @@
       updateperson)
     values (#{appparamId,jdbcType=INTEGER}, #{appparamType,jdbcType=VARCHAR}, #{appparamName,jdbcType=VARCHAR}, 
       #{appparamPid,jdbcType=INTEGER}, #{appparamDesc,jdbcType=VARCHAR}, #{systemparam,jdbcType=INTEGER}, 
-      #{createdate,jdbcType=DATE}, #{createperson,jdbcType=VARCHAR}, #{updatedate,jdbcType=DATE}, 
+      #{createdate,jdbcType=TIMESTAMP}, #{createperson,jdbcType=VARCHAR}, #{updatedate,jdbcType=TIMESTAMP}, 
       #{updateperson,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.miaoyou.platform.server.entity.Appparamtb" >
@@ -176,13 +176,13 @@
         #{systemparam,jdbcType=INTEGER},
       </if>
       <if test="createdate != null" >
-        #{createdate,jdbcType=DATE},
+        #{createdate,jdbcType=TIMESTAMP},
       </if>
       <if test="createperson != null" >
         #{createperson,jdbcType=VARCHAR},
       </if>
       <if test="updatedate != null" >
-        #{updatedate,jdbcType=DATE},
+        #{updatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="updateperson != null" >
         #{updateperson,jdbcType=VARCHAR},
@@ -217,13 +217,13 @@
         systemparam = #{record.systemparam,jdbcType=INTEGER},
       </if>
       <if test="record.createdate != null" >
-        createdate = #{record.createdate,jdbcType=DATE},
+        createdate = #{record.createdate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.createperson != null" >
         createperson = #{record.createperson,jdbcType=VARCHAR},
       </if>
       <if test="record.updatedate != null" >
-        updatedate = #{record.updatedate,jdbcType=DATE},
+        updatedate = #{record.updatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.updateperson != null" >
         updateperson = #{record.updateperson,jdbcType=VARCHAR},
@@ -241,9 +241,9 @@
       appparam_pid = #{record.appparamPid,jdbcType=INTEGER},
       appparam_desc = #{record.appparamDesc,jdbcType=VARCHAR},
       systemparam = #{record.systemparam,jdbcType=INTEGER},
-      createdate = #{record.createdate,jdbcType=DATE},
+      createdate = #{record.createdate,jdbcType=TIMESTAMP},
       createperson = #{record.createperson,jdbcType=VARCHAR},
-      updatedate = #{record.updatedate,jdbcType=DATE},
+      updatedate = #{record.updatedate,jdbcType=TIMESTAMP},
       updateperson = #{record.updateperson,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -268,13 +268,13 @@
         systemparam = #{systemparam,jdbcType=INTEGER},
       </if>
       <if test="createdate != null" >
-        createdate = #{createdate,jdbcType=DATE},
+        createdate = #{createdate,jdbcType=TIMESTAMP},
       </if>
       <if test="createperson != null" >
         createperson = #{createperson,jdbcType=VARCHAR},
       </if>
       <if test="updatedate != null" >
-        updatedate = #{updatedate,jdbcType=DATE},
+        updatedate = #{updatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="updateperson != null" >
         updateperson = #{updateperson,jdbcType=VARCHAR},
@@ -289,9 +289,9 @@
       appparam_pid = #{appparamPid,jdbcType=INTEGER},
       appparam_desc = #{appparamDesc,jdbcType=VARCHAR},
       systemparam = #{systemparam,jdbcType=INTEGER},
-      createdate = #{createdate,jdbcType=DATE},
+      createdate = #{createdate,jdbcType=TIMESTAMP},
       createperson = #{createperson,jdbcType=VARCHAR},
-      updatedate = #{updatedate,jdbcType=DATE},
+      updatedate = #{updatedate,jdbcType=TIMESTAMP},
       updateperson = #{updateperson,jdbcType=VARCHAR}
     where appparam_id = #{appparamId,jdbcType=INTEGER}
   </update>

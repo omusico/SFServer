@@ -61,11 +61,20 @@ public class SurveyDtController {
 	public @ResponseBody CommFindEntity<SurveyDetailtb> getAll(
 			@RequestParam(value = "psi", defaultValue = "0") int page,
 			@RequestParam(value = "pst", defaultValue = "20") int perPage,
-			@RequestParam(value = "conditionSql", defaultValue = "") String conditionSql) {
+			 @RequestParam(value = "key", defaultValue = "") String name) {
 		log.debug("getAll.pageindex" + page + ",perPage:" + perPage);
 		Pager pager = new Pager(page, perPage);
+		StringBuilder sb = new StringBuilder();
+        String andSplit = " and ";
+        if(!name.equals("")){
+        	sb.append("(surverydetail_name").append(" like ").append("\"%"+name+"%\"").append(" or ").append("zujima").append(" like ").append("\""+name+"%\")").append(andSplit);
+        }
+        if(sb.length()>andSplit.length()){
+        	sb.delete((sb.length()-andSplit.length()), sb.length()-1);
+        }
+        
 		CommFindEntity<SurveyDetailtb> result = surveyDtService.findAll(pager,
-				conditionSql);
+				sb.toString());
 		return result;
 	}
 

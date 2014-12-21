@@ -10,13 +10,13 @@
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="planfreq" property="planfreq" jdbcType="INTEGER" />
     <result column="plannumber" property="plannumber" jdbcType="INTEGER" />
-    <result column="plannexttime" property="plannexttime" jdbcType="DATE" />
+    <result column="plannexttime" property="plannexttime" jdbcType="TIMESTAMP" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="zujima" property="zujima" jdbcType="VARCHAR" />
     <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
-    <result column="createdate" property="createdate" jdbcType="DATE" />
+    <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
     <result column="createperson" property="createperson" jdbcType="VARCHAR" />
-    <result column="updatedate" property="updatedate" jdbcType="DATE" />
+    <result column="updatedate" property="updatedate" jdbcType="TIMESTAMP" />
     <result column="updateperson" property="updateperson" jdbcType="VARCHAR" />
     <result column="ext1" property="ext1" jdbcType="VARCHAR" />
     <result column="ext2" property="ext2" jdbcType="VARCHAR" />
@@ -130,9 +130,9 @@
       ext1, ext2, ext3)
     values (#{planId,jdbcType=BIGINT}, #{patientid,jdbcType=BIGINT}, #{planname,jdbcType=VARCHAR}, 
       #{plantype,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{planfreq,jdbcType=INTEGER}, 
-      #{plannumber,jdbcType=INTEGER}, #{plannexttime,jdbcType=DATE}, #{remark,jdbcType=VARCHAR}, 
-      #{zujima,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=INTEGER}, #{createdate,jdbcType=DATE}, 
-      #{createperson,jdbcType=VARCHAR}, #{updatedate,jdbcType=DATE}, #{updateperson,jdbcType=VARCHAR}, 
+      #{plannumber,jdbcType=INTEGER}, #{plannexttime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{zujima,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=INTEGER}, #{createdate,jdbcType=TIMESTAMP}, 
+      #{createperson,jdbcType=VARCHAR}, #{updatedate,jdbcType=TIMESTAMP}, #{updateperson,jdbcType=VARCHAR}, 
       #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.miaoyou.platform.server.entity.Sfplantb" >
@@ -216,7 +216,7 @@
         #{plannumber,jdbcType=INTEGER},
       </if>
       <if test="plannexttime != null" >
-        #{plannexttime,jdbcType=DATE},
+        #{plannexttime,jdbcType=TIMESTAMP},
       </if>
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
@@ -228,13 +228,13 @@
         #{deleteFlag,jdbcType=INTEGER},
       </if>
       <if test="createdate != null" >
-        #{createdate,jdbcType=DATE},
+        #{createdate,jdbcType=TIMESTAMP},
       </if>
       <if test="createperson != null" >
         #{createperson,jdbcType=VARCHAR},
       </if>
       <if test="updatedate != null" >
-        #{updatedate,jdbcType=DATE},
+        #{updatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="updateperson != null" >
         #{updateperson,jdbcType=VARCHAR},
@@ -281,7 +281,7 @@
         plannumber = #{record.plannumber,jdbcType=INTEGER},
       </if>
       <if test="record.plannexttime != null" >
-        plannexttime = #{record.plannexttime,jdbcType=DATE},
+        plannexttime = #{record.plannexttime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.remark != null" >
         remark = #{record.remark,jdbcType=VARCHAR},
@@ -293,13 +293,13 @@
         delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
       </if>
       <if test="record.createdate != null" >
-        createdate = #{record.createdate,jdbcType=DATE},
+        createdate = #{record.createdate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.createperson != null" >
         createperson = #{record.createperson,jdbcType=VARCHAR},
       </if>
       <if test="record.updatedate != null" >
-        updatedate = #{record.updatedate,jdbcType=DATE},
+        updatedate = #{record.updatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.updateperson != null" >
         updateperson = #{record.updateperson,jdbcType=VARCHAR},
@@ -327,13 +327,13 @@
       status = #{record.status,jdbcType=INTEGER},
       planfreq = #{record.planfreq,jdbcType=INTEGER},
       plannumber = #{record.plannumber,jdbcType=INTEGER},
-      plannexttime = #{record.plannexttime,jdbcType=DATE},
+      plannexttime = #{record.plannexttime,jdbcType=TIMESTAMP},
       remark = #{record.remark,jdbcType=VARCHAR},
       zujima = #{record.zujima,jdbcType=VARCHAR},
       delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
-      createdate = #{record.createdate,jdbcType=DATE},
+      createdate = #{record.createdate,jdbcType=TIMESTAMP},
       createperson = #{record.createperson,jdbcType=VARCHAR},
-      updatedate = #{record.updatedate,jdbcType=DATE},
+      updatedate = #{record.updatedate,jdbcType=TIMESTAMP},
       updateperson = #{record.updateperson,jdbcType=VARCHAR},
       ext1 = #{record.ext1,jdbcType=VARCHAR},
       ext2 = #{record.ext2,jdbcType=VARCHAR},
@@ -364,7 +364,7 @@
         plannumber = #{plannumber,jdbcType=INTEGER},
       </if>
       <if test="plannexttime != null" >
-        plannexttime = #{plannexttime,jdbcType=DATE},
+        plannexttime = #{plannexttime,jdbcType=TIMESTAMP},
       </if>
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
@@ -376,13 +376,13 @@
         delete_flag = #{deleteFlag,jdbcType=INTEGER},
       </if>
       <if test="createdate != null" >
-        createdate = #{createdate,jdbcType=DATE},
+        createdate = #{createdate,jdbcType=TIMESTAMP},
       </if>
       <if test="createperson != null" >
         createperson = #{createperson,jdbcType=VARCHAR},
       </if>
       <if test="updatedate != null" >
-        updatedate = #{updatedate,jdbcType=DATE},
+        updatedate = #{updatedate,jdbcType=TIMESTAMP},
       </if>
       <if test="updateperson != null" >
         updateperson = #{updateperson,jdbcType=VARCHAR},
@@ -407,13 +407,13 @@
       status = #{status,jdbcType=INTEGER},
       planfreq = #{planfreq,jdbcType=INTEGER},
       plannumber = #{plannumber,jdbcType=INTEGER},
-      plannexttime = #{plannexttime,jdbcType=DATE},
+      plannexttime = #{plannexttime,jdbcType=TIMESTAMP},
       remark = #{remark,jdbcType=VARCHAR},
       zujima = #{zujima,jdbcType=VARCHAR},
       delete_flag = #{deleteFlag,jdbcType=INTEGER},
-      createdate = #{createdate,jdbcType=DATE},
+      createdate = #{createdate,jdbcType=TIMESTAMP},
       createperson = #{createperson,jdbcType=VARCHAR},
-      updatedate = #{updatedate,jdbcType=DATE},
+      updatedate = #{updatedate,jdbcType=TIMESTAMP},
       updateperson = #{updateperson,jdbcType=VARCHAR},
       ext1 = #{ext1,jdbcType=VARCHAR},
       ext2 = #{ext2,jdbcType=VARCHAR},
