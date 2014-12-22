@@ -1,6 +1,11 @@
 package com.miaoyou.platform.server.entity;
 
-public class RspatientsurveysvKey {
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class RspatientsurveysvKey implements Serializable{
     private Long patientsurveyId;
 
     private Long surveryId;
