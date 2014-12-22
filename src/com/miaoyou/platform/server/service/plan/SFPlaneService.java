@@ -65,7 +65,7 @@ public class SFPlaneService implements SFPlaneServiceIF{
 		example.setLimitStart(page.getStartDataIndex());
 		example.setLimitEnd(page.getPageSize());
 		// 排序
-		example.setOrderByClause("survery_id DESC");
+		example.setOrderByClause("plan_id DESC");
 
 		List<Sfplantb> ls = sfplantbMapper.selectByExample(example);
 		result.setResult(ls);

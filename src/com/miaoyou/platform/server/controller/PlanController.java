@@ -82,6 +82,7 @@ public class PlanController {
 			@RequestParam(value = "pst", defaultValue = "20") int perPage,
 			@RequestParam(value = "type", defaultValue = "0") int type,
 			@RequestParam(value = "status", defaultValue = "0") int status,
+			@RequestParam(value = "patientid", defaultValue = "0") long patientid,
 			@RequestParam(value = "startDate", defaultValue = "") String startDate,
 			@RequestParam(value = "endDate", defaultValue = "") String endDate,
 			@RequestParam(value = "key", defaultValue = "") String name) {
@@ -91,14 +92,24 @@ public class PlanController {
 		// 构造SQL，注意这里的string都是对应数据库中的字段名，不是entity名
 		StringBuilder sb = new StringBuilder();
 		String andSplit = " and ";
+		
+		/*不要删除的数据*/
+		sb.append("delete_flag").append(" = ").append(0).append(andSplit);
+		
 		if (type >= 0) {
-			sb.append("plantype").append(" = ").append("+type+")
+			sb.append("plantype").append(" = ").append(type)
 					.append(andSplit);
 		}
 		if (status >= 0) {
-			sb.append("status").append(" = ").append("+status+")
+			sb.append("status").append(" = ").append(status)
 					.append(andSplit);
 		}
+		
+		if (patientid > 0) {
+			sb.append("patientid").append(" = ").append(patientid)
+					.append(andSplit);
+		}
+		
 		if (!startDate.equals("") && !endDate.equals("")) {
 			sb.append("(plannexttime").append(" between ")
 					.append("\"" + startDate + "\"").append(andSplit)
@@ -140,12 +151,12 @@ public class PlanController {
 			int result = sFPlaneService.saveData(bean);
 			comResponse.setResponseStatus(ComResponse.STATUS_OK);
 			comResponse.setResponseEntity(bean);
-			logService.saveLog("新建调查问卷模版");
-			comResponse.setExtendResponseContext("创建调查问卷模版成功.");
+			logService.saveLog("新建电话随访计划,病案ID:"+bean.getPatientid());
+			comResponse.setExtendResponseContext("创建电话随访计划成功.");
 		} catch (Exception e) {
 			log.error(e);
 			comResponse.setResponseStatus(ComResponse.STATUS_FAIL);
-			comResponse.setErrorMessage("新建调查问卷模版失败." + e.getMessage());
+			comResponse.setErrorMessage("新建电话随访计划失败." + e.getMessage());
 		}
 		log.debug("added:" + comResponse.getResponseStatus());
 
@@ -164,12 +175,12 @@ public class PlanController {
 			int result = sFPlaneService.updateData(bean);
 			comResponse.setResponseStatus(ComResponse.STATUS_OK);
 			comResponse.setResponseEntity(bean);
-			logService.saveLog("更新调查问卷模版");
-			comResponse.setExtendResponseContext("更新调查问卷模版成功.");
+			logService.saveLog("更新电话随访计划,病案ID:"+bean.getPatientid());
+			comResponse.setExtendResponseContext("更新电话随访计划成功.");
 		} catch (Exception e) {
 			log.error(e);
 			comResponse.setResponseStatus(ComResponse.STATUS_FAIL);
-			comResponse.setErrorMessage("更新调查问卷模版失败." + e.getMessage());
+			comResponse.setErrorMessage("更新电话随访计划失败." + e.getMessage());
 		}
 		log.debug("updated:" + comResponse.getResponseStatus());
 
@@ -183,12 +194,12 @@ public class PlanController {
 		try {
 			int result = sFPlaneService.deleteDataByKey(id);
 			comResponse.setResponseStatus(ComResponse.STATUS_OK);
-			logService.saveLog("删除调查问卷模版");
-			comResponse.setExtendResponseContext("删除调查问卷模版成功.");
+			logService.saveLog("删除电话随访计划");
+			comResponse.setExtendResponseContext("删除电话随访计划成功.");
 		} catch (Exception e) {
 			log.error(e);
 			comResponse.setResponseStatus(ComResponse.STATUS_FAIL);
-			comResponse.setErrorMessage("删除调查问卷模版失败." + e.getMessage());
+			comResponse.setErrorMessage("删除电话随访计划失败." + e.getMessage());
 		}
 		log.debug("deleted:" + comResponse.getResponseStatus());
 

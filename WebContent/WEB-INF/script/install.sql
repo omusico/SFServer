@@ -291,6 +291,12 @@ CREATE TABLE `rs_patient_survey_sv` (
   `surverydetail_answer` varchar(100) DEFAULT NULL COMMENT '问卷答案'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `rs_keshi_dns`;
+CREATE TABLE `rs_keshi_dns` (
+  `department_id` int(20) NOT NULL COMMENT '科室编号',
+  `diagnosis_id` BIGINT NOT NULL COMMENT '诊断ID'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
 /*init value*/
 insert  into `roletb`(`role_id`,`role_type`,`role_name`,`role_scope`,`zujima`,`role_desc`)
 values

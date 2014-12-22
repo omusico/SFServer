@@ -1,11 +1,6 @@
 package com.miaoyou.platform.server.entity;
 
-import java.io.Serializable;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class RsdnssvtbKey implements Serializable{
+public class RsdnssvtbKey {
     private Long diagnosisId;
 
     private Long surveryId;

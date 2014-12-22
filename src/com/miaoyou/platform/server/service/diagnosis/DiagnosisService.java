@@ -101,7 +101,9 @@ public class DiagnosisService implements DiagnosisServiceIF {
 	public int updateData(Diagnosistb bean) {
 		log.info("updateData:" + bean.getDiagnosisId());
 		bean.setUpdatedate(new Date());
-		
+		//得到汉字的首字母。，这里还有bug，一些多音字不好区分，以后improve
+		String zujima = PingYinUtil.getFirstSpell(bean.getDiagnosisName());
+		bean.setZujima(zujima);
 		/* 从session里面获取当前操作的用户 */
 		Object principal = SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();

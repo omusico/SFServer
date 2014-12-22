@@ -90,7 +90,7 @@ public class PatientController {
 	            @RequestParam(value = "chuyuanriqi", defaultValue = "") String chuyuanriqi,
 	            @RequestParam(value = "keshi", defaultValue = "") String keshi,
 	            @RequestParam(value = "name", defaultValue = "") String name,
-	            @RequestParam(value = "chuyuanhao", defaultValue = "") String chuyuanhao) {
+	            @RequestParam(value = "zhuyuanhao", defaultValue = "") String zhuyuanhao) {
 	        log.debug("getAll.pageindex" + page + ",perPage:" + perPage);
 	        Pager pager = new Pager(page, perPage);
 	        
@@ -100,8 +100,8 @@ public class PatientController {
 	        if(!chuyuanriqi.equals("")){
 	        	sb.append("chuyuanriqi").append(" = ").append("\""+chuyuanriqi+"\"").append(andSplit);
 	        }
-	        if(!chuyuanhao.equals("")){
-	        	sb.append("chuyuanhao").append(" = ").append("\""+chuyuanhao+"\"").append(andSplit);
+	        if(!zhuyuanhao.equals("")){
+	        	sb.append("zhuyuanhao").append(" = ").append("\""+zhuyuanhao+"\"").append(andSplit);
 	        }
 	        if(!keshi.equals("")){
 	        	sb.append("keshi").append(" like ").append("\"%"+keshi+"%\"").append(andSplit);
