@@ -3,7 +3,7 @@ package com.miaoyou.platform.server.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RsdnssvtbaddExample {
+public class RspatientdpdnsExample {
     protected String orderByClause;
 
     protected boolean distinct;
@@ -16,7 +16,7 @@ public class RsdnssvtbaddExample {
 
     protected Integer limitEnd;
 
-    public RsdnssvtbaddExample() {
+    public RspatientdpdnsExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -134,63 +134,63 @@ public class RsdnssvtbaddExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andDiagnosisIdIsNull() {
-            addCriterion("diagnosis_id is null");
+        public Criteria andPatientidIsNull() {
+            addCriterion("patientid is null");
             return (Criteria) this;
         }
 
-        public Criteria andDiagnosisIdIsNotNull() {
-            addCriterion("diagnosis_id is not null");
+        public Criteria andPatientidIsNotNull() {
+            addCriterion("patientid is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDiagnosisIdEqualTo(Long value) {
-            addCriterion("diagnosis_id =", value, "diagnosisId");
+        public Criteria andPatientidEqualTo(Long value) {
+            addCriterion("patientid =", value, "patientid");
             return (Criteria) this;
         }
 
-        public Criteria andDiagnosisIdNotEqualTo(Long value) {
-            addCriterion("diagnosis_id <>", value, "diagnosisId");
+        public Criteria andPatientidNotEqualTo(Long value) {
+            addCriterion("patientid <>", value, "patientid");
             return (Criteria) this;
         }
 
-        public Criteria andDiagnosisIdGreaterThan(Long value) {
-            addCriterion("diagnosis_id >", value, "diagnosisId");
+        public Criteria andPatientidGreaterThan(Long value) {
+            addCriterion("patientid >", value, "patientid");
             return (Criteria) this;
         }
 
-        public Criteria andDiagnosisIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("diagnosis_id >=", value, "diagnosisId");
+        public Criteria andPatientidGreaterThanOrEqualTo(Long value) {
+            addCriterion("patientid >=", value, "patientid");
             return (Criteria) this;
         }
 
-        public Criteria andDiagnosisIdLessThan(Long value) {
-            addCriterion("diagnosis_id <", value, "diagnosisId");
+        public Criteria andPatientidLessThan(Long value) {
+            addCriterion("patientid <", value, "patientid");
             return (Criteria) this;
         }
 
-        public Criteria andDiagnosisIdLessThanOrEqualTo(Long value) {
-            addCriterion("diagnosis_id <=", value, "diagnosisId");
+        public Criteria andPatientidLessThanOrEqualTo(Long value) {
+            addCriterion("patientid <=", value, "patientid");
             return (Criteria) this;
         }
 
-        public Criteria andDiagnosisIdIn(List<Long> values) {
-            addCriterion("diagnosis_id in", values, "diagnosisId");
+        public Criteria andPatientidIn(List<Long> values) {
+            addCriterion("patientid in", values, "patientid");
             return (Criteria) this;
         }
 
-        public Criteria andDiagnosisIdNotIn(List<Long> values) {
-            addCriterion("diagnosis_id not in", values, "diagnosisId");
+        public Criteria andPatientidNotIn(List<Long> values) {
+            addCriterion("patientid not in", values, "patientid");
             return (Criteria) this;
         }
 
-        public Criteria andDiagnosisIdBetween(Long value1, Long value2) {
-            addCriterion("diagnosis_id between", value1, value2, "diagnosisId");
+        public Criteria andPatientidBetween(Long value1, Long value2) {
+            addCriterion("patientid between", value1, value2, "patientid");
             return (Criteria) this;
         }
 
-        public Criteria andDiagnosisIdNotBetween(Long value1, Long value2) {
-            addCriterion("diagnosis_id not between", value1, value2, "diagnosisId");
+        public Criteria andPatientidNotBetween(Long value1, Long value2) {
+            addCriterion("patientid not between", value1, value2, "patientid");
             return (Criteria) this;
         }
 
@@ -254,123 +254,63 @@ public class RsdnssvtbaddExample {
             return (Criteria) this;
         }
 
-        public Criteria andSurveryIdIsNull() {
-            addCriterion("survery_id is null");
+        public Criteria andDiagnosisIdIsNull() {
+            addCriterion("diagnosis_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andSurveryIdIsNotNull() {
-            addCriterion("survery_id is not null");
+        public Criteria andDiagnosisIdIsNotNull() {
+            addCriterion("diagnosis_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andSurveryIdEqualTo(Long value) {
-            addCriterion("survery_id =", value, "surveryId");
+        public Criteria andDiagnosisIdEqualTo(Long value) {
+            addCriterion("diagnosis_id =", value, "diagnosisId");
             return (Criteria) this;
         }
 
-        public Criteria andSurveryIdNotEqualTo(Long value) {
-            addCriterion("survery_id <>", value, "surveryId");
+        public Criteria andDiagnosisIdNotEqualTo(Long value) {
+            addCriterion("diagnosis_id <>", value, "diagnosisId");
             return (Criteria) this;
         }
 
-        public Criteria andSurveryIdGreaterThan(Long value) {
-            addCriterion("survery_id >", value, "surveryId");
+        public Criteria andDiagnosisIdGreaterThan(Long value) {
+            addCriterion("diagnosis_id >", value, "diagnosisId");
             return (Criteria) this;
         }
 
-        public Criteria andSurveryIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("survery_id >=", value, "surveryId");
+        public Criteria andDiagnosisIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("diagnosis_id >=", value, "diagnosisId");
             return (Criteria) this;
         }
 
-        public Criteria andSurveryIdLessThan(Long value) {
-            addCriterion("survery_id <", value, "surveryId");
+        public Criteria andDiagnosisIdLessThan(Long value) {
+            addCriterion("diagnosis_id <", value, "diagnosisId");
             return (Criteria) this;
         }
 
-        public Criteria andSurveryIdLessThanOrEqualTo(Long value) {
-            addCriterion("survery_id <=", value, "surveryId");
+        public Criteria andDiagnosisIdLessThanOrEqualTo(Long value) {
+            addCriterion("diagnosis_id <=", value, "diagnosisId");
             return (Criteria) this;
         }
 
-        public Criteria andSurveryIdIn(List<Long> values) {
-            addCriterion("survery_id in", values, "surveryId");
+        public Criteria andDiagnosisIdIn(List<Long> values) {
+            addCriterion("diagnosis_id in", values, "diagnosisId");
             return (Criteria) this;
         }
 
-        public Criteria andSurveryIdNotIn(List<Long> values) {
-            addCriterion("survery_id not in", values, "surveryId");
+        public Criteria andDiagnosisIdNotIn(List<Long> values) {
+            addCriterion("diagnosis_id not in", values, "diagnosisId");
             return (Criteria) this;
         }
 
-        public Criteria andSurveryIdBetween(Long value1, Long value2) {
-            addCriterion("survery_id between", value1, value2, "surveryId");
+        public Criteria andDiagnosisIdBetween(Long value1, Long value2) {
+            addCriterion("diagnosis_id between", value1, value2, "diagnosisId");
             return (Criteria) this;
         }
 
-        public Criteria andSurveryIdNotBetween(Long value1, Long value2) {
-            addCriterion("survery_id not between", value1, value2, "surveryId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSurverydetailIdIsNull() {
-            addCriterion("surverydetail_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSurverydetailIdIsNotNull() {
-            addCriterion("surverydetail_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSurverydetailIdEqualTo(Long value) {
-            addCriterion("surverydetail_id =", value, "surverydetailId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSurverydetailIdNotEqualTo(Long value) {
-            addCriterion("surverydetail_id <>", value, "surverydetailId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSurverydetailIdGreaterThan(Long value) {
-            addCriterion("surverydetail_id >", value, "surverydetailId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSurverydetailIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("surverydetail_id >=", value, "surverydetailId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSurverydetailIdLessThan(Long value) {
-            addCriterion("surverydetail_id <", value, "surverydetailId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSurverydetailIdLessThanOrEqualTo(Long value) {
-            addCriterion("surverydetail_id <=", value, "surverydetailId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSurverydetailIdIn(List<Long> values) {
-            addCriterion("surverydetail_id in", values, "surverydetailId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSurverydetailIdNotIn(List<Long> values) {
-            addCriterion("surverydetail_id not in", values, "surverydetailId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSurverydetailIdBetween(Long value1, Long value2) {
-            addCriterion("surverydetail_id between", value1, value2, "surverydetailId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSurverydetailIdNotBetween(Long value1, Long value2) {
-            addCriterion("surverydetail_id not between", value1, value2, "surverydetailId");
+        public Criteria andDiagnosisIdNotBetween(Long value1, Long value2) {
+            addCriterion("diagnosis_id not between", value1, value2, "diagnosisId");
             return (Criteria) this;
         }
     }

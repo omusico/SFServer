@@ -10,13 +10,18 @@ public interface DiagnosisSurveyServiceIF {
 	
 	public CommFindEntity<Surveytb> findSurvey(Long diagnosisId);
 	
-	public SurveyModelEntity findDnsModelAll(Pager page, Long surveryId,Long diagnosisId);
+	public CommFindEntity<Surveytb> findAllSurveyWithAddedSurvey(Long diagnosisId,Integer departmentId);
+		
+	public SurveyModelEntity findDnsModelAllWithAddedQuestion(Pager page, Long surveryId,Long diagnosisId,Integer departmentId);
 	
 	public int deleteDnsSurveyModel(Long surveryId,Long diagnosisId);
 	
 	public int saveDnsSurveyModel(Long surveryId,Long diagnosisId);
 	
-	public int saveDnsSurveyModelQuestion(SurveyDetailtb surveyDetailtb,Long diagnosisId,Long surveryId);
+	public int saveDnsSurveyModelWithAddedSurvey(Integer departmentId,Long diagnosisId,Long surveryId);
 	
-	public int deleteDnsSurveyModelAddedQuestion(Long surverydetailId,Long diagnosisId,Long surveryId);
+	public int saveDnsSurveyModelWidthAddedQuestion(SurveyDetailtb surveyDetailtb,Integer departmentId,Long diagnosisId,Long surveryId);
+	
+	public int deleteDnsSurveyModelAddedQuestion(Long surverydetailId,Integer departmentId,Long diagnosisId,Long surveryId);
+	public int deleteDnsSurveyModelAddedSurvey(Integer departmentId,Long diagnosisId,Long surveryId);
 }

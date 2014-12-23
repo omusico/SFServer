@@ -225,9 +225,9 @@ CREATE TABLE `rs_dns_sv` (
 DROP TABLE IF EXISTS `rs_dns_sv_add`;
 CREATE TABLE `rs_dns_sv_add` (
   `diagnosis_id` BIGINT NOT NULL COMMENT '诊断ID',
+  `department_id` int(20) NOT NULL COMMENT '科室编号',
   `survery_id` BIGINT NOT NULL COMMENT '问卷ID',
-  `surverydetail_id` BIGINT NOT NULL COMMENT '增加的问题',
-   PRIMARY KEY (`diagnosis_id`,`survery_id`,`surverydetail_id`)
+  `surverydetail_id` BIGINT default NULL COMMENT '增加的问题'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `rs_plan_tel_sv`;
@@ -293,6 +293,19 @@ CREATE TABLE `rs_patient_survey_sv` (
 
 DROP TABLE IF EXISTS `rs_keshi_dns`;
 CREATE TABLE `rs_keshi_dns` (
+  `department_id` int(20) NOT NULL COMMENT '科室编号',
+  `diagnosis_id` BIGINT NOT NULL COMMENT '诊断ID'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `rs_patient_sv_add`;
+CREATE TABLE `rs_patient_sv_add` (
+  `patientid` BIGINT NOT NULL COMMENT '病患ID',
+  `survery_id` BIGINT NOT NULL COMMENT '问卷ID'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `rs_patient_dp_dns`;
+CREATE TABLE `rs_patient_dp_dns` (
+  `patientid` BIGINT NOT NULL COMMENT '病患ID',
   `department_id` int(20) NOT NULL COMMENT '科室编号',
   `diagnosis_id` BIGINT NOT NULL COMMENT '诊断ID'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;

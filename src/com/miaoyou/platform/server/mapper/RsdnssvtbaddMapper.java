@@ -1,7 +1,7 @@
 package com.miaoyou.platform.server.mapper;
 
+import com.miaoyou.platform.server.entity.Rsdnssvtbadd;
 import com.miaoyou.platform.server.entity.RsdnssvtbaddExample;
-import com.miaoyou.platform.server.entity.RsdnssvtbaddKey;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,15 +10,13 @@ public interface RsdnssvtbaddMapper {
 
     int deleteByExample(RsdnssvtbaddExample example);
 
-    int deleteByPrimaryKey(RsdnssvtbaddKey key);
+    int insert(Rsdnssvtbadd record);
 
-    int insert(RsdnssvtbaddKey record);
+    int insertSelective(Rsdnssvtbadd record);
 
-    int insertSelective(RsdnssvtbaddKey record);
+    List<Rsdnssvtbadd> selectByExample(RsdnssvtbaddExample example);
 
-    List<RsdnssvtbaddKey> selectByExample(RsdnssvtbaddExample example);
+    int updateByExampleSelective(@Param("record") Rsdnssvtbadd record, @Param("example") RsdnssvtbaddExample example);
 
-    int updateByExampleSelective(@Param("record") RsdnssvtbaddKey record, @Param("example") RsdnssvtbaddExample example);
-
-    int updateByExample(@Param("record") RsdnssvtbaddKey record, @Param("example") RsdnssvtbaddExample example);
+    int updateByExample(@Param("record") Rsdnssvtbadd record, @Param("example") RsdnssvtbaddExample example);
 }

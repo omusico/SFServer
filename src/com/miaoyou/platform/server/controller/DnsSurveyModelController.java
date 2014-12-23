@@ -59,15 +59,27 @@ public class DnsSurveyModelController {
 		return diagnosisSurveyService.findSurvey(diagnosisId);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/rsdnssv/{diagnosisId}/{surveryId}")
-	public SurveyModelEntity findDnsModelAll(
+	@RequestMapping(method = RequestMethod.GET, value = "/rsdnssv/{departmentId}/{diagnosisId}/{surveryId}")
+	public @ResponseBody SurveyModelEntity findDnsModelAllWithAddedQuestion(
 			@RequestParam(value = "psi", defaultValue = "0") int page,
 			@RequestParam(value = "pst", defaultValue = "20") int perPage,
-			@PathVariable Long surveryId,
-			@PathVariable Long diagnosisId){
-		log.debug("getAll.pageindex" + page + ",perPage:" + perPage+",diagnosisId:"+diagnosisId+",surveryId:"+surveryId);
+			@PathVariable Integer departmentId,
+			@PathVariable Long diagnosisId,@PathVariable Long surveryId){
+		log.debug("getAll.pageindex" + page + ",perPage:" + perPage+",diagnosisId:"+diagnosisId+",surveryId:"+surveryId+",departmentId:"+departmentId);
 		Pager pager = new Pager(page, perPage);
-		SurveyModelEntity modelEntity = diagnosisSurveyService.findDnsModelAll(pager, surveryId, diagnosisId);
+		SurveyModelEntity modelEntity = diagnosisSurveyService.findDnsModelAllWithAddedQuestion(pager, surveryId, diagnosisId,departmentId);
+		return modelEntity;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/rsdnssv/{departmentId}/{diagnosisId}")
+	public @ResponseBody CommFindEntity<Surveytb>  findAllSurveyWithAddedSurvey(
+			@RequestParam(value = "psi", defaultValue = "0") int page,
+			@RequestParam(value = "pst", defaultValue = "20") int perPage,
+			@PathVariable Integer departmentId,
+			@PathVariable Long diagnosisId){
+		log.debug("getAll.pageindex" + page + ",perPage:" + perPage+",diagnosisId:"+diagnosisId+",departmentId:"+departmentId);
+		Pager pager = new Pager(page, perPage);
+		 CommFindEntity<Surveytb> modelEntity = diagnosisSurveyService.findAllSurveyWithAddedSurvey(diagnosisId,departmentId);
 		return modelEntity;
 	}
 	
@@ -114,14 +126,14 @@ public class DnsSurveyModelController {
 	}
 
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/rsdnssv/adddt/{diagnosisId}/{surveryId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ComResponse saveDnsSurveyModelQuestion(@RequestBody SurveyDetailtb surveyDetailtb,@PathVariable Long diagnosisId,@PathVariable Long surveryId) {
+	@RequestMapping(method = RequestMethod.POST, value = "/rsdnssv/adddt/{departmentId}/{diagnosisId}/{surveryId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ComResponse saveDnsSurveyModelWidthAddedQuestion(@RequestBody SurveyDetailtb surveyDetailtb,@PathVariable Integer departmentId,@PathVariable Long diagnosisId,@PathVariable Long surveryId) {
 
-			log.debug("add:diagnosisId:" + diagnosisId+",surveryId:"+surveryId);
+			log.debug("add:diagnosisId:" + diagnosisId+",surveryId:"+surveryId+",departmentId:"+departmentId);
 
 		ComResponse comResponse = new ComResponse();
 		try {
-			int result = diagnosisSurveyService.saveDnsSurveyModelQuestion(surveyDetailtb, diagnosisId, surveryId);
+			int result = diagnosisSurveyService.saveDnsSurveyModelWidthAddedQuestion(surveyDetailtb, departmentId,diagnosisId, surveryId);
 			comResponse.setResponseStatus(ComResponse.STATUS_OK);
 			comResponse.setResponseEntity(null);
 			logService.saveLog("新建问卷新增问题");
@@ -135,21 +147,62 @@ public class DnsSurveyModelController {
 
 		return comResponse;
 	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/rsdnssv/addsurvey/{departmentId}/{diagnosisId}/{surveryId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ComResponse saveDnsSurveyModelWithAddedSurvey(@PathVariable Integer departmentId,@PathVariable Long diagnosisId,@PathVariable Long surveryId) {
 
+		log.debug("add:diagnosisId:" + diagnosisId+",surveryId:"+surveryId+",departmentId:"+departmentId);
 
-	@RequestMapping(method = RequestMethod.POST, value = "/rsdnssv/deletedt/{diagnosisId}/{surveryId}/{surverydetailId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ComResponse deleteDnsSurveyModelAddedQuestion( @PathVariable Long diagnosisId,@PathVariable Long surveryId,@PathVariable Long surverydetailId) {
-		log.debug("delete:diagnosisId:" + diagnosisId+",surveryId:"+surveryId);
 		ComResponse comResponse = new ComResponse();
 		try {
-			int result = diagnosisSurveyService.deleteDnsSurveyModelAddedQuestion(surverydetailId, diagnosisId, surveryId);
+			int result = diagnosisSurveyService.saveDnsSurveyModelWithAddedSurvey(departmentId,diagnosisId, surveryId);
 			comResponse.setResponseStatus(ComResponse.STATUS_OK);
-			logService.saveLog("删除问卷新增问题问题");
-			comResponse.setExtendResponseContext("删除问卷新增问题问题成功.");
+			comResponse.setResponseEntity(null);
+			logService.saveLog("创建额外问卷为科室:"+departmentId);
+			comResponse.setExtendResponseContext("创建额外问卷成功.");
 		} catch (Exception e) {
 			log.error(e);
 			comResponse.setResponseStatus(ComResponse.STATUS_FAIL);
-			comResponse.setErrorMessage("删除问卷新增问题失败." + e.getMessage());
+			comResponse.setErrorMessage("创建额外问卷失败." + e.getMessage());
+		}
+		log.debug("added:" + comResponse.getResponseStatus());
+
+		return comResponse;
+	}
+
+
+	@RequestMapping(method = RequestMethod.POST, value = "/rsdnssv/deletedt/{departmentId}/{diagnosisId}/{surveryId}/{surverydetailId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ComResponse deleteDnsSurveyModelAddedQuestion(@PathVariable Integer departmentId, @PathVariable Long diagnosisId,@PathVariable Long surveryId,@PathVariable Long surverydetailId) {
+		log.debug("delete:diagnosisId:" + diagnosisId+",surveryId:"+surveryId+",departmentId:"+departmentId+",surverydetailId:"+surverydetailId);
+		ComResponse comResponse = new ComResponse();
+		try {
+			int result = diagnosisSurveyService.deleteDnsSurveyModelAddedQuestion(surverydetailId,departmentId, diagnosisId, surveryId);
+			comResponse.setResponseStatus(ComResponse.STATUS_OK);
+			logService.saveLog("删除问卷额外问题");
+			comResponse.setExtendResponseContext("删除问卷额外问题成功.");
+		} catch (Exception e) {
+			log.error(e);
+			comResponse.setResponseStatus(ComResponse.STATUS_FAIL);
+			comResponse.setErrorMessage("删除问卷额外问题失败." + e.getMessage());
+		}
+		log.debug("deleted:" + comResponse.getResponseStatus());
+
+		return comResponse;
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/rsdnssv/deletesurvey/{departmentId}/{diagnosisId}/{surveryId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ComResponse deleteDnsSurveyModelAddedSurvey(@PathVariable Integer departmentId, @PathVariable Long diagnosisId,@PathVariable Long surveryId) {
+		log.debug("delete:diagnosisId:" + diagnosisId+",surveryId:"+surveryId+",departmentId:"+departmentId);
+		ComResponse comResponse = new ComResponse();
+		try {
+			int result = diagnosisSurveyService.deleteDnsSurveyModelAddedSurvey(departmentId, diagnosisId, surveryId);
+			comResponse.setResponseStatus(ComResponse.STATUS_OK);
+			logService.saveLog("删除额外问卷");
+			comResponse.setExtendResponseContext("删除额外问卷成功.");
+		} catch (Exception e) {
+			log.error(e);
+			comResponse.setResponseStatus(ComResponse.STATUS_FAIL);
+			comResponse.setErrorMessage("删除额外问卷额外问题失败." + e.getMessage());
 		}
 		log.debug("deleted:" + comResponse.getResponseStatus());
 

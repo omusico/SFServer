@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.miaoyou.platform.server.entity.RsdnssvtbExample;
 import com.miaoyou.platform.server.entity.RsdnssvtbKey;
+import com.miaoyou.platform.server.entity.Rsdnssvtbadd;
 import com.miaoyou.platform.server.entity.RsdnssvtbaddExample;
 import com.miaoyou.platform.server.entity.RsdnssvtbaddKey;
 import com.miaoyou.platform.server.entity.SurveyDetailtb;
@@ -61,13 +62,50 @@ public class DiagnosisSurveyService implements DiagnosisSurveyServiceIF {
 				suryveyArray.add(survey);
 			}
 		}
-
+		result.setCount(suryveyArray.size());
 		return result;
 	}
-
+	
 	@Override
-	public SurveyModelEntity findDnsModelAll(Pager page, Long surveryId,
-			Long diagnosisId) {
+	public CommFindEntity<Surveytb> findAllSurveyWithAddedSurvey(Long diagnosisId,Integer departmentId) {
+		log.info("findSurvey:" + diagnosisId);
+		CommFindEntity<Surveytb> result = new CommFindEntity<>();
+		List<Surveytb> suryveyArray = new ArrayList<>();
+		result.setResult(suryveyArray);
+
+		RsdnssvtbExample example = new RsdnssvtbExample();
+		example.createCriteria().andDiagnosisIdEqualTo(diagnosisId);
+		List<RsdnssvtbKey> lsKey = rsdnssvtbMapper.selectByExample(example);
+		if (lsKey != null) {
+			log.info("RsdnssvtbKey count:" + lsKey.size());
+			result.setCount(lsKey.size());
+			for (RsdnssvtbKey key : lsKey) {
+				Surveytb survey = surveyService.findDataByKey(key
+						.getSurveryId());
+				suryveyArray.add(survey);
+			}
+		}
+		
+		//查询出科室单独增加的一些的问卷
+		RsdnssvtbaddExample exampleadd  =new RsdnssvtbaddExample();
+		exampleadd.createCriteria().andDepartmentIdEqualTo(departmentId).andDiagnosisIdEqualTo(diagnosisId).andSurverydetailIdIsNull();
+		List<Rsdnssvtbadd> addArray = rsdnssvtbaddMapper.selectByExample(exampleadd);
+		if(addArray!=null){
+			for (Rsdnssvtbadd key : addArray) {
+				Surveytb survey = surveyService.findDataByKey(key
+						.getSurveryId());
+				survey.setExt1("add");
+				suryveyArray.add(survey);
+			}
+		}
+		
+		result.setCount(suryveyArray.size());
+		return result;
+	}
+	
+	@Override
+	public SurveyModelEntity findDnsModelAllWithAddedQuestion(Pager page, Long surveryId,
+			Long diagnosisId,Integer departmentId) {
 		log.info("findDnsModelAll,surveryId:" + surveryId + ",diagnosisId:"
 				+ diagnosisId);
 
@@ -80,16 +118,18 @@ public class DiagnosisSurveyService implements DiagnosisSurveyServiceIF {
 			/* 查询是否有增加的项目 */
 			RsdnssvtbaddExample exmaple = new RsdnssvtbaddExample();
 			exmaple.createCriteria().andDiagnosisIdEqualTo(diagnosisId)
-					.andSurveryIdEqualTo(surveryId);
-			List<RsdnssvtbaddKey> addtb = rsdnssvtbaddMapper
+					.andSurveryIdEqualTo(surveryId).andDepartmentIdEqualTo(departmentId);
+			List<Rsdnssvtbadd> addtb = rsdnssvtbaddMapper
 					.selectByExample(exmaple);
 			if (addtb != null) {
 				log.info("additonal question count:" + addtb.size());
-				for (RsdnssvtbaddKey key : addtb) {
+				for (Rsdnssvtbadd key : addtb) {
 					SurveyDetailtb detail = surveyDtService.findDataByKey(key
 							.getSurverydetailId());
-					detail.setExt1("add");
-					modelEntity.getSurveyArray().getResult().add(detail);
+					if(detail!=null){
+					    detail.setExt1("add");
+					    modelEntity.getSurveyArray().getResult().add(detail);
+					}
 				}
 			}
 		}else{
@@ -126,9 +166,9 @@ public class DiagnosisSurveyService implements DiagnosisSurveyServiceIF {
 	}
 
 	@Override
-	public int saveDnsSurveyModelQuestion(SurveyDetailtb surveyDetailtb,
-			Long diagnosisId, Long surveryId) {
-		log.info("saveDnsSurveyModelQuestion:"+surveryId+",diagnosisId:"+diagnosisId);
+	public int saveDnsSurveyModelWidthAddedQuestion(SurveyDetailtb surveyDetailtb,
+			Integer departmentId,Long diagnosisId, Long surveryId) {
+		log.info("saveDnsSurveyModelWidthAddedQuestion:"+surveryId+",diagnosisId:"+diagnosisId+"，departmentId:"+departmentId);
 		
 		if(surveyDetailtb.getSurverydetailId()<=0){
 			log.debug("try to create new SurveyDetailtb");
@@ -139,10 +179,26 @@ public class DiagnosisSurveyService implements DiagnosisSurveyServiceIF {
 		
 		log.debug("add key for surveyDetailtb:"+surveyDetailtb.getSurverydetailId());
 		if(surveyDetailtb.getSurverydetailId()>0){
-			RsdnssvtbaddKey addKey = new RsdnssvtbaddKey();
+			Rsdnssvtbadd addKey = new Rsdnssvtbadd();
 			addKey.setDiagnosisId(diagnosisId);
 			addKey.setSurveryId(surveryId);
 			addKey.setSurverydetailId(surveyDetailtb.getSurverydetailId());
+			addKey.setDepartmentId(departmentId);
+			return rsdnssvtbaddMapper.insertSelective(addKey);
+		}
+		
+		return 0;
+	}
+	
+	@Override
+	public int saveDnsSurveyModelWithAddedSurvey(Integer departmentId,Long diagnosisId, Long surveryId) {
+		log.info("saveDnsSurveyModelWithAddedSurvey:"+surveryId+",diagnosisId:"+diagnosisId+"，departmentId:"+departmentId);
+
+		if(surveryId>0){
+			Rsdnssvtbadd addKey = new Rsdnssvtbadd();
+			addKey.setDiagnosisId(diagnosisId);
+			addKey.setSurveryId(surveryId);
+			addKey.setDepartmentId(departmentId);
 			return rsdnssvtbaddMapper.insertSelective(addKey);
 		}
 		
@@ -150,19 +206,32 @@ public class DiagnosisSurveyService implements DiagnosisSurveyServiceIF {
 	}
 
 	@Override
-	public int deleteDnsSurveyModelAddedQuestion(Long surverydetailId,
-			Long diagnosisId, Long surveryId) {
+	public int deleteDnsSurveyModelAddedQuestion(Long surverydetailId,Integer departmentId,Long diagnosisId, Long surveryId) {
 		log.info("deleteDnsSurveyModelAddedQuestion:"+surveryId+",diagnosisId:"+diagnosisId);
 		if(surverydetailId>0){
-			RsdnssvtbaddKey addKey = new RsdnssvtbaddKey();
-			addKey.setDiagnosisId(diagnosisId);
-			addKey.setSurveryId(surveryId);
-			addKey.setSurverydetailId(surverydetailId);
-			return rsdnssvtbaddMapper.deleteByPrimaryKey(addKey);
+			RsdnssvtbaddExample example = new RsdnssvtbaddExample();
+			example.createCriteria().andDepartmentIdEqualTo(departmentId)
+			.andDiagnosisIdEqualTo(diagnosisId).andSurverydetailIdEqualTo(surverydetailId)
+			.andSurveryIdEqualTo(surveryId);
+			return rsdnssvtbaddMapper.deleteByExample(example);
 		}else{
 			log.error("error,SurverydetailId <= 0.");
 		}
 		return 0;
 	}
 
+	@Override
+	public int deleteDnsSurveyModelAddedSurvey(Integer departmentId,Long diagnosisId, Long surveryId) {
+		log.info("deleteDnsSurveyModelAddedSurvey:"+surveryId+",diagnosisId:"+diagnosisId);
+		if(surveryId>0){
+			RsdnssvtbaddExample example = new RsdnssvtbaddExample();
+			example.createCriteria().andDepartmentIdEqualTo(departmentId)
+			.andDiagnosisIdEqualTo(diagnosisId).andSurveryIdEqualTo(surveryId);
+			return rsdnssvtbaddMapper.deleteByExample(example);
+		}else{
+			log.error("error,surveryId <= 0.");
+		}
+		return 0;
+	}
+	
 }

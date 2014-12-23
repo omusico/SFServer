@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.miaoyou.platform.server.mapper.RsdnssvtbaddMapper" >
+<mapper namespace="com.miaoyou.platform.server.mapper.RspatientsvaddMapper" >
   <cache />
-  <resultMap id="BaseResultMap" type="com.miaoyou.platform.server.entity.Rsdnssvtbadd" >
-    <result column="diagnosis_id" property="diagnosisId" jdbcType="BIGINT" />
-    <result column="department_id" property="departmentId" jdbcType="INTEGER" />
+  <resultMap id="BaseResultMap" type="com.miaoyou.platform.server.entity.Rspatientsvadd" >
+    <result column="patientid" property="patientid" jdbcType="BIGINT" />
     <result column="survery_id" property="surveryId" jdbcType="BIGINT" />
-    <result column="surverydetail_id" property="surverydetailId" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,15 +65,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    diagnosis_id, department_id, survery_id, surverydetail_id
+    patientid, survery_id
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.miaoyou.platform.server.entity.RsdnssvtbaddExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.miaoyou.platform.server.entity.RspatientsvaddExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from rs_dns_sv_add
+    from rs_patient_sv_add
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -89,69 +87,49 @@
       limit #{limitStart} , #{limitEnd}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.miaoyou.platform.server.entity.RsdnssvtbaddExample" >
-    delete from rs_dns_sv_add
+  <delete id="deleteByExample" parameterType="com.miaoyou.platform.server.entity.RspatientsvaddExample" >
+    delete from rs_patient_sv_add
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.miaoyou.platform.server.entity.Rsdnssvtbadd" >
-    insert into rs_dns_sv_add (diagnosis_id, department_id, survery_id, 
-      surverydetail_id)
-    values (#{diagnosisId,jdbcType=BIGINT}, #{departmentId,jdbcType=INTEGER}, #{surveryId,jdbcType=BIGINT}, 
-      #{surverydetailId,jdbcType=BIGINT})
+  <insert id="insert" parameterType="com.miaoyou.platform.server.entity.Rspatientsvadd" >
+    insert into rs_patient_sv_add (patientid, survery_id)
+    values (#{patientid,jdbcType=BIGINT}, #{surveryId,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.miaoyou.platform.server.entity.Rsdnssvtbadd" >
-    insert into rs_dns_sv_add
+  <insert id="insertSelective" parameterType="com.miaoyou.platform.server.entity.Rspatientsvadd" >
+    insert into rs_patient_sv_add
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="diagnosisId != null" >
-        diagnosis_id,
-      </if>
-      <if test="departmentId != null" >
-        department_id,
+      <if test="patientid != null" >
+        patientid,
       </if>
       <if test="surveryId != null" >
         survery_id,
       </if>
-      <if test="surverydetailId != null" >
-        surverydetail_id,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="diagnosisId != null" >
-        #{diagnosisId,jdbcType=BIGINT},
-      </if>
-      <if test="departmentId != null" >
-        #{departmentId,jdbcType=INTEGER},
+      <if test="patientid != null" >
+        #{patientid,jdbcType=BIGINT},
       </if>
       <if test="surveryId != null" >
         #{surveryId,jdbcType=BIGINT},
       </if>
-      <if test="surverydetailId != null" >
-        #{surverydetailId,jdbcType=BIGINT},
-      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.miaoyou.platform.server.entity.RsdnssvtbaddExample" resultType="java.lang.Integer" >
-    select count(*) from rs_dns_sv_add
+  <select id="countByExample" parameterType="com.miaoyou.platform.server.entity.RspatientsvaddExample" resultType="java.lang.Integer" >
+    select count(*) from rs_patient_sv_add
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update rs_dns_sv_add
+    update rs_patient_sv_add
     <set >
-      <if test="record.diagnosisId != null" >
-        diagnosis_id = #{record.diagnosisId,jdbcType=BIGINT},
-      </if>
-      <if test="record.departmentId != null" >
-        department_id = #{record.departmentId,jdbcType=INTEGER},
+      <if test="record.patientid != null" >
+        patientid = #{record.patientid,jdbcType=BIGINT},
       </if>
       <if test="record.surveryId != null" >
         survery_id = #{record.surveryId,jdbcType=BIGINT},
-      </if>
-      <if test="record.surverydetailId != null" >
-        surverydetail_id = #{record.surverydetailId,jdbcType=BIGINT},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -159,11 +137,9 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update rs_dns_sv_add
-    set diagnosis_id = #{record.diagnosisId,jdbcType=BIGINT},
-      department_id = #{record.departmentId,jdbcType=INTEGER},
-      survery_id = #{record.surveryId,jdbcType=BIGINT},
-      surverydetail_id = #{record.surverydetailId,jdbcType=BIGINT}
+    update rs_patient_sv_add
+    set patientid = #{record.patientid,jdbcType=BIGINT},
+      survery_id = #{record.surveryId,jdbcType=BIGINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>

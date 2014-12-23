@@ -1,6 +1,8 @@
 package com.miaoyou.platform.server.entity;
 
-public class RssvsvdtbKey {
+import java.io.Serializable;
+
+public class RssvsvdtbKey implements Serializable{
     private Long surveryId;
 
     private Long surverydetailId;

@@ -1,11 +1,11 @@
 package com.miaoyou.platform.server.entity;
 
-public class RsdnssvtbaddKey {
+import java.io.Serializable;
+
+public class RsdnssvtbaddKey implements Serializable{
     private Long diagnosisId;
 
-    private Long surveryId;
-
-    private Long surverydetailId;
+    private Integer departmentId;
 
     public Long getDiagnosisId() {
         return diagnosisId;
@@ -15,19 +15,11 @@ public class RsdnssvtbaddKey {
         this.diagnosisId = diagnosisId;
     }
 
-    public Long getSurveryId() {
-        return surveryId;
+    public Integer getDepartmentId() {
+        return departmentId;
     }
 
-    public void setSurveryId(Long surveryId) {
-        this.surveryId = surveryId;
-    }
-
-    public Long getSurverydetailId() {
-        return surverydetailId;
-    }
-
-    public void setSurverydetailId(Long surverydetailId) {
-        this.surverydetailId = surverydetailId;
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
     }
 }
