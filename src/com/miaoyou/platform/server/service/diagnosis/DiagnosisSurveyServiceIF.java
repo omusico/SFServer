@@ -14,6 +14,8 @@ public interface DiagnosisSurveyServiceIF {
 		
 	public SurveyModelEntity findDnsModelAllWithAddedQuestion(Pager page, Long surveryId,Long diagnosisId,Integer departmentId);
 	
+	public SurveyModelEntity findDnsModelAllWithAddedQuestionForPatientDefaultSurvey(Pager page, Long patientId,Long surveryId);
+	
 	public int deleteDnsSurveyModel(Long surveryId,Long diagnosisId);
 	
 	public int saveDnsSurveyModel(Long surveryId,Long diagnosisId);

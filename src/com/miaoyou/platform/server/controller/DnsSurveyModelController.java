@@ -71,6 +71,17 @@ public class DnsSurveyModelController {
 		return modelEntity;
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, value = "/rsdnssv/patient/{patientId}/{surveryId}")
+	public @ResponseBody SurveyModelEntity findDnsModelAllWithAddedQuestionForPatientDefaultSurvey(
+			@RequestParam(value = "psi", defaultValue = "0") int page,
+			@RequestParam(value = "pst", defaultValue = "20") int perPage,
+			@PathVariable Long patientId,@PathVariable Long surveryId){
+		log.debug("getAll.pageindex" + page + ",perPage:" + perPage+",patientId:"+patientId+",surveryId:"+surveryId);
+		Pager pager = new Pager(page, perPage);
+		SurveyModelEntity modelEntity = diagnosisSurveyService.findDnsModelAllWithAddedQuestionForPatientDefaultSurvey(pager,patientId,surveryId);
+		return modelEntity;
+	}
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/rsdnssv/{departmentId}/{diagnosisId}")
 	public @ResponseBody CommFindEntity<Surveytb>  findAllSurveyWithAddedSurvey(
 			@RequestParam(value = "psi", defaultValue = "0") int page,

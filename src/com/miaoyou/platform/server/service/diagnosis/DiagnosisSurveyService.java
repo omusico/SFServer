@@ -13,13 +13,16 @@ import com.miaoyou.platform.server.entity.RsdnssvtbExample;
 import com.miaoyou.platform.server.entity.RsdnssvtbKey;
 import com.miaoyou.platform.server.entity.Rsdnssvtbadd;
 import com.miaoyou.platform.server.entity.RsdnssvtbaddExample;
-import com.miaoyou.platform.server.entity.RsdnssvtbaddKey;
+import com.miaoyou.platform.server.entity.Rspatientdpdns;
+import com.miaoyou.platform.server.entity.RspatientdpdnsExample;
 import com.miaoyou.platform.server.entity.SurveyDetailtb;
 import com.miaoyou.platform.server.entity.Surveytb;
 import com.miaoyou.platform.server.entity.child.SurveyModelEntity;
 import com.miaoyou.platform.server.entity.common.CommFindEntity;
 import com.miaoyou.platform.server.mapper.RsdnssvtbMapper;
 import com.miaoyou.platform.server.mapper.RsdnssvtbaddMapper;
+import com.miaoyou.platform.server.mapper.RspatientdpdnsMapper;
+import com.miaoyou.platform.server.mapper.RspatientsvaddMapper;
 import com.miaoyou.platform.server.service.pkkey.PkgeneratorServiceIF;
 import com.miaoyou.platform.server.service.survey.SurveyDtServiceIF;
 import com.miaoyou.platform.server.service.survey.SurveyModelServiceIF;
@@ -42,6 +45,12 @@ public class DiagnosisSurveyService implements DiagnosisSurveyServiceIF {
 	RsdnssvtbaddMapper rsdnssvtbaddMapper;
 	@Resource
 	SurveyModelServiceIF surveyModelService;
+	
+	@Resource
+	RspatientdpdnsMapper rspatientdpdnsMapper;
+	
+	@Resource
+	RspatientsvaddMapper rspatientsvaddMapper;
 
 	@Override
 	public CommFindEntity<Surveytb> findSurvey(Long diagnosisId) {
@@ -232,6 +241,56 @@ public class DiagnosisSurveyService implements DiagnosisSurveyServiceIF {
 			log.error("error,surveryId <= 0.");
 		}
 		return 0;
+	}
+
+	@Override
+	public SurveyModelEntity findDnsModelAllWithAddedQuestionForPatientDefaultSurvey(
+			Pager page, Long patientId, Long surveryId) {
+		log.info("findDnsModelAllWithAddedQuestionForPatientDefaultSurvey:"+surveryId+",patientId:"+patientId);
+		SurveyModelEntity result = new SurveyModelEntity();
+		CommFindEntity<SurveyDetailtb> allEntity = new CommFindEntity<SurveyDetailtb>();
+		List<SurveyDetailtb> lsArray = new ArrayList<>();
+		allEntity.setResult(lsArray);
+		result.setSurveyArray(allEntity);
+		
+		//这里的分页有问题，强烈界面上有分页需求的地方，不要用这个地方来进行分页。页面不准。数据肯定是全的，
+		
+		RspatientdpdnsExample example = new RspatientdpdnsExample();
+		example.createCriteria().andPatientidEqualTo(patientId);
+		List<Rspatientdpdns> rspaarray = rspatientdpdnsMapper.selectByExample(example);
+		if(rspaarray!=null){
+			
+			SurveyModelEntity modelEntity = surveyModelService.findModelAll(page,surveryId);
+			
+			for(Rspatientdpdns rspdns:rspaarray){
+				int dpId = rspdns.getDepartmentId();
+				long dnsId = rspdns.getDiagnosisId();
+				log.debug("the last page, add addiational question");
+				
+				/* 查询是否有增加的项目 */
+				RsdnssvtbaddExample exmaple = new RsdnssvtbaddExample();
+				exmaple.createCriteria().andDiagnosisIdEqualTo(dnsId)
+						.andSurveryIdEqualTo(surveryId).andDepartmentIdEqualTo(dpId);
+				List<Rsdnssvtbadd> addtb = rsdnssvtbaddMapper
+						.selectByExample(exmaple);
+				if (addtb != null) {
+					log.info("additonal question count:" + addtb.size());
+					for (Rsdnssvtbadd key : addtb) {
+						SurveyDetailtb detail = surveyDtService.findDataByKey(key
+								.getSurverydetailId());
+						if(detail!=null){
+						    detail.setExt1("add");
+						    modelEntity.getSurveyArray().getResult().add(detail);
+						}
+					}
+				}
+			}
+			
+			lsArray.addAll(modelEntity.getSurveyArray().getResult());
+			allEntity.setCount(modelEntity.getSurveyArray().getCount());
+		}
+		
+		return result;
 	}
 	
 }

@@ -30,7 +30,7 @@ import com.miaoyou.platform.server.service.patient.PatientSurveyServiceIF;
 import com.miaoyou.platform.server.utils.Pager;
 
 /**
- * 随访问卷模版
+ * 随访问卷调查卷子
  * 
  * @author 305027939
  *

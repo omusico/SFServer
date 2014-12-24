@@ -1,6 +1,11 @@
 package com.miaoyou.platform.server.entity;
 
-public class PatienttbWithBLOBs extends Patienttb {
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class PatienttbWithBLOBs extends Patienttb implements Serializable {
     private String zhiyuqingkuang;
 
     private String chuyuanxiaojie;
