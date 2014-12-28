@@ -22,6 +22,8 @@ public class Sfplantb implements Serializable {
 
     private Date plannexttime;
 
+    private Integer userId;
+
     private String remark;
 
     private String zujima;
@@ -104,6 +106,14 @@ public class Sfplantb implements Serializable {
 
     public void setPlannexttime(Date plannexttime) {
         this.plannexttime = plannexttime;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getRemark() {

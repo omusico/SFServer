@@ -17,6 +17,8 @@ import com.miaoyou.platform.server.entity.DiagnosistbExample;
 import com.miaoyou.platform.server.entity.PatienttbExample;
 import com.miaoyou.platform.server.entity.PatienttbWithBLOBs;
 import com.miaoyou.platform.server.entity.Rspatientdpdns;
+import com.miaoyou.platform.server.entity.Surveytb;
+import com.miaoyou.platform.server.entity.child.PlanAll;
 import com.miaoyou.platform.server.entity.child.UserAll;
 import com.miaoyou.platform.server.entity.common.CommFindEntity;
 import com.miaoyou.platform.server.entity.common.CommUserDetails;
@@ -24,7 +26,9 @@ import com.miaoyou.platform.server.mapper.DepartmenttbMapper;
 import com.miaoyou.platform.server.mapper.DiagnosistbMapper;
 import com.miaoyou.platform.server.mapper.PatienttbMapper;
 import com.miaoyou.platform.server.mapper.RspatientdpdnsMapper;
+import com.miaoyou.platform.server.service.diagnosis.DiagnosisSurveyServiceIF;
 import com.miaoyou.platform.server.service.pkkey.PkgeneratorServiceIF;
+import com.miaoyou.platform.server.service.plan.SFPlaneServiceIF;
 import com.miaoyou.platform.server.utils.Pager;
 import com.miaoyou.platform.server.utils.PingYinUtil;
 
@@ -38,12 +42,18 @@ public class PatientService implements PatientServiceIF {
 
 	@Resource
 	DepartmenttbMapper departmenttbMapper;
-	
+
 	@Resource
 	DiagnosistbMapper diagnosistbMapper;
-	
+
 	@Resource
 	RspatientdpdnsMapper rspatientdpdnsMapper;
+
+	@Resource
+	DiagnosisSurveyServiceIF diagnosisSurveyService;
+
+	@Resource
+	SFPlaneServiceIF sFPlaneService;
 
 	@Override
 	public PatienttbWithBLOBs findDataByKey(Long id) {
@@ -105,14 +115,16 @@ public class PatientService implements PatientServiceIF {
 				}
 			}
 		}
-		
-		savePatientDpDns(bean.getPatientid(),bean.getChuyuanzhengduan(),bean.getKeshi());
+
+		savePatientDpDns(bean.getPatientid(), bean.getChuyuanzhengduan(),
+				bean.getKeshi());
 
 		log.info("relationship done. start to insert to database for patient.");
 		return patienttbMapper.insertSelective(bean);
 	}
 
-	private void savePatientDpDns(long patientId,String dnsList, String department) {
+	private void savePatientDpDns(long patientId, String dnsList,
+			String department) {
 		log.info("try to insert relationship for patient,deparment,diagnosistb");
 		if (dnsList != null && !dnsList.trim().equals("") && department != null
 				&& !department.trim().equals("")) {
@@ -124,33 +136,76 @@ public class PatientService implements PatientServiceIF {
 			List<Departmenttb> deparArray = departmenttbMapper
 					.selectByExample(dpExample);
 			if (deparArray != null && deparArray.size() > 0) {
-				log.info("found department count:"+deparArray.size() +" for "+department+", we only fetch one");
+				log.info("found department count:" + deparArray.size()
+						+ " for " + department + ", we only fetch one");
 				Departmenttb depart = deparArray.get(0);
 				String[] arrayDns = dnsList.split("#");
+
+				/* 为每个患者默认创建一个计划 */
+				PlanAll sfPlan = new PlanAll();
+				sfPlan.setPlanname("默认电话随访计划");
+				sfPlan.setPatientid(patientId);
+				sFPlaneService.saveData(sfPlan);
+
 				for (String dns : arrayDns) {
 					DiagnosistbExample dnsexample = new DiagnosistbExample();
-					dnsexample.createCriteria().andDiagnosisNameLike("%"+dns.trim()+"%");
-					List<Diagnosistb> dnsArray = diagnosistbMapper.selectByExample(dnsexample);
-					if(dnsArray!=null&&dnsArray.size()>0){
-						log.info("found diagnosis count:"+dnsArray.size()+",for "+dns+", we only fetch one");
+					dnsexample.createCriteria().andDiagnosisNameLike(
+							"%" + dns.trim() + "%");
+					List<Diagnosistb> dnsArray = diagnosistbMapper
+							.selectByExample(dnsexample);
+					if (dnsArray != null && dnsArray.size() > 0) {
+						log.info("found diagnosis count:" + dnsArray.size()
+								+ ",for " + dns + ", we only fetch one");
 						Diagnosistb gotdns = dnsArray.get(0);
-						
-						Rspatientdpdns rspatientdpdns  =new Rspatientdpdns();
-						rspatientdpdns.setDepartmentId(depart.getDepartmentId());
+
+						Rspatientdpdns rspatientdpdns = new Rspatientdpdns();
+						rspatientdpdns
+								.setDepartmentId(depart.getDepartmentId());
 						rspatientdpdns.setDiagnosisId(gotdns.getDiagnosisId());
 						rspatientdpdns.setPatientid(patientId);
-						log.info("create relationship,patient:"+rspatientdpdns.getPatientid()+",diagnosis"+rspatientdpdns.getDiagnosisId()+", department:"+rspatientdpdns.getDepartmentId());
+						log.info("create relationship,patient:"
+								+ rspatientdpdns.getPatientid() + ",diagnosis"
+								+ rspatientdpdns.getDiagnosisId()
+								+ ", department:"
+								+ rspatientdpdns.getDepartmentId());
 						rspatientdpdnsMapper.insert(rspatientdpdns);
+
+						try {
+							/* 为每个病患插入相关的调查问卷 */
+							CommFindEntity<Surveytb> modelEntity = diagnosisSurveyService
+									.findAllSurveyWithAddedSurvey(
+											rspatientdpdns.getDiagnosisId(),
+											rspatientdpdns.getDepartmentId());
+							if (modelEntity != null
+									&& modelEntity.getResult() != null
+									&& modelEntity.getResult().size() > 0) {
+								List<Surveytb> surveys = modelEntity
+										.getResult();
+								log.debug("found findAllSurveyWithAddedSurvey count:"
+										+ surveys.size());
+								for (Surveytb sur : surveys) {
+									log.debug("add survey:"
+											+ sur.getSurveryId() + ",for "
+											+ patientId);
+									sFPlaneService.saveDataForPatientSurvey(
+											sfPlan.getPlanId(),
+											sur.getSurveryId());
+								}
+							}
+						} catch (Exception e) {
+							log.error(e);
+						}
+
 						continue;
-					}else{
-						log.warn("not found diagnosis for :"+dns);
+					} else {
+						log.warn("not found diagnosis for :" + dns);
 					}
-					
+
 				}
-			}else{
+			} else {
 				log.warn("not found department, can not insert the rs_patient_dp_dns");
 			}
-		}else{
+		} else {
 			log.warn("dnsList or department is not correct");
 		}
 	}

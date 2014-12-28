@@ -22,7 +22,6 @@ import com.miaoyou.platform.server.entity.common.CommFindEntity;
 import com.miaoyou.platform.server.mapper.RsdnssvtbMapper;
 import com.miaoyou.platform.server.mapper.RsdnssvtbaddMapper;
 import com.miaoyou.platform.server.mapper.RspatientdpdnsMapper;
-import com.miaoyou.platform.server.mapper.RspatientsvaddMapper;
 import com.miaoyou.platform.server.service.pkkey.PkgeneratorServiceIF;
 import com.miaoyou.platform.server.service.survey.SurveyDtServiceIF;
 import com.miaoyou.platform.server.service.survey.SurveyModelServiceIF;
@@ -49,8 +48,6 @@ public class DiagnosisSurveyService implements DiagnosisSurveyServiceIF {
 	@Resource
 	RspatientdpdnsMapper rspatientdpdnsMapper;
 	
-	@Resource
-	RspatientsvaddMapper rspatientsvaddMapper;
 
 	@Override
 	public CommFindEntity<Surveytb> findSurvey(Long diagnosisId) {

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.miaoyou.platform.server.entity.Sfplantb;
 import com.miaoyou.platform.server.entity.Surveytb;
+import com.miaoyou.platform.server.entity.child.PlanAll;
 import com.miaoyou.platform.server.entity.common.ComResponse;
 import com.miaoyou.platform.server.entity.common.CommFindEntity;
 import com.miaoyou.platform.server.service.log.LogIF;
@@ -52,17 +53,12 @@ public class PlanController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/plan/{id}")
-	public @ResponseBody Sfplantb getById(@PathVariable Long id) {
+	public @ResponseBody PlanAll getById(@PathVariable Long id) {
 		log.debug("get:" + id);
-		Sfplantb bean = sFPlaneService.findDataByKey(id);
+		PlanAll bean = sFPlaneService.findDataByKey(id);
 		return bean;
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/plan/survey/{planId}")
-	public  @ResponseBody CommFindEntity<Surveytb> getSurveyByDns(@PathVariable Long planId) {
-		log.debug("getSurveyByDns:" + planId);
-		return sFPlaneService.findSurveyByDns(planId);
-	}
 
 //	@RequestMapping(method = RequestMethod.GET, value = "/plan")
 //	public @ResponseBody CommFindEntity<Sfplantb> getAll(
@@ -77,7 +73,7 @@ public class PlanController {
 //	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/plan")
-	public @ResponseBody CommFindEntity<Sfplantb> getAll(
+	public @ResponseBody CommFindEntity<PlanAll> getAll(
 			@RequestParam(value = "psi", defaultValue = "0") int page,
 			@RequestParam(value = "pst", defaultValue = "20") int perPage,
 			@RequestParam(value = "type", defaultValue = "0") int type,
@@ -133,20 +129,20 @@ public class PlanController {
 			sb.delete((sb.length() - andSplit.length()), sb.length() - 1);
 		}
 
-		CommFindEntity<Sfplantb> result = sFPlaneService.findAll(pager,
+		CommFindEntity<PlanAll> result = sFPlaneService.findAll(pager,
 				sb.toString());
 		return result;
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/plan/add", produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ComResponse<Sfplantb> add(@RequestBody Sfplantb bean) {
+	public @ResponseBody ComResponse<PlanAll> add(@RequestBody PlanAll bean) {
 		if (bean != null) {
 			log.debug("add:" + bean.getPlanname());
 		} else {
 			log.error("add: bean is null!");
 		}
 
-		ComResponse<Sfplantb> comResponse = new ComResponse<Sfplantb>();
+		ComResponse<PlanAll> comResponse = new ComResponse<PlanAll>();
 		try {
 			int result = sFPlaneService.saveData(bean);
 			comResponse.setResponseStatus(ComResponse.STATUS_OK);
@@ -164,13 +160,13 @@ public class PlanController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/plan/update", produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ComResponse<Sfplantb> update(@RequestBody Sfplantb bean) {
+	public @ResponseBody ComResponse<PlanAll> update(@RequestBody PlanAll bean) {
 		if (bean != null) {
 			log.debug("update:" + bean.getPlanname());
 		} else {
 			log.error("update: bean is null!");
 		}
-		ComResponse<Sfplantb> comResponse = new ComResponse<Sfplantb>();
+		ComResponse<PlanAll> comResponse = new ComResponse<PlanAll>();
 		try {
 			int result = sFPlaneService.updateData(bean);
 			comResponse.setResponseStatus(ComResponse.STATUS_OK);
@@ -188,9 +184,9 @@ public class PlanController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/plan/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ComResponse<Sfplantb> delete(@PathVariable Long id) {
+	public @ResponseBody ComResponse<PlanAll> delete(@PathVariable Long id) {
 		log.debug("delete:" + id);
-		ComResponse<Sfplantb> comResponse = new ComResponse<Sfplantb>();
+		ComResponse<PlanAll> comResponse = new ComResponse<PlanAll>();
 		try {
 			int result = sFPlaneService.deleteDataByKey(id);
 			comResponse.setResponseStatus(ComResponse.STATUS_OK);
@@ -206,4 +202,48 @@ public class PlanController {
 		return comResponse;
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/plan/survey/{planId}")
+	public  @ResponseBody CommFindEntity<Surveytb> getSurveyByDns(@PathVariable Long planId) {
+		log.debug("getSurveyByDns:" + planId);
+		return sFPlaneService.findSurveyByPlanId(planId);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/plan/survey/delete/{planId}/{surveryId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ComResponse<Sfplantb> deleteForPatientSurvey(@PathVariable Long planId,@PathVariable Long surveryId) {
+		log.debug("delete:" + surveryId);
+		ComResponse<Sfplantb> comResponse = new ComResponse<Sfplantb>();
+		try {
+			int result = sFPlaneService.deleteDataByKeyForPatientSurvey(planId, surveryId);
+			comResponse.setResponseStatus(ComResponse.STATUS_OK);
+			logService.saveLog("删除电话随访计划问卷");
+			comResponse.setExtendResponseContext("删除电话随访计划问卷成功.");
+		} catch (Exception e) {
+			log.error(e);
+			comResponse.setResponseStatus(ComResponse.STATUS_FAIL);
+			comResponse.setErrorMessage("删除电话随访计划问卷失败." + e.getMessage());
+		}
+		log.debug("deleted:" + comResponse.getResponseStatus());
+
+		return comResponse;
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/plan/survey/add/{planId}/{surveryId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ComResponse<PlanAll> addForPatientSurvey(@PathVariable Long planId,@PathVariable Long surveryId) {
+		log.debug("delete:" + surveryId);
+		ComResponse<PlanAll> comResponse = new ComResponse<PlanAll>();
+		try {
+			int result = sFPlaneService.saveDataForPatientSurvey(planId, surveryId);
+			comResponse.setResponseStatus(ComResponse.STATUS_OK);
+			logService.saveLog("增加电话随访计划问卷");
+			comResponse.setExtendResponseContext("增加电话随访计划问卷成功.");
+		} catch (Exception e) {
+			log.error(e);
+			comResponse.setResponseStatus(ComResponse.STATUS_FAIL);
+			comResponse.setErrorMessage("增加电话随访计划问卷失败." + e.getMessage());
+		}
+		log.debug("deleted:" + comResponse.getResponseStatus());
+
+		return comResponse;
+	}
+	
 }

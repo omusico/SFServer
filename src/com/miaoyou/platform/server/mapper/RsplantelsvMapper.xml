@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.miaoyou.platform.server.mapper.RsplantelsvMapper" >
   <cache />
-  <resultMap id="BaseResultMap" type="com.miaoyou.platform.server.entity.RsplantelsvKey" >
+  <resultMap id="BaseResultMap" type="com.miaoyou.platform.server.entity.Rsplantelsv" >
     <id column="plan_id" property="planId" jdbcType="BIGINT" />
-    <id column="diagnosis_id" property="diagnosisId" jdbcType="BIGINT" />
+    <result column="survery_id" property="surveryId" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -65,7 +65,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    plan_id, diagnosis_id
+    plan_id, survery_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.miaoyou.platform.server.entity.RsplantelsvExample" >
     select
@@ -87,10 +87,15 @@
       limit #{limitStart} , #{limitEnd}
     </if>
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="com.miaoyou.platform.server.entity.RsplantelsvKey" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from rs_plan_tel_sv
+    where plan_id = #{planId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from rs_plan_tel_sv
     where plan_id = #{planId,jdbcType=BIGINT}
-      and diagnosis_id = #{diagnosisId,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.miaoyou.platform.server.entity.RsplantelsvExample" >
     delete from rs_plan_tel_sv
@@ -98,26 +103,26 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.miaoyou.platform.server.entity.RsplantelsvKey" >
-    insert into rs_plan_tel_sv (plan_id, diagnosis_id)
-    values (#{planId,jdbcType=BIGINT}, #{diagnosisId,jdbcType=BIGINT})
+  <insert id="insert" parameterType="com.miaoyou.platform.server.entity.Rsplantelsv" >
+    insert into rs_plan_tel_sv (plan_id, survery_id)
+    values (#{planId,jdbcType=BIGINT}, #{surveryId,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.miaoyou.platform.server.entity.RsplantelsvKey" >
+  <insert id="insertSelective" parameterType="com.miaoyou.platform.server.entity.Rsplantelsv" >
     insert into rs_plan_tel_sv
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="planId != null" >
         plan_id,
       </if>
-      <if test="diagnosisId != null" >
-        diagnosis_id,
+      <if test="surveryId != null" >
+        survery_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="planId != null" >
         #{planId,jdbcType=BIGINT},
       </if>
-      <if test="diagnosisId != null" >
-        #{diagnosisId,jdbcType=BIGINT},
+      <if test="surveryId != null" >
+        #{surveryId,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -133,8 +138,8 @@
       <if test="record.planId != null" >
         plan_id = #{record.planId,jdbcType=BIGINT},
       </if>
-      <if test="record.diagnosisId != null" >
-        diagnosis_id = #{record.diagnosisId,jdbcType=BIGINT},
+      <if test="record.surveryId != null" >
+        survery_id = #{record.surveryId,jdbcType=BIGINT},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -144,9 +149,23 @@
   <update id="updateByExample" parameterType="map" >
     update rs_plan_tel_sv
     set plan_id = #{record.planId,jdbcType=BIGINT},
-      diagnosis_id = #{record.diagnosisId,jdbcType=BIGINT}
+      survery_id = #{record.surveryId,jdbcType=BIGINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.miaoyou.platform.server.entity.Rsplantelsv" >
+    update rs_plan_tel_sv
+    <set >
+      <if test="surveryId != null" >
+        survery_id = #{surveryId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where plan_id = #{planId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.miaoyou.platform.server.entity.Rsplantelsv" >
+    update rs_plan_tel_sv
+    set survery_id = #{surveryId,jdbcType=BIGINT}
+    where plan_id = #{planId,jdbcType=BIGINT}
   </update>
 </mapper>

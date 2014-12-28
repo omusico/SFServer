@@ -233,8 +233,8 @@ CREATE TABLE `rs_dns_sv_add` (
 DROP TABLE IF EXISTS `rs_plan_tel_sv`;
 CREATE TABLE `rs_plan_tel_sv` (
   `plan_id` BIGINT NOT NULL COMMENT '计划ID',
-  `diagnosis_id` BIGINT NOT NULL COMMENT '问卷ID',
-   PRIMARY KEY (`plan_id`,`diagnosis_id`)
+  `survery_id` BIGINT NOT NULL COMMENT '问卷ID',
+   PRIMARY KEY (`plan_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `sfplantb`;
@@ -247,6 +247,7 @@ CREATE TABLE `sfplantb` (
   `planfreq` int(5) DEFAULT 0 COMMENT '计划执行的频率',
   `plannumber` int(5) DEFAULT 0 COMMENT '计划执行的次数',
   `plannexttime` datetime COMMENT '下一次计划开始的时间',
+  `user_id` int(20) DEFAULT 0 COMMENT '医生ID',
   `remark` varchar(500) DEFAULT '' COMMENT '描述',
   `zujima` varchar(500) DEFAULT '' COMMENT '助记码',
   `delete_flag` int(2) DEFAULT 0 COMMENT '是否删除标志，1.已经删除，0.没有删除',
@@ -297,11 +298,6 @@ CREATE TABLE `rs_keshi_dns` (
   `diagnosis_id` BIGINT NOT NULL COMMENT '诊断ID'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `rs_patient_sv_add`;
-CREATE TABLE `rs_patient_sv_add` (
-  `patientid` BIGINT NOT NULL COMMENT '病患ID',
-  `survery_id` BIGINT NOT NULL COMMENT '问卷ID'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `rs_patient_dp_dns`;
 CREATE TABLE `rs_patient_dp_dns` (

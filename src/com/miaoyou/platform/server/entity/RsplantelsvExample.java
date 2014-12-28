@@ -194,63 +194,63 @@ public class RsplantelsvExample {
             return (Criteria) this;
         }
 
-        public Criteria andDiagnosisIdIsNull() {
-            addCriterion("diagnosis_id is null");
+        public Criteria andSurveryIdIsNull() {
+            addCriterion("survery_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andDiagnosisIdIsNotNull() {
-            addCriterion("diagnosis_id is not null");
+        public Criteria andSurveryIdIsNotNull() {
+            addCriterion("survery_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDiagnosisIdEqualTo(Long value) {
-            addCriterion("diagnosis_id =", value, "diagnosisId");
+        public Criteria andSurveryIdEqualTo(Long value) {
+            addCriterion("survery_id =", value, "surveryId");
             return (Criteria) this;
         }
 
-        public Criteria andDiagnosisIdNotEqualTo(Long value) {
-            addCriterion("diagnosis_id <>", value, "diagnosisId");
+        public Criteria andSurveryIdNotEqualTo(Long value) {
+            addCriterion("survery_id <>", value, "surveryId");
             return (Criteria) this;
         }
 
-        public Criteria andDiagnosisIdGreaterThan(Long value) {
-            addCriterion("diagnosis_id >", value, "diagnosisId");
+        public Criteria andSurveryIdGreaterThan(Long value) {
+            addCriterion("survery_id >", value, "surveryId");
             return (Criteria) this;
         }
 
-        public Criteria andDiagnosisIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("diagnosis_id >=", value, "diagnosisId");
+        public Criteria andSurveryIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("survery_id >=", value, "surveryId");
             return (Criteria) this;
         }
 
-        public Criteria andDiagnosisIdLessThan(Long value) {
-            addCriterion("diagnosis_id <", value, "diagnosisId");
+        public Criteria andSurveryIdLessThan(Long value) {
+            addCriterion("survery_id <", value, "surveryId");
             return (Criteria) this;
         }
 
-        public Criteria andDiagnosisIdLessThanOrEqualTo(Long value) {
-            addCriterion("diagnosis_id <=", value, "diagnosisId");
+        public Criteria andSurveryIdLessThanOrEqualTo(Long value) {
+            addCriterion("survery_id <=", value, "surveryId");
             return (Criteria) this;
         }
 
-        public Criteria andDiagnosisIdIn(List<Long> values) {
-            addCriterion("diagnosis_id in", values, "diagnosisId");
+        public Criteria andSurveryIdIn(List<Long> values) {
+            addCriterion("survery_id in", values, "surveryId");
             return (Criteria) this;
         }
 
-        public Criteria andDiagnosisIdNotIn(List<Long> values) {
-            addCriterion("diagnosis_id not in", values, "diagnosisId");
+        public Criteria andSurveryIdNotIn(List<Long> values) {
+            addCriterion("survery_id not in", values, "surveryId");
             return (Criteria) this;
         }
 
-        public Criteria andDiagnosisIdBetween(Long value1, Long value2) {
-            addCriterion("diagnosis_id between", value1, value2, "diagnosisId");
+        public Criteria andSurveryIdBetween(Long value1, Long value2) {
+            addCriterion("survery_id between", value1, value2, "surveryId");
             return (Criteria) this;
         }
 
-        public Criteria andDiagnosisIdNotBetween(Long value1, Long value2) {
-            addCriterion("diagnosis_id not between", value1, value2, "diagnosisId");
+        public Criteria andSurveryIdNotBetween(Long value1, Long value2) {
+            addCriterion("survery_id not between", value1, value2, "surveryId");
             return (Criteria) this;
         }
     }

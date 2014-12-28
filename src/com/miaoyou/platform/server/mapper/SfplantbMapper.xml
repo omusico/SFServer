@@ -11,6 +11,7 @@
     <result column="planfreq" property="planfreq" jdbcType="INTEGER" />
     <result column="plannumber" property="plannumber" jdbcType="INTEGER" />
     <result column="plannexttime" property="plannexttime" jdbcType="TIMESTAMP" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="zujima" property="zujima" jdbcType="VARCHAR" />
     <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
@@ -82,7 +83,7 @@
   </sql>
   <sql id="Base_Column_List" >
     plan_id, patientid, planname, plantype, status, planfreq, plannumber, plannexttime, 
-    remark, zujima, delete_flag, createdate, createperson, updatedate, updateperson, 
+    user_id, remark, zujima, delete_flag, createdate, createperson, updatedate, updateperson, 
     ext1, ext2, ext3
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.miaoyou.platform.server.entity.SfplantbExample" >
@@ -124,16 +125,18 @@
   <insert id="insert" parameterType="com.miaoyou.platform.server.entity.Sfplantb" >
     insert into sfplantb (plan_id, patientid, planname, 
       plantype, status, planfreq, 
-      plannumber, plannexttime, remark, 
-      zujima, delete_flag, createdate, 
-      createperson, updatedate, updateperson, 
-      ext1, ext2, ext3)
+      plannumber, plannexttime, user_id, 
+      remark, zujima, delete_flag, 
+      createdate, createperson, updatedate, 
+      updateperson, ext1, ext2, 
+      ext3)
     values (#{planId,jdbcType=BIGINT}, #{patientid,jdbcType=BIGINT}, #{planname,jdbcType=VARCHAR}, 
       #{plantype,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{planfreq,jdbcType=INTEGER}, 
-      #{plannumber,jdbcType=INTEGER}, #{plannexttime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
-      #{zujima,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=INTEGER}, #{createdate,jdbcType=TIMESTAMP}, 
-      #{createperson,jdbcType=VARCHAR}, #{updatedate,jdbcType=TIMESTAMP}, #{updateperson,jdbcType=VARCHAR}, 
-      #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR})
+      #{plannumber,jdbcType=INTEGER}, #{plannexttime,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR}, #{zujima,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=INTEGER}, 
+      #{createdate,jdbcType=TIMESTAMP}, #{createperson,jdbcType=VARCHAR}, #{updatedate,jdbcType=TIMESTAMP}, 
+      #{updateperson,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, 
+      #{ext3,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.miaoyou.platform.server.entity.Sfplantb" >
     insert into sfplantb
@@ -161,6 +164,9 @@
       </if>
       <if test="plannexttime != null" >
         plannexttime,
+      </if>
+      <if test="userId != null" >
+        user_id,
       </if>
       <if test="remark != null" >
         remark,
@@ -217,6 +223,9 @@
       </if>
       <if test="plannexttime != null" >
         #{plannexttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
       </if>
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
@@ -283,6 +292,9 @@
       <if test="record.plannexttime != null" >
         plannexttime = #{record.plannexttime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
       <if test="record.remark != null" >
         remark = #{record.remark,jdbcType=VARCHAR},
       </if>
@@ -328,6 +340,7 @@
       planfreq = #{record.planfreq,jdbcType=INTEGER},
       plannumber = #{record.plannumber,jdbcType=INTEGER},
       plannexttime = #{record.plannexttime,jdbcType=TIMESTAMP},
+      user_id = #{record.userId,jdbcType=INTEGER},
       remark = #{record.remark,jdbcType=VARCHAR},
       zujima = #{record.zujima,jdbcType=VARCHAR},
       delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
@@ -365,6 +378,9 @@
       </if>
       <if test="plannexttime != null" >
         plannexttime = #{plannexttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
       </if>
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
@@ -408,6 +424,7 @@
       planfreq = #{planfreq,jdbcType=INTEGER},
       plannumber = #{plannumber,jdbcType=INTEGER},
       plannexttime = #{plannexttime,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=INTEGER},
       remark = #{remark,jdbcType=VARCHAR},
       zujima = #{zujima,jdbcType=VARCHAR},
       delete_flag = #{deleteFlag,jdbcType=INTEGER},
