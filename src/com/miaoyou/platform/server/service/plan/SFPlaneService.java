@@ -13,6 +13,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.miaoyou.platform.server.entity.PatienttbWithBLOBs;
 import com.miaoyou.platform.server.entity.Rsplantelsv;
 import com.miaoyou.platform.server.entity.RsplantelsvExample;
 import com.miaoyou.platform.server.entity.Sfplantb;
@@ -24,6 +25,7 @@ import com.miaoyou.platform.server.entity.common.CommFindEntity;
 import com.miaoyou.platform.server.entity.common.CommUserDetails;
 import com.miaoyou.platform.server.mapper.RsplantelsvMapper;
 import com.miaoyou.platform.server.mapper.SfplantbMapper;
+import com.miaoyou.platform.server.service.patient.PatientServiceIF;
 import com.miaoyou.platform.server.service.pkkey.PkgeneratorServiceIF;
 import com.miaoyou.platform.server.service.survey.SurveyServiceIF;
 import com.miaoyou.platform.server.service.user.UserServiceIF;
@@ -48,6 +50,9 @@ public class SFPlaneService implements SFPlaneServiceIF {
 
 	@Resource
 	UserServiceIF userService;
+	
+	@Resource
+	PatientServiceIF patientService;
 
 	@Override
 	public PlanAll findDataByKey(Long id) {
@@ -60,6 +65,9 @@ public class SFPlaneService implements SFPlaneServiceIF {
 				// 查询出用户用户信息
 				UserAll userAll = userService.findUserAll(plan.getUserId());
 				planAll.setUserAll(userAll);
+				
+				PatienttbWithBLOBs patient = patientService.findDataByKey(plan.getPatientid());
+				planAll.setPatienttb(patient);
 			}
 		}
 		return planAll;
@@ -97,6 +105,9 @@ public class SFPlaneService implements SFPlaneServiceIF {
 					// 查询出用户用户信息
 					UserAll userAll = userService.findUserAll(plan.getUserId());
 					planAll.setUserAll(userAll);
+					
+					PatienttbWithBLOBs patient = patientService.findDataByKey(plan.getPatientid());
+					planAll.setPatienttb(patient);
 				}
 				temp.add(planAll);
 			}

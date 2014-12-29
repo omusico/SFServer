@@ -89,7 +89,7 @@ public class PatientController {
 	            @RequestParam(value = "pst", defaultValue = "20") int perPage,
 	            @RequestParam(value = "chuyuanriqi", defaultValue = "") String chuyuanriqi,
 	            @RequestParam(value = "keshi", defaultValue = "") String keshi,
-	            @RequestParam(value = "name", defaultValue = "") String name,
+	            @RequestParam(value = "key", defaultValue = "") String name,
 	            @RequestParam(value = "zhuyuanhao", defaultValue = "") String zhuyuanhao) {
 	        log.debug("getAll.pageindex" + page + ",perPage:" + perPage);
 	        Pager pager = new Pager(page, perPage);

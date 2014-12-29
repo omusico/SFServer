@@ -77,7 +77,7 @@ public class PlanController {
 			@RequestParam(value = "psi", defaultValue = "0") int page,
 			@RequestParam(value = "pst", defaultValue = "20") int perPage,
 			@RequestParam(value = "type", defaultValue = "0") int type,
-			@RequestParam(value = "status", defaultValue = "0") int status,
+			@RequestParam(value = "status", defaultValue = "-1") int status,
 			@RequestParam(value = "patientid", defaultValue = "0") long patientid,
 			@RequestParam(value = "startDate", defaultValue = "") String startDate,
 			@RequestParam(value = "endDate", defaultValue = "") String endDate,
