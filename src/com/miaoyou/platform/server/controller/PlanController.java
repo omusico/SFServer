@@ -79,6 +79,7 @@ public class PlanController {
 			@RequestParam(value = "type", defaultValue = "0") int type,
 			@RequestParam(value = "status", defaultValue = "-1") int status,
 			@RequestParam(value = "patientid", defaultValue = "0") long patientid,
+			@RequestParam(value = "userid", defaultValue = "0") long userid,
 			@RequestParam(value = "startDate", defaultValue = "") String startDate,
 			@RequestParam(value = "endDate", defaultValue = "") String endDate,
 			@RequestParam(value = "key", defaultValue = "") String name) {
@@ -100,7 +101,10 @@ public class PlanController {
 			sb.append("status").append(" = ").append(status)
 					.append(andSplit);
 		}
-		
+		if (userid > 0) {
+			sb.append("user_id").append(" = ").append(userid)
+					.append(andSplit);
+		}
 		if (patientid > 0) {
 			sb.append("patientid").append(" = ").append(patientid)
 					.append(andSplit);

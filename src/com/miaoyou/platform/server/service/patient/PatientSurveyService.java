@@ -206,20 +206,23 @@ public class PatientSurveyService implements PatientSurveyServiceIF {
 				// 检查是不是每一个问卷都完成了。
 				boolean allFinished = false;
 				loop1:
-				for (Patientsurveytb psvLs : patientsurArra) {
-					for (RsplantelsvKey rskey : rsplanrvLs) {
-						if (rskey.getSurveryId() == psvLs.getSurveryId()
-								&& psvLs.getStatus() == 0) { // 还有随访的
+				for (RsplantelsvKey rskey : rsplanrvLs) {
+					for (Patientsurveytb psvLs : patientsurArra) {
+					
+						if (rskey.getSurveryId().longValue() == psvLs.getSurveryId().longValue()
+								&& psvLs.getStatus().intValue() == 0) { // 还有随访的
 							allFinished = false;
+							log.debug("set allFinished to false, because survey:"+rskey.getSurveryId()+",status is 0");
 							break loop1;
-						} else if (rskey.getSurveryId() == psvLs.getSurveryId()
-								&& psvLs.getStatus() != 0) { // 还有随访的
+						} else if (rskey.getSurveryId().longValue() == psvLs.getSurveryId().longValue()
+								&& psvLs.getStatus().intValue() != 0) { // 还有随访的
 							allFinished = true;
+							log.debug("set allFinished to true, because survey:"+rskey.getSurveryId()+",status is not 0");
 							continue loop1;
 						}
 
 					}
-					log.debug("all finished?" + allFinished);
+					log.debug("all finished?" + allFinished+", because survey:"+rskey.getSurveryId()+",not found.");
 					allFinished = false;
 					break loop1;
 				}
@@ -227,11 +230,11 @@ public class PatientSurveyService implements PatientSurveyServiceIF {
 				// 如果都完成，就把该计划做成完成状态
 				if (allFinished) {
 					PlanAll sfplan = new PlanAll();
-					sfplan.setPatientid(planid);
+					sfplan.setPlanId(planid);
 					sfplan.setStatus(1);
-
+					log.debug("update plan status for " + planid);
 					sFPlaneService.updateData(sfplan);
-					log.debug("updated plan status for " + planid);
+					
 				}
 			}
 

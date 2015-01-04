@@ -161,11 +161,13 @@ public class SFPlaneService implements SFPlaneServiceIF {
 
 	@Override
 	public int updateData(PlanAll bean) {
-		log.info("updateData:" + bean.getPlanname());
+		log.info("updateData:" + bean.getPlanId());
 		bean.setUpdatedate(new Date());
 		// 得到汉字的首字母。，这里还有bug，一些多音字不好区分，以后improve
+		if(bean.getPlanname()!=null&&!bean.getPlanname().trim().equals("")){
 		String zujima = PingYinUtil.getFirstSpell(bean.getPlanname());
 		bean.setZujima(zujima);
+		}
 
 		/* 从session里面获取当前操作的用户 */
 		Object principal = SecurityContextHolder.getContext()

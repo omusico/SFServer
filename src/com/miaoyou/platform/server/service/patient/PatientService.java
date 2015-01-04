@@ -18,6 +18,8 @@ import com.miaoyou.platform.server.entity.PatienttbExample;
 import com.miaoyou.platform.server.entity.PatienttbWithBLOBs;
 import com.miaoyou.platform.server.entity.Rspatientdpdns;
 import com.miaoyou.platform.server.entity.Surveytb;
+import com.miaoyou.platform.server.entity.Usertb;
+import com.miaoyou.platform.server.entity.UsertbExample;
 import com.miaoyou.platform.server.entity.child.PlanAll;
 import com.miaoyou.platform.server.entity.child.UserAll;
 import com.miaoyou.platform.server.entity.common.CommFindEntity;
@@ -26,6 +28,7 @@ import com.miaoyou.platform.server.mapper.DepartmenttbMapper;
 import com.miaoyou.platform.server.mapper.DiagnosistbMapper;
 import com.miaoyou.platform.server.mapper.PatienttbMapper;
 import com.miaoyou.platform.server.mapper.RspatientdpdnsMapper;
+import com.miaoyou.platform.server.mapper.UsertbMapper;
 import com.miaoyou.platform.server.service.diagnosis.DiagnosisSurveyServiceIF;
 import com.miaoyou.platform.server.service.pkkey.PkgeneratorServiceIF;
 import com.miaoyou.platform.server.service.plan.SFPlaneServiceIF;
@@ -54,6 +57,9 @@ public class PatientService implements PatientServiceIF {
 
 	@Resource
 	SFPlaneServiceIF sFPlaneService;
+	
+    @Resource
+    private UsertbMapper mapper;
 
 	@Override
 	public PatienttbWithBLOBs findDataByKey(Long id) {
@@ -116,15 +122,20 @@ public class PatientService implements PatientServiceIF {
 			}
 		}
 
-		savePatientDpDns(bean.getPatientid(), bean.getChuyuanzhengduan(),
-				bean.getKeshi());
+		savePatientDpDns(bean);
 
 		log.info("relationship done. start to insert to database for patient.");
 		return patienttbMapper.insertSelective(bean);
 	}
 
-	private void savePatientDpDns(long patientId, String dnsList,
-			String department) {
+	/**
+	 * 这里主要是根据输入的患者数据，系统自动自动创建计划任务
+	 * @param bean
+	 */
+	private void savePatientDpDns(PatienttbWithBLOBs bean) {
+		long patientId = bean.getPatientid();
+		String dnsList = bean.getChuyuanzhengduan();
+		String department = bean.getKeshi();
 		log.info("try to insert relationship for patient,deparment,diagnosistb");
 		if (dnsList != null && !dnsList.trim().equals("") && department != null
 				&& !department.trim().equals("")) {
@@ -145,6 +156,21 @@ public class PatientService implements PatientServiceIF {
 				PlanAll sfPlan = new PlanAll();
 				sfPlan.setPlanname("默认电话随访计划");
 				sfPlan.setPatientid(patientId);
+
+				// 这里应该把任务默认分配给该用户的住院医生
+				String zhuyuanyisheng = bean.getZhuyuanyisheng();
+				if(zhuyuanyisheng!=null&&!zhuyuanyisheng.trim().equals("")){
+					log.info("try to find out the resident doctor.");
+					UsertbExample example = new UsertbExample();
+					example.createCriteria().andUserNameLike(zhuyuanyisheng+"%");
+					List<Usertb> usertbs = mapper.selectByExample(example);
+					if(usertbs!=null&&usertbs.size()>0){
+						Usertb user = usertbs.get(0);
+						log.info("found user:"+user.getUserName());
+						sfPlan.setUserId(user.getUserId());
+					}
+				}
+
 				sFPlaneService.saveData(sfPlan);
 
 				for (String dns : arrayDns) {
