@@ -1,7 +1,7 @@
 package com.miaoyou.platform.server.mapper;
 
-import com.miaoyou.platform.server.entity.Rsplantelsv;
 import com.miaoyou.platform.server.entity.RsplantelsvExample;
+import com.miaoyou.platform.server.entity.RsplantelsvKey;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,21 +10,15 @@ public interface RsplantelsvMapper {
 
     int deleteByExample(RsplantelsvExample example);
 
-    int deleteByPrimaryKey(Long planId);
+    int deleteByPrimaryKey(RsplantelsvKey key);
 
-    int insert(Rsplantelsv record);
+    int insert(RsplantelsvKey record);
 
-    int insertSelective(Rsplantelsv record);
+    int insertSelective(RsplantelsvKey record);
 
-    List<Rsplantelsv> selectByExample(RsplantelsvExample example);
+    List<RsplantelsvKey> selectByExample(RsplantelsvExample example);
 
-    Rsplantelsv selectByPrimaryKey(Long planId);
+    int updateByExampleSelective(@Param("record") RsplantelsvKey record, @Param("example") RsplantelsvExample example);
 
-    int updateByExampleSelective(@Param("record") Rsplantelsv record, @Param("example") RsplantelsvExample example);
-
-    int updateByExample(@Param("record") Rsplantelsv record, @Param("example") RsplantelsvExample example);
-
-    int updateByPrimaryKeySelective(Rsplantelsv record);
-
-    int updateByPrimaryKey(Rsplantelsv record);
+    int updateByExample(@Param("record") RsplantelsvKey record, @Param("example") RsplantelsvExample example);
 }

@@ -33,7 +33,7 @@ CREATE TABLE `pkgenerator` (
 
 DROP TABLE IF EXISTS `appparamtb`;
 CREATE TABLE `appparamtb` (
-  `appparam_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '系统参数id',
+  `appparam_id` int(20) NOT NULL COMMENT '系统参数id',
   `appparam_type` varchar(50) DEFAULT NULL COMMENT '参数类型',
   `appparam_name` varchar(50) DEFAULT NULL COMMENT '参数名',
   `appparam_pid` int(20) DEFAULT NULL COMMENT '父参数',
@@ -234,7 +234,7 @@ DROP TABLE IF EXISTS `rs_plan_tel_sv`;
 CREATE TABLE `rs_plan_tel_sv` (
   `plan_id` BIGINT NOT NULL COMMENT '计划ID',
   `survery_id` BIGINT NOT NULL COMMENT '问卷ID',
-   PRIMARY KEY (`plan_id`)
+   PRIMARY KEY (`plan_id`,`survery_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `sfplantb`;

@@ -2,10 +2,7 @@ package com.miaoyou.platform.server.entity;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class RssvsvdtbKey  implements Serializable {
+public class RssvsvdtbKey implements Serializable {
     private Long surveryId;
 
     private Long surverydetailId;

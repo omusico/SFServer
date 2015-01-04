@@ -2,17 +2,17 @@ package com.miaoyou.platform.server.entity;
 
 import java.io.Serializable;
 
-public class RsdnssvtbKey implements Serializable {
-    private Long diagnosisId;
+public class RsplantelsvKey implements Serializable {
+    private Long planId;
 
     private Long surveryId;
 
-    public Long getDiagnosisId() {
-        return diagnosisId;
+    public Long getPlanId() {
+        return planId;
     }
 
-    public void setDiagnosisId(Long diagnosisId) {
-        this.diagnosisId = diagnosisId;
+    public void setPlanId(Long planId) {
+        this.planId = planId;
     }
 
     public Long getSurveryId() {

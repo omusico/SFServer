@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,13 +15,18 @@ import com.miaoyou.platform.server.entity.Patientsurveytb;
 import com.miaoyou.platform.server.entity.PatientsurveytbExample;
 import com.miaoyou.platform.server.entity.Rspatientsurveysv;
 import com.miaoyou.platform.server.entity.RspatientsurveysvExample;
+import com.miaoyou.platform.server.entity.RsplantelsvExample;
+import com.miaoyou.platform.server.entity.RsplantelsvKey;
 import com.miaoyou.platform.server.entity.SurveyDetailtb;
+import com.miaoyou.platform.server.entity.child.PlanAll;
 import com.miaoyou.platform.server.entity.child.UserAll;
 import com.miaoyou.platform.server.entity.common.CommFindEntity;
 import com.miaoyou.platform.server.entity.common.CommUserDetails;
 import com.miaoyou.platform.server.mapper.PatientsurveytbMapper;
 import com.miaoyou.platform.server.mapper.RspatientsurveysvMapper;
+import com.miaoyou.platform.server.mapper.RsplantelsvMapper;
 import com.miaoyou.platform.server.service.pkkey.PkgeneratorServiceIF;
+import com.miaoyou.platform.server.service.plan.SFPlaneServiceIF;
 import com.miaoyou.platform.server.utils.Pager;
 import com.miaoyou.platform.server.utils.PingYinUtil;
 
@@ -34,6 +40,11 @@ public class PatientSurveyService implements PatientSurveyServiceIF {
 	PatientsurveytbMapper patientsurveytbMapper;
 	@Resource
 	RspatientsurveysvMapper rspatientsurveysvMapper;
+	@Resource
+	SFPlaneServiceIF sFPlaneService;
+
+	@Resource
+	RsplantelsvMapper rsplantelsvMapper;
 
 	@Override
 	public Patientsurveytb findDataByKey(Long id) {
@@ -72,6 +83,45 @@ public class PatientSurveyService implements PatientSurveyServiceIF {
 	@Override
 	public int saveData(Patientsurveytb bean) {
 		log.info("saveData:" + bean.getSurveryName());
+
+		// 我们先根据survey id，paitient id，plan_id找出是否已经有一份调查问卷了
+		PatientsurveytbExample example = new PatientsurveytbExample();
+		example.createCriteria().andPatientidEqualTo(bean.getPatientid())
+				.andSurveryIdEqualTo(bean.getSurveryId())
+				.andPlanIdEqualTo(bean.getPlanId());
+		List<Patientsurveytb> lsresult = patientsurveytbMapper
+				.selectByExample(example);
+		if (lsresult != null && lsresult.size() > 0) {
+			Patientsurveytb patiensurtb = lsresult.get(0);
+			try {
+				BeanUtils.copyProperties(bean, patiensurtb);
+			} catch (Exception e) {
+				bean = lsresult.get(0);
+				log.error(e);
+			}
+
+			log.info("found existing survey,no create new one. PatientsurveyId:"
+					+ bean.getPatientsurveyId());
+
+			bean.setUpdatedate(new Date());
+			/* 从session里面获取当前操作的用户 */
+			Object principal = SecurityContextHolder.getContext()
+					.getAuthentication().getPrincipal();
+			if (principal != null) {
+				if (principal instanceof CommUserDetails) {
+					CommUserDetails user = (CommUserDetails) principal;
+					UserAll session = user.getUserSessionEntity();
+					if (session != null) {
+						bean.setUpdateperson(session.getUserName());
+					}
+				}
+			}
+
+			return 0;
+		} else {
+			log.info("not found existing survey,create new one.");
+		}
+
 		long key = pkgeneratorService.getPrimaryKey("patientsurveytb",
 				"patientsurvey_id");
 		bean.setPatientsurveyId(key);
@@ -92,6 +142,8 @@ public class PatientSurveyService implements PatientSurveyServiceIF {
 				UserAll session = user.getUserSessionEntity();
 				if (session != null) {
 					bean.setCreateperson(session.getUserName());
+					bean.setUserId(session.getUserId());
+					bean.setDepartmentId(session.getDepartmentId());
 				}
 			}
 		}
@@ -131,7 +183,61 @@ public class PatientSurveyService implements PatientSurveyServiceIF {
 				}
 			}
 		}
-		return patientsurveytbMapper.updateByPrimaryKeySelective(bean);
+
+		int result = patientsurveytbMapper.updateByPrimaryKeySelective(bean);
+
+		// 检查是否还有需要把计划设置为完成状态
+		if (bean.getStatus() != 0) {
+			long planid = bean.getPlanId();
+			log.debug("check if all survey have already been finished.");
+			// 找出病人问卷中的所有问卷 planid
+			PatientsurveytbExample psurExample = new PatientsurveytbExample();
+			psurExample.createCriteria().andPlanIdEqualTo(planid);
+			List<Patientsurveytb> patientsurArra = patientsurveytbMapper
+					.selectByExample(psurExample);
+
+			// 找出计划关系表中的的数据，该计划总共多少个问卷
+			RsplantelsvExample resplanExapl = new RsplantelsvExample();
+			resplanExapl.createCriteria().andPlanIdEqualTo(planid);
+			List<RsplantelsvKey> rsplanrvLs = rsplantelsvMapper
+					.selectByExample(resplanExapl);
+
+			if (patientsurArra != null && rsplanrvLs != null) {
+				// 检查是不是每一个问卷都完成了。
+				boolean allFinished = false;
+				loop1:
+				for (Patientsurveytb psvLs : patientsurArra) {
+					for (RsplantelsvKey rskey : rsplanrvLs) {
+						if (rskey.getSurveryId() == psvLs.getSurveryId()
+								&& psvLs.getStatus() == 0) { // 还有随访的
+							allFinished = false;
+							break loop1;
+						} else if (rskey.getSurveryId() == psvLs.getSurveryId()
+								&& psvLs.getStatus() != 0) { // 还有随访的
+							allFinished = true;
+							continue loop1;
+						}
+
+					}
+					log.debug("all finished?" + allFinished);
+					allFinished = false;
+					break loop1;
+				}
+
+				// 如果都完成，就把该计划做成完成状态
+				if (allFinished) {
+					PlanAll sfplan = new PlanAll();
+					sfplan.setPatientid(planid);
+					sfplan.setStatus(1);
+
+					sFPlaneService.updateData(sfplan);
+					log.debug("updated plan status for " + planid);
+				}
+			}
+
+		}
+
+		return result;
 	}
 
 	@Override
@@ -150,7 +256,7 @@ public class PatientSurveyService implements PatientSurveyServiceIF {
 		log.info("findAllAnwser:" + patientsurveyId);
 
 		CommFindEntity<Rspatientsurveysv> result = new CommFindEntity<Rspatientsurveysv>();
-        RspatientsurveysvExample example = new RspatientsurveysvExample();
+		RspatientsurveysvExample example = new RspatientsurveysvExample();
 		if (patientsurveyId > 0) {
 			example.createCriteria().andPatientsurveyIdEqualTo(patientsurveyId);
 		}
@@ -165,9 +271,10 @@ public class PatientSurveyService implements PatientSurveyServiceIF {
 		// 排序
 		example.setOrderByClause("patientsurvey_id DESC");
 
-		List<Rspatientsurveysv> ls = rspatientsurveysvMapper.selectByExample(example);
+		List<Rspatientsurveysv> ls = rspatientsurveysvMapper
+				.selectByExample(example);
 		result.setResult(ls);
-		
+
 		return result;
 	}
 

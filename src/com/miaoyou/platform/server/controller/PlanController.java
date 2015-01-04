@@ -208,6 +208,12 @@ public class PlanController {
 		return sFPlaneService.findSurveyByPlanId(planId);
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, value = "/plan/survey/{planId}/{status}")
+	public  @ResponseBody CommFindEntity<Surveytb> getSurveyByDns(@PathVariable Long planId,@PathVariable Integer status) {
+		log.debug("getSurveyByDns:" + planId+",status:"+status);
+		return sFPlaneService.findSurveyByPlanIdForCalling(status, planId);
+	}
+	
 	@RequestMapping(method = RequestMethod.POST, value = "/plan/survey/delete/{planId}/{surveryId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ComResponse<Sfplantb> deleteForPatientSurvey(@PathVariable Long planId,@PathVariable Long surveryId) {
 		log.debug("delete:" + surveryId);

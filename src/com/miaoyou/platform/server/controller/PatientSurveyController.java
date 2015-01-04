@@ -2,6 +2,7 @@ package com.miaoyou.platform.server.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -177,6 +178,38 @@ public class PatientSurveyController {
 			int result = patientSurveyService.saveAnwser(patientsurveyId, bean);
 			comResponse.setResponseStatus(ComResponse.STATUS_OK);
 			comResponse.setResponseEntity(bean);
+			logService.saveLog("新增病案调查反馈.id:"+patientsurveyId);
+			comResponse.setExtendResponseContext("创建病案调查反馈.id:"+patientsurveyId);
+		} catch (Exception e) {
+			log.error(e);
+			comResponse.setResponseStatus(ComResponse.STATUS_FAIL);
+			comResponse.setErrorMessage("新建病案调查反馈." + e.getMessage());
+		}
+		log.debug("added:" + comResponse.getResponseStatus());
+
+		return comResponse;
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/patientsv/{patientsurveyId}/addarray", produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ComResponse<SurveyDetailtb> addList(@RequestBody List<SurveyDetailtb> beans,@PathVariable Long patientsurveyId) {
+		if (beans != null) {
+			log.debug("add:" + beans.size());
+		} else {
+			log.error("add: bean is null!");
+		}
+
+		ComResponse<SurveyDetailtb> comResponse = new ComResponse<SurveyDetailtb>();
+		try {
+			SurveyDetailtb lastsurDetail = null;
+			if(beans!=null){
+				for(SurveyDetailtb surDetail:beans){
+					lastsurDetail = surDetail;
+					int result = patientSurveyService.saveAnwser(patientsurveyId, surDetail);
+				}
+			
+			}
+			comResponse.setResponseStatus(ComResponse.STATUS_OK);
+			comResponse.setResponseEntity(lastsurDetail);
 			logService.saveLog("新增病案调查反馈.id:"+patientsurveyId);
 			comResponse.setExtendResponseContext("创建病案调查反馈.id:"+patientsurveyId);
 		} catch (Exception e) {

@@ -13,9 +13,11 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.miaoyou.platform.server.entity.Patientsurveytb;
+import com.miaoyou.platform.server.entity.PatientsurveytbExample;
 import com.miaoyou.platform.server.entity.PatienttbWithBLOBs;
-import com.miaoyou.platform.server.entity.Rsplantelsv;
 import com.miaoyou.platform.server.entity.RsplantelsvExample;
+import com.miaoyou.platform.server.entity.RsplantelsvKey;
 import com.miaoyou.platform.server.entity.Sfplantb;
 import com.miaoyou.platform.server.entity.SfplantbExample;
 import com.miaoyou.platform.server.entity.Surveytb;
@@ -23,6 +25,7 @@ import com.miaoyou.platform.server.entity.child.PlanAll;
 import com.miaoyou.platform.server.entity.child.UserAll;
 import com.miaoyou.platform.server.entity.common.CommFindEntity;
 import com.miaoyou.platform.server.entity.common.CommUserDetails;
+import com.miaoyou.platform.server.mapper.PatientsurveytbMapper;
 import com.miaoyou.platform.server.mapper.RsplantelsvMapper;
 import com.miaoyou.platform.server.mapper.SfplantbMapper;
 import com.miaoyou.platform.server.service.patient.PatientServiceIF;
@@ -53,6 +56,9 @@ public class SFPlaneService implements SFPlaneServiceIF {
 	
 	@Resource
 	PatientServiceIF patientService;
+	
+	@Resource
+	PatientsurveytbMapper patientsurveytbMapper;
 
 	@Override
 	public PlanAll findDataByKey(Long id) {
@@ -185,10 +191,10 @@ public class SFPlaneService implements SFPlaneServiceIF {
 
 		RsplantelsvExample example = new RsplantelsvExample();
 		example.createCriteria().andPlanIdEqualTo(planId);
-		List<Rsplantelsv> plantelKey = rsplantelsvMapper
+		List<RsplantelsvKey> plantelKey = rsplantelsvMapper
 				.selectByExample(example);
 		if (plantelKey != null) {
-			for (Rsplantelsv key : plantelKey) {
+			for (RsplantelsvKey key : plantelKey) {
 				Surveytb array = surveyService
 						.findDataByKey(key.getSurveryId());
 				surveryArray.add(array);
@@ -197,11 +203,47 @@ public class SFPlaneService implements SFPlaneServiceIF {
 		result.setCount(surveryArray.size());
 		return result;
 	}
+	
+	
+	@Override
+	public CommFindEntity<Surveytb> findSurveyByPlanIdForCalling(int status,Long planId) {
+		log.info("findSurveyByPlanId:" + planId);
+		CommFindEntity<Surveytb> result = new CommFindEntity<Surveytb>();
+		List<Surveytb> surveryArray = new ArrayList<>();
+		result.setResult(surveryArray);
+
+		PatientsurveytbExample psurExample = new PatientsurveytbExample();
+		psurExample.createCriteria().andPlanIdEqualTo(planId);
+		List<Patientsurveytb> patientSurLs=patientsurveytbMapper.selectByExample(psurExample);
+		
+		
+		RsplantelsvExample example = new RsplantelsvExample();
+		example.createCriteria().andPlanIdEqualTo(planId);
+		List<RsplantelsvKey> plantelKey = rsplantelsvMapper.selectByExample(example);
+		if (plantelKey != null) {
+			loop1:for (RsplantelsvKey key : plantelKey) {
+				long surveyId = key.getSurveryId();
+				if(patientSurLs!=null&&patientSurLs.size()>0){
+					for(Patientsurveytb psui:patientSurLs){
+						if(psui.getSurveryId()==surveyId&&psui.getStatus()!=status){
+							continue loop1;
+						}
+					}
+				}
+				Surveytb array = surveyService
+						.findDataByKey(key.getSurveryId());
+				surveryArray.add(array);
+			}
+		}
+		result.setCount(surveryArray.size());
+		return result;
+	}
+	
 
 	@Override
 	public int saveDataForPatientSurvey(Long planId, Long surveryId) {
 		log.info("saveData,planId:" + planId + ",survey:" + surveryId);
-		Rsplantelsv sv = new Rsplantelsv();
+		RsplantelsvKey sv = new RsplantelsvKey();
 		sv.setPlanId(planId);
 		sv.setSurveryId(surveryId);
 		return rsplantelsvMapper.insert(sv);
