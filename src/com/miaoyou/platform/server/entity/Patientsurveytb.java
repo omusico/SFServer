@@ -14,6 +14,12 @@ public class Patientsurveytb implements Serializable {
 
     private Long patientid;
 
+    private Long calltime;
+
+    private String dialphone;
+
+    private String recordfile;
+
     private Integer status;
 
     private Long planId;
@@ -72,6 +78,30 @@ public class Patientsurveytb implements Serializable {
 
     public void setPatientid(Long patientid) {
         this.patientid = patientid;
+    }
+
+    public Long getCalltime() {
+        return calltime;
+    }
+
+    public void setCalltime(Long calltime) {
+        this.calltime = calltime;
+    }
+
+    public String getDialphone() {
+        return dialphone;
+    }
+
+    public void setDialphone(String dialphone) {
+        this.dialphone = dialphone == null ? null : dialphone.trim();
+    }
+
+    public String getRecordfile() {
+        return recordfile;
+    }
+
+    public void setRecordfile(String recordfile) {
+        this.recordfile = recordfile == null ? null : recordfile.trim();
     }
 
     public Integer getStatus() {

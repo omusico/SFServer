@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.miaoyou.platform.server.entity.Patienttb;
+import com.miaoyou.platform.server.entity.child.PatienttbRecordCase;
 import com.miaoyou.platform.server.entity.common.ComResponse;
 import com.miaoyou.platform.server.entity.common.CommFindEntity;
 import com.miaoyou.platform.server.service.log.LogIF;
-import com.miaoyou.platform.server.service.patient.PatientServiceIF;
+import com.miaoyou.platform.server.service.patient.PatientRecordCaseServiceIF;
 import com.miaoyou.platform.server.utils.Pager;
 
 
@@ -34,11 +34,11 @@ import com.miaoyou.platform.server.utils.Pager;
  *
  */
 @Controller
-public class PatientController {
-	  private static final Log log = LogFactory.getLog(PatientController.class);
+public class PatientRecordCaseController {
+	  private static final Log log = LogFactory.getLog(PatientRecordCaseController.class);
 	  
 	@Resource
-	PatientServiceIF patientService;
+	PatientRecordCaseServiceIF patientRecordCaseService;
 	
     @Resource
     LogIF logService;
@@ -50,11 +50,11 @@ public class PatientController {
 				new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), true));
 	}
     
-	 @RequestMapping(method = RequestMethod.GET, value = "/patient/{id}")
+	 @RequestMapping(method = RequestMethod.GET, value = "/case/{id}")
 	    public @ResponseBody
-	    Patienttb getById(@PathVariable Long id) {
+	    PatienttbRecordCase getById(@PathVariable Long id) {
 	        log.debug("get:" + id);
-	        Patienttb bean = patientService.findDataByKey(id);
+	        PatienttbRecordCase bean = patientRecordCaseService.findDataByKey(id);
 	        return bean;
 	    }
 	    
@@ -70,108 +70,94 @@ public class PatientController {
 	     * @param zujima
 	     * @return
 	     */
-	    @RequestMapping(method = RequestMethod.GET, value = "/patient")
+	    @RequestMapping(method = RequestMethod.GET, value = "/case")
 	    public @ResponseBody
-	    CommFindEntity<Patienttb> getAll(
+	    CommFindEntity<PatienttbRecordCase> getAll(
 	            @RequestParam(value = "psi", defaultValue = "0") int page,
 	            @RequestParam(value = "pst", defaultValue = "20") int perPage,
-	            @RequestParam(value = "chuyuanriqi", defaultValue = "") String chuyuanriqi,
+	            @RequestParam(value = "chuyuanriqi", defaultValue = "") Date chuyuanriqi,
 	            @RequestParam(value = "keshi", defaultValue = "") String keshi,
-	            @RequestParam(value = "key", defaultValue = "") String name,
-	            @RequestParam(value = "zhuyuanhao", defaultValue = "") String zhuyuanhao) {
+	            @RequestParam(value = "patientid", defaultValue = "0") Long patientid,
+	            @RequestParam(value = "type", defaultValue = "0") int type,
+	            @RequestParam(value = "key", defaultValue = "") String key,
+	            @RequestParam(value = "zhuyuanhao", defaultValue = "") String zhuyuanhao,
+	            @RequestParam(value = "zujima", defaultValue = "") String zujima) {
 	        log.debug("getAll.pageindex" + page + ",perPage:" + perPage);
 	        Pager pager = new Pager(page, perPage);
-	        
-	        //构造SQL，注意这里的string都是对应数据库中的字段名，不是entity名
-	        StringBuilder sb = new StringBuilder();
-	        String andSplit = " and ";
-	        if(!chuyuanriqi.equals("")){
-	        	sb.append("chuyuanriqi").append(" = ").append("\""+chuyuanriqi+"\"").append(andSplit);
-	        }
-	        if(!zhuyuanhao.equals("")){
-	        	sb.append("zhuyuanhao").append(" = ").append("\""+zhuyuanhao+"\"").append(andSplit);
-	        }
-	        if(!keshi.equals("")){
-	        	sb.append("keshi").append(" like ").append("\"%"+keshi+"%\"").append(andSplit);
-	        }
-	        if(!name.equals("")){
-	        	sb.append("(name").append(" like ").append("\"%"+name+"%\"").append(" or ").append("zujima").append(" like ").append("\""+name+"%\")").append(andSplit);
-	        }
-	       
-	        
-	        if(sb.length()>andSplit.length()){
-	        	sb.delete((sb.length()-andSplit.length()), sb.length()-1);
+	      
+	        if(!key.trim().equals("")){
+	        	zhuyuanhao = key;
 	        }
 	        
-	        CommFindEntity<Patienttb> result = patientService.findAll(pager, sb.toString());
+	        CommFindEntity<PatienttbRecordCase> result = patientRecordCaseService.findAll(pager,type, patientid,zhuyuanhao,keshi,chuyuanriqi,zujima);
 	        return result;
 	    }
 
-	    @RequestMapping(method = RequestMethod.POST, value = "/patient/add", produces = MediaType.APPLICATION_JSON_VALUE)
+	    @RequestMapping(method = RequestMethod.POST, value = "/case/add", produces = MediaType.APPLICATION_JSON_VALUE)
 	    public @ResponseBody
-	    ComResponse<Patienttb> add(@RequestBody Patienttb bean) {
-	        if (bean!= null) {
-	            log.debug("add:" + bean.getName());
+	    ComResponse<PatienttbRecordCase> add(@RequestBody PatienttbRecordCase bean) {
+	        if (bean.getPatienttb() != null) {
+	            log.debug("add:" + bean.getPatienttb().getName());
 	        } else {
 	            log.error("add: bean is null!");
 	        }
 
-	        ComResponse<Patienttb> comResponse = new ComResponse<Patienttb>();
+	        ComResponse<PatienttbRecordCase> comResponse = new ComResponse<PatienttbRecordCase>();
 	        try {
-	            int result = patientService.saveData(bean);
+	            int result = patientRecordCaseService.saveData(bean);
 	            comResponse.setResponseStatus(ComResponse.STATUS_OK);
 	            comResponse.setResponseEntity(bean);
-	            logService.saveLog("新建病患基本信息");
+	            logService.saveLog("新建病案");
 	            comResponse.setExtendResponseContext("创建病案成功.");
 	        } catch (Exception e) {
 	            log.error(e);
 	            comResponse.setResponseStatus(ComResponse.STATUS_FAIL);
-	            comResponse.setErrorMessage("新建病患基本信息失败."+e.getMessage());
+	            comResponse.setErrorMessage("新建病案失败."+e.getMessage());
 	        }
 	        log.debug("added:" + comResponse.getResponseStatus());
 	        
 	        return comResponse;
 	    }
 
-	    @RequestMapping(method = RequestMethod.POST, value = "/patient/update", produces = MediaType.APPLICATION_JSON_VALUE)
+	    @RequestMapping(method = RequestMethod.POST, value = "/case/update", produces = MediaType.APPLICATION_JSON_VALUE)
 	    public @ResponseBody
-	    ComResponse<Patienttb> update(@RequestBody Patienttb bean) {
+	    ComResponse<PatienttbRecordCase> update(@RequestBody PatienttbRecordCase bean) {
 	        if (bean != null) {
 	            log.debug("update:" + bean.getPatientid());
 	        } else {
 	            log.error("update: bean is null!");
 	        }
-	        ComResponse<Patienttb> comResponse = new ComResponse<Patienttb>();
+	        ComResponse<PatienttbRecordCase> comResponse = new ComResponse<PatienttbRecordCase>();
 	        try {
-	            int result = patientService.updateData(bean);
+	            int result = patientRecordCaseService.updateData(bean);
 	            comResponse.setResponseStatus(ComResponse.STATUS_OK);
 	            comResponse.setResponseEntity(bean);
-	            logService.saveLog("更新病患基本信息模版");
+	            logService.saveLog("更新病案模版");
 	            comResponse.setExtendResponseContext("更新病案成功.");
 	        } catch (Exception e) {
 	        	log.error(e);
 	            comResponse.setResponseStatus(ComResponse.STATUS_FAIL);
-	            comResponse.setErrorMessage("更新病患基本信息失败."+e.getMessage());
+	            comResponse.setErrorMessage("更新病案失败."+e.getMessage());
 	        }
 	        log.debug("updated:" + comResponse.getResponseStatus());
 	        
 	        return comResponse;
 	    }
 
-	    @RequestMapping(method = RequestMethod.POST, value = "/patient/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	    @RequestMapping(method = RequestMethod.POST, value = "/case/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	    public @ResponseBody
-	    ComResponse<Patienttb> delete(@PathVariable Long id) {
+	    ComResponse<PatienttbRecordCase> delete(@PathVariable Long id) {
 	        log.debug("delete:" + id);
-	        ComResponse<Patienttb> comResponse = new ComResponse<Patienttb>();
+	        ComResponse<PatienttbRecordCase> comResponse = new ComResponse<PatienttbRecordCase>();
 	        try {
-	            int result =patientService.deleteDataByKey(id);
+	            int result =patientRecordCaseService.deleteDataByKey(id);
 	            comResponse.setResponseStatus(ComResponse.STATUS_OK);
-	            logService.saveLog("删除病患基本信息");
-	            comResponse.setExtendResponseContext("删除病患基本信息成功.");
+	            logService.saveLog("删除病案模版");
+	            comResponse.setExtendResponseContext("删除病案成功.");
 	        } catch (Exception e) {
 	        	log.error(e);
 	            comResponse.setResponseStatus(ComResponse.STATUS_FAIL);
-	            comResponse.setErrorMessage("删除病患基本信息失败."+e.getMessage());
+	            comResponse.setErrorMessage("删除病案失败."+e.getMessage());
 	        }
 	        log.debug("deleted:" + comResponse.getResponseStatus());
 	         

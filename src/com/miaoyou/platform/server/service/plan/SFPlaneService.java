@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.miaoyou.platform.server.entity.Patientsurveytb;
 import com.miaoyou.platform.server.entity.PatientsurveytbExample;
-import com.miaoyou.platform.server.entity.PatienttbWithBLOBs;
+import com.miaoyou.platform.server.entity.Patienttb;
 import com.miaoyou.platform.server.entity.RsplantelsvExample;
 import com.miaoyou.platform.server.entity.RsplantelsvKey;
 import com.miaoyou.platform.server.entity.Sfplantb;
@@ -72,7 +72,7 @@ public class SFPlaneService implements SFPlaneServiceIF {
 				UserAll userAll = userService.findUserAll(plan.getUserId());
 				planAll.setUserAll(userAll);
 				
-				PatienttbWithBLOBs patient = patientService.findDataByKey(plan.getPatientid());
+				Patienttb patient = patientService.findDataByKey(plan.getPatientid());
 				planAll.setPatienttb(patient);
 			}
 		}
@@ -112,7 +112,7 @@ public class SFPlaneService implements SFPlaneServiceIF {
 					UserAll userAll = userService.findUserAll(plan.getUserId());
 					planAll.setUserAll(userAll);
 					
-					PatienttbWithBLOBs patient = patientService.findDataByKey(plan.getPatientid());
+					Patienttb patient = patientService.findDataByKey(plan.getPatientid());
 					planAll.setPatienttb(patient);
 				}
 				temp.add(planAll);
@@ -248,6 +248,17 @@ public class SFPlaneService implements SFPlaneServiceIF {
 		RsplantelsvKey sv = new RsplantelsvKey();
 		sv.setPlanId(planId);
 		sv.setSurveryId(surveryId);
+		
+		
+		//剔除一样的计划和调查问卷
+		RsplantelsvExample example = new RsplantelsvExample();
+		example.createCriteria().andPlanIdEqualTo(planId).andSurveryIdEqualTo(surveryId);
+		int count = rsplantelsvMapper.countByExample(example);
+		if(count>0){
+			log.warn(""+count+" are existing here, not insert new.");
+			return 0;
+		}
+		
 		return rsplantelsvMapper.insert(sv);
 	}
 

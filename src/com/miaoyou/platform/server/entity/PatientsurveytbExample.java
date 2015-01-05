@@ -385,6 +385,206 @@ public class PatientsurveytbExample {
             return (Criteria) this;
         }
 
+        public Criteria andCalltimeIsNull() {
+            addCriterion("calltime is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCalltimeIsNotNull() {
+            addCriterion("calltime is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCalltimeEqualTo(Long value) {
+            addCriterion("calltime =", value, "calltime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCalltimeNotEqualTo(Long value) {
+            addCriterion("calltime <>", value, "calltime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCalltimeGreaterThan(Long value) {
+            addCriterion("calltime >", value, "calltime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCalltimeGreaterThanOrEqualTo(Long value) {
+            addCriterion("calltime >=", value, "calltime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCalltimeLessThan(Long value) {
+            addCriterion("calltime <", value, "calltime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCalltimeLessThanOrEqualTo(Long value) {
+            addCriterion("calltime <=", value, "calltime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCalltimeIn(List<Long> values) {
+            addCriterion("calltime in", values, "calltime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCalltimeNotIn(List<Long> values) {
+            addCriterion("calltime not in", values, "calltime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCalltimeBetween(Long value1, Long value2) {
+            addCriterion("calltime between", value1, value2, "calltime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCalltimeNotBetween(Long value1, Long value2) {
+            addCriterion("calltime not between", value1, value2, "calltime");
+            return (Criteria) this;
+        }
+
+        public Criteria andDialphoneIsNull() {
+            addCriterion("dialphone is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDialphoneIsNotNull() {
+            addCriterion("dialphone is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDialphoneEqualTo(String value) {
+            addCriterion("dialphone =", value, "dialphone");
+            return (Criteria) this;
+        }
+
+        public Criteria andDialphoneNotEqualTo(String value) {
+            addCriterion("dialphone <>", value, "dialphone");
+            return (Criteria) this;
+        }
+
+        public Criteria andDialphoneGreaterThan(String value) {
+            addCriterion("dialphone >", value, "dialphone");
+            return (Criteria) this;
+        }
+
+        public Criteria andDialphoneGreaterThanOrEqualTo(String value) {
+            addCriterion("dialphone >=", value, "dialphone");
+            return (Criteria) this;
+        }
+
+        public Criteria andDialphoneLessThan(String value) {
+            addCriterion("dialphone <", value, "dialphone");
+            return (Criteria) this;
+        }
+
+        public Criteria andDialphoneLessThanOrEqualTo(String value) {
+            addCriterion("dialphone <=", value, "dialphone");
+            return (Criteria) this;
+        }
+
+        public Criteria andDialphoneLike(String value) {
+            addCriterion("dialphone like", value, "dialphone");
+            return (Criteria) this;
+        }
+
+        public Criteria andDialphoneNotLike(String value) {
+            addCriterion("dialphone not like", value, "dialphone");
+            return (Criteria) this;
+        }
+
+        public Criteria andDialphoneIn(List<String> values) {
+            addCriterion("dialphone in", values, "dialphone");
+            return (Criteria) this;
+        }
+
+        public Criteria andDialphoneNotIn(List<String> values) {
+            addCriterion("dialphone not in", values, "dialphone");
+            return (Criteria) this;
+        }
+
+        public Criteria andDialphoneBetween(String value1, String value2) {
+            addCriterion("dialphone between", value1, value2, "dialphone");
+            return (Criteria) this;
+        }
+
+        public Criteria andDialphoneNotBetween(String value1, String value2) {
+            addCriterion("dialphone not between", value1, value2, "dialphone");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordfileIsNull() {
+            addCriterion("recordfile is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordfileIsNotNull() {
+            addCriterion("recordfile is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordfileEqualTo(String value) {
+            addCriterion("recordfile =", value, "recordfile");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordfileNotEqualTo(String value) {
+            addCriterion("recordfile <>", value, "recordfile");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordfileGreaterThan(String value) {
+            addCriterion("recordfile >", value, "recordfile");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordfileGreaterThanOrEqualTo(String value) {
+            addCriterion("recordfile >=", value, "recordfile");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordfileLessThan(String value) {
+            addCriterion("recordfile <", value, "recordfile");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordfileLessThanOrEqualTo(String value) {
+            addCriterion("recordfile <=", value, "recordfile");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordfileLike(String value) {
+            addCriterion("recordfile like", value, "recordfile");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordfileNotLike(String value) {
+            addCriterion("recordfile not like", value, "recordfile");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordfileIn(List<String> values) {
+            addCriterion("recordfile in", values, "recordfile");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordfileNotIn(List<String> values) {
+            addCriterion("recordfile not in", values, "recordfile");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordfileBetween(String value1, String value2) {
+            addCriterion("recordfile between", value1, value2, "recordfile");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordfileNotBetween(String value1, String value2) {
+            addCriterion("recordfile not between", value1, value2, "recordfile");
+            return (Criteria) this;
+        }
+
         public Criteria andStatusIsNull() {
             addCriterion("status is null");
             return (Criteria) this;

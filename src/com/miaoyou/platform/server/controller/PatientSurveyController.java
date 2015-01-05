@@ -66,6 +66,7 @@ public class PatientSurveyController {
 			@RequestParam(value = "pst", defaultValue = "20") int perPage,
             @RequestParam(value = "key", defaultValue = "") String name,
             @RequestParam(value = "patientid", defaultValue = "0") Long patientid,
+            @RequestParam(value = "planid", defaultValue = "0") Long planid,
             @RequestParam(value = "surveryid", defaultValue = "0") Long surveryid,
             @RequestParam(value = "status", defaultValue = "0") int status) {
 		log.debug("getAll.pageindex" + page + ",perPage:" + perPage);
@@ -76,7 +77,9 @@ public class PatientSurveyController {
         if(!name.equals("")){
         	sb.append("(survery_name").append(" like ").append("\"%"+name+"%\"").append(" or ").append("zujima").append(" like ").append("\""+name+"%\")").append(andSplit);
         }
-        
+        if(planid>0){
+        	sb.append("plan_id").append(" = ").append(planid).append(andSplit);
+        }
         if(surveryid>0){
         	sb.append("survery_id").append(" = ").append(surveryid).append(andSplit);
         }

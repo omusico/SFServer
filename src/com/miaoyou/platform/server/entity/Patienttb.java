@@ -28,35 +28,9 @@ public class Patienttb implements Serializable {
 
     private String orelationship;
 
-    private String keshi;
-
-    private String zhuyuanhao;
-
     private String zhuyuancishu;
 
-    private Date ruyuanriqi;
-
-    private String chuyuanzhengduan;
-
-    private Date chuyuanriqi;
-
-    private String zhurenyisheng;
-
-    private String zhuzhiyisheng;
-
-    private String zhuyuanyisheng;
-
-    private String shoushumingcheng;
-
-    private String zhudaoyisheng;
-
-    private Date shoushuriqi;
-
-    private String zhuyuantianshu;
-
     private String suifangbeizhu;
-
-    private String bingliezhuangtai;
 
     private String zujima;
 
@@ -164,22 +138,6 @@ public class Patienttb implements Serializable {
         this.orelationship = orelationship == null ? null : orelationship.trim();
     }
 
-    public String getKeshi() {
-        return keshi;
-    }
-
-    public void setKeshi(String keshi) {
-        this.keshi = keshi == null ? null : keshi.trim();
-    }
-
-    public String getZhuyuanhao() {
-        return zhuyuanhao;
-    }
-
-    public void setZhuyuanhao(String zhuyuanhao) {
-        this.zhuyuanhao = zhuyuanhao == null ? null : zhuyuanhao.trim();
-    }
-
     public String getZhuyuancishu() {
         return zhuyuancishu;
     }
@@ -188,100 +146,12 @@ public class Patienttb implements Serializable {
         this.zhuyuancishu = zhuyuancishu == null ? null : zhuyuancishu.trim();
     }
 
-    public Date getRuyuanriqi() {
-        return ruyuanriqi;
-    }
-
-    public void setRuyuanriqi(Date ruyuanriqi) {
-        this.ruyuanriqi = ruyuanriqi;
-    }
-
-    public String getChuyuanzhengduan() {
-        return chuyuanzhengduan;
-    }
-
-    public void setChuyuanzhengduan(String chuyuanzhengduan) {
-        this.chuyuanzhengduan = chuyuanzhengduan == null ? null : chuyuanzhengduan.trim();
-    }
-
-    public Date getChuyuanriqi() {
-        return chuyuanriqi;
-    }
-
-    public void setChuyuanriqi(Date chuyuanriqi) {
-        this.chuyuanriqi = chuyuanriqi;
-    }
-
-    public String getZhurenyisheng() {
-        return zhurenyisheng;
-    }
-
-    public void setZhurenyisheng(String zhurenyisheng) {
-        this.zhurenyisheng = zhurenyisheng == null ? null : zhurenyisheng.trim();
-    }
-
-    public String getZhuzhiyisheng() {
-        return zhuzhiyisheng;
-    }
-
-    public void setZhuzhiyisheng(String zhuzhiyisheng) {
-        this.zhuzhiyisheng = zhuzhiyisheng == null ? null : zhuzhiyisheng.trim();
-    }
-
-    public String getZhuyuanyisheng() {
-        return zhuyuanyisheng;
-    }
-
-    public void setZhuyuanyisheng(String zhuyuanyisheng) {
-        this.zhuyuanyisheng = zhuyuanyisheng == null ? null : zhuyuanyisheng.trim();
-    }
-
-    public String getShoushumingcheng() {
-        return shoushumingcheng;
-    }
-
-    public void setShoushumingcheng(String shoushumingcheng) {
-        this.shoushumingcheng = shoushumingcheng == null ? null : shoushumingcheng.trim();
-    }
-
-    public String getZhudaoyisheng() {
-        return zhudaoyisheng;
-    }
-
-    public void setZhudaoyisheng(String zhudaoyisheng) {
-        this.zhudaoyisheng = zhudaoyisheng == null ? null : zhudaoyisheng.trim();
-    }
-
-    public Date getShoushuriqi() {
-        return shoushuriqi;
-    }
-
-    public void setShoushuriqi(Date shoushuriqi) {
-        this.shoushuriqi = shoushuriqi;
-    }
-
-    public String getZhuyuantianshu() {
-        return zhuyuantianshu;
-    }
-
-    public void setZhuyuantianshu(String zhuyuantianshu) {
-        this.zhuyuantianshu = zhuyuantianshu == null ? null : zhuyuantianshu.trim();
-    }
-
     public String getSuifangbeizhu() {
         return suifangbeizhu;
     }
 
     public void setSuifangbeizhu(String suifangbeizhu) {
         this.suifangbeizhu = suifangbeizhu == null ? null : suifangbeizhu.trim();
-    }
-
-    public String getBingliezhuangtai() {
-        return bingliezhuangtai;
-    }
-
-    public void setBingliezhuangtai(String bingliezhuangtai) {
-        this.bingliezhuangtai = bingliezhuangtai == null ? null : bingliezhuangtai.trim();
     }
 
     public String getZujima() {

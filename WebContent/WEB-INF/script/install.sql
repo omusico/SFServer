@@ -131,9 +131,9 @@ CREATE TABLE `diagnosistb` (
 
 DROP TABLE IF EXISTS `patienttb`;
 CREATE TABLE `patienttb` (
-  `patientid` BIGINT NOT NULL COMMENT '病案D',
+  `patientid` BIGINT NOT NULL COMMENT '病患ID',
   `name` varchar(50) NOT NULL COMMENT '病人姓名',
-  `nianling` varchar(5) DEFAULT '' COMMENT '病人年龄',
+  `nianling` varchar(50) DEFAULT '' COMMENT '病人年龄',
   `xingbie` varchar(4) DEFAULT '男' COMMENT '病人性别',
   `zhengjianhaoma` varchar(100) DEFAULT '' COMMENT '证件号码',
   `telphone` varchar(50) DEFAULT '' COMMENT '座机',
@@ -142,9 +142,26 @@ CREATE TABLE `patienttb` (
   `ophone` varchar(50) DEFAULT '' COMMENT '其他电话号码',
   `oname` varchar(50) DEFAULT '' COMMENT '其他电话号码主人',
   `orelationship` varchar(50) DEFAULT '' COMMENT '与病人的关系',
+  `zhuyuancishu` varchar(50) DEFAULT '' COMMENT '住院次数',
+  `suifangbeizhu` varchar(1000)  COMMENT '随访备注',
+  `zujima` varchar(100) DEFAULT '' COMMENT '助记码',
+  `delete_flag` int(2) DEFAULT 0 COMMENT '是否删除标志，1，已经删除，0：没有删除',
+  `createdate` datetime COMMENT '创建时间',
+  `createperson` varchar(50) COMMENT '创建时间',
+  `updatedate` datetime COMMENT '创建时间',
+  `updateperson` varchar(50) COMMENT '创建时间',
+  `ext1` varchar(1000) DEFAULT '' COMMENT '扩展字段1',
+  `ext2` varchar(1000) DEFAULT '' COMMENT '扩展字段2',
+  `ext3` varchar(500) DEFAULT '' COMMENT '扩展字段3',
+  PRIMARY KEY (`patientid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `recordcasetb`;
+CREATE TABLE `recordcasetb` (
+  `recordcaseid` BIGINT NOT NULL COMMENT '病案ID',
+  `patientid` BIGINT NOT NULL COMMENT '病患ID',
   `keshi` varchar(50) DEFAULT '' COMMENT '科室',
   `zhuyuanhao` varchar(100) DEFAULT '' COMMENT '住院号',
-  `zhuyuancishu` varchar(50) DEFAULT '' COMMENT '住院次数',
   `ruyuanriqi` DATE  COMMENT '住院日期',
   `chuyuanzhengduan` varchar(100) DEFAULT '' COMMENT '出院诊断',
   `chuyuanriqi` datetime COMMENT '出院日期',
@@ -158,7 +175,6 @@ CREATE TABLE `patienttb` (
   `zhiyuqingkuang` TEXT  COMMENT '治愈情况',
   `chuyuanxiaojie` TEXT  COMMENT '出院小结',
   `chuyuanyizhu` TEXT  COMMENT '出院遗嘱',
-  `suifangbeizhu` varchar(1000)  COMMENT '随访备注',
   `bingliezhuangtai` varchar(20) DEFAULT '' COMMENT '病历状态',
   `zujima` varchar(100) DEFAULT '' COMMENT '助记码',
   `delete_flag` int(2) DEFAULT 0 COMMENT '是否删除标志，1，已经删除，0：没有删除',
@@ -169,7 +185,7 @@ CREATE TABLE `patienttb` (
   `ext1` varchar(1000) DEFAULT '' COMMENT '扩展字段1',
   `ext2` varchar(1000) DEFAULT '' COMMENT '扩展字段2',
   `ext3` varchar(500) DEFAULT '' COMMENT '扩展字段3',
-  PRIMARY KEY (`patientid`)
+  PRIMARY KEY (`recordcaseid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `surveytb`;
@@ -268,6 +284,9 @@ CREATE TABLE `patientsurveytb` (
   `survery_name` varchar(100) DEFAULT '' COMMENT '问卷名',
   `survery_id` BIGINT DEFAULT 0 COMMENT '问卷ID',
   `patientid` BIGINT  DEFAULT 0 COMMENT '病案ID',
+  `calltime` BIGINT  DEFAULT 0 COMMENT '通话时长',
+  `dialphone` varchar(30) DEFAULT ''  COMMENT '随访电话',
+  `recordfile` varchar(100) DEFAULT ''  COMMENT '录音文件',
   `status` int(2) DEFAULT 0 COMMENT '状态，1:随访完成，0:随访中，-1:异常',
   `plan_id` BIGINT DEFAULT 0  COMMENT '计划ID',
   `department_id` int(20) DEFAULT 0 COMMENT '科室编号',

@@ -1,6 +1,6 @@
 package com.miaoyou.platform.server.entity;
 
-public class PatienttbWithBLOBs extends Patienttb {
+public class RecordcasetbWithBLOBs extends Recordcasetb {
     private String zhiyuqingkuang;
 
     private String chuyuanxiaojie;

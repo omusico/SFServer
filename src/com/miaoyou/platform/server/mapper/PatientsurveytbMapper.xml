@@ -7,6 +7,9 @@
     <result column="survery_name" property="surveryName" jdbcType="VARCHAR" />
     <result column="survery_id" property="surveryId" jdbcType="BIGINT" />
     <result column="patientid" property="patientid" jdbcType="BIGINT" />
+    <result column="calltime" property="calltime" jdbcType="BIGINT" />
+    <result column="dialphone" property="dialphone" jdbcType="VARCHAR" />
+    <result column="recordfile" property="recordfile" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="plan_id" property="planId" jdbcType="BIGINT" />
     <result column="department_id" property="departmentId" jdbcType="INTEGER" />
@@ -81,9 +84,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    patientsurvey_id, survery_name, survery_id, patientid, status, plan_id, department_id, 
-    user_id, remark, zujima, delete_flag, createdate, createperson, updatedate, updateperson, 
-    ext1, ext2, ext3
+    patientsurvey_id, survery_name, survery_id, patientid, calltime, dialphone, recordfile, 
+    status, plan_id, department_id, user_id, remark, zujima, delete_flag, createdate, 
+    createperson, updatedate, updateperson, ext1, ext2, ext3
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.miaoyou.platform.server.entity.PatientsurveytbExample" >
     select
@@ -123,13 +126,15 @@
   </delete>
   <insert id="insert" parameterType="com.miaoyou.platform.server.entity.Patientsurveytb" >
     insert into patientsurveytb (patientsurvey_id, survery_name, survery_id, 
-      patientid, status, plan_id, 
+      patientid, calltime, dialphone, 
+      recordfile, status, plan_id, 
       department_id, user_id, remark, 
       zujima, delete_flag, createdate, 
       createperson, updatedate, updateperson, 
       ext1, ext2, ext3)
     values (#{patientsurveyId,jdbcType=BIGINT}, #{surveryName,jdbcType=VARCHAR}, #{surveryId,jdbcType=BIGINT}, 
-      #{patientid,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, #{planId,jdbcType=BIGINT}, 
+      #{patientid,jdbcType=BIGINT}, #{calltime,jdbcType=BIGINT}, #{dialphone,jdbcType=VARCHAR}, 
+      #{recordfile,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{planId,jdbcType=BIGINT}, 
       #{departmentId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
       #{zujima,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=INTEGER}, #{createdate,jdbcType=TIMESTAMP}, 
       #{createperson,jdbcType=VARCHAR}, #{updatedate,jdbcType=TIMESTAMP}, #{updateperson,jdbcType=VARCHAR}, 
@@ -149,6 +154,15 @@
       </if>
       <if test="patientid != null" >
         patientid,
+      </if>
+      <if test="calltime != null" >
+        calltime,
+      </if>
+      <if test="dialphone != null" >
+        dialphone,
+      </if>
+      <if test="recordfile != null" >
+        recordfile,
       </if>
       <if test="status != null" >
         status,
@@ -205,6 +219,15 @@
       </if>
       <if test="patientid != null" >
         #{patientid,jdbcType=BIGINT},
+      </if>
+      <if test="calltime != null" >
+        #{calltime,jdbcType=BIGINT},
+      </if>
+      <if test="dialphone != null" >
+        #{dialphone,jdbcType=VARCHAR},
+      </if>
+      <if test="recordfile != null" >
+        #{recordfile,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
@@ -271,6 +294,15 @@
       <if test="record.patientid != null" >
         patientid = #{record.patientid,jdbcType=BIGINT},
       </if>
+      <if test="record.calltime != null" >
+        calltime = #{record.calltime,jdbcType=BIGINT},
+      </if>
+      <if test="record.dialphone != null" >
+        dialphone = #{record.dialphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordfile != null" >
+        recordfile = #{record.recordfile,jdbcType=VARCHAR},
+      </if>
       <if test="record.status != null" >
         status = #{record.status,jdbcType=INTEGER},
       </if>
@@ -324,6 +356,9 @@
       survery_name = #{record.surveryName,jdbcType=VARCHAR},
       survery_id = #{record.surveryId,jdbcType=BIGINT},
       patientid = #{record.patientid,jdbcType=BIGINT},
+      calltime = #{record.calltime,jdbcType=BIGINT},
+      dialphone = #{record.dialphone,jdbcType=VARCHAR},
+      recordfile = #{record.recordfile,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER},
       plan_id = #{record.planId,jdbcType=BIGINT},
       department_id = #{record.departmentId,jdbcType=INTEGER},
@@ -353,6 +388,15 @@
       </if>
       <if test="patientid != null" >
         patientid = #{patientid,jdbcType=BIGINT},
+      </if>
+      <if test="calltime != null" >
+        calltime = #{calltime,jdbcType=BIGINT},
+      </if>
+      <if test="dialphone != null" >
+        dialphone = #{dialphone,jdbcType=VARCHAR},
+      </if>
+      <if test="recordfile != null" >
+        recordfile = #{recordfile,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
@@ -404,6 +448,9 @@
     set survery_name = #{surveryName,jdbcType=VARCHAR},
       survery_id = #{surveryId,jdbcType=BIGINT},
       patientid = #{patientid,jdbcType=BIGINT},
+      calltime = #{calltime,jdbcType=BIGINT},
+      dialphone = #{dialphone,jdbcType=VARCHAR},
+      recordfile = #{recordfile,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       plan_id = #{planId,jdbcType=BIGINT},
       department_id = #{departmentId,jdbcType=INTEGER},
