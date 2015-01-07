@@ -325,6 +325,37 @@ CREATE TABLE `rs_patient_dp_dns` (
   `diagnosis_id` BIGINT NOT NULL COMMENT '诊断ID'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
+
+DROP TABLE IF EXISTS `smstypetb`;
+CREATE TABLE `smstypetb` (
+  `smstype_id` BIGINT NOT NULL COMMENT '短消息类型ID',
+  `smstype_name` varchar(30) NOT NULL COMMENT '短消息类型名',
+  `zujima` varchar(100) DEFAULT '' COMMENT '助记码',
+  `delete_flag` int(2) DEFAULT 0 COMMENT '是否删除标志，1，已经删除，0：没有删除',
+  `createdate` datetime COMMENT '创建时间',
+  `createperson` varchar(50) COMMENT '创建时间',
+  `updatedate` datetime COMMENT '创建时间',
+  `updateperson` varchar(50) COMMENT '创建时间',
+  PRIMARY KEY (`smstype_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `smstb`;
+CREATE TABLE `smstb` (
+  `sms_id` BIGINT NOT NULL COMMENT '短消息ID',
+  `smstype_id` BIGINT NOT NULL COMMENT '短消息类型ID',
+  `sms_name` varchar(30) NOT NULL COMMENT '短消息',
+  `zujima` varchar(100) DEFAULT '' COMMENT '助记码',
+  `delete_flag` int(2) DEFAULT 0 COMMENT '是否删除标志，1，已经删除，0：没有删除',
+  `createdate` datetime COMMENT '创建时间',
+  `createperson` varchar(50) COMMENT '创建时间',
+  `updatedate` datetime COMMENT '创建时间',
+  `updateperson` varchar(50) COMMENT '创建时间',
+  `ext1` varchar(1000) DEFAULT '' COMMENT '扩展字段1',
+  `ext2` varchar(1000) DEFAULT '' COMMENT '扩展字段2',
+  `ext3` varchar(500) DEFAULT '' COMMENT '扩展字段3',
+  PRIMARY KEY (`smstype_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
 /*init value*/
 insert  into `roletb`(`role_id`,`role_type`,`role_name`,`role_scope`,`zujima`,`role_desc`)
 values

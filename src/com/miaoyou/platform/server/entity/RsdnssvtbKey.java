@@ -1,6 +1,8 @@
 package com.miaoyou.platform.server.entity;
 
-public class RsdnssvtbKey {
+import java.io.Serializable;
+
+public class RsdnssvtbKey implements Serializable{
     private Long diagnosisId;
 
     private Long surveryId;

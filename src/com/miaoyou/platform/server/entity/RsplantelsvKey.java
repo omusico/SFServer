@@ -1,6 +1,8 @@
 package com.miaoyou.platform.server.entity;
 
-public class RsplantelsvKey {
+import java.io.Serializable;
+
+public class RsplantelsvKey implements Serializable{
     private Long planId;
 
     private Long surveryId;
