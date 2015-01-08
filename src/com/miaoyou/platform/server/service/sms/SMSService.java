@@ -13,6 +13,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.miaoyou.platform.server.entity.Rsdnssmsaddtb;
+import com.miaoyou.platform.server.entity.RsdnssmsaddtbExample;
 import com.miaoyou.platform.server.entity.Smstb;
 import com.miaoyou.platform.server.entity.SmstbExample;
 import com.miaoyou.platform.server.entity.Smstypetb;
@@ -20,6 +22,7 @@ import com.miaoyou.platform.server.entity.child.SMSAll;
 import com.miaoyou.platform.server.entity.child.UserAll;
 import com.miaoyou.platform.server.entity.common.CommFindEntity;
 import com.miaoyou.platform.server.entity.common.CommUserDetails;
+import com.miaoyou.platform.server.mapper.RsdnssmsaddtbMapper;
 import com.miaoyou.platform.server.mapper.SmstbMapper;
 import com.miaoyou.platform.server.service.pkkey.PkgeneratorServiceIF;
 import com.miaoyou.platform.server.utils.Pager;
@@ -39,6 +42,9 @@ public class SMSService implements SMSServiceIF {
 	
 	@Resource
 	PkgeneratorServiceIF pkgeneratorService;
+	
+	@Resource
+	RsdnssmsaddtbMapper rsdnssmsaddtbMapper;
 	
 	@Override
 	public SMSAll findDataByKey(Long id) {
@@ -150,6 +156,43 @@ public class SMSService implements SMSServiceIF {
 			}
 		}
 		return smstbMapper.updateByPrimaryKeySelective(bean);
+	}
+
+	@Override
+	public CommFindEntity<Rsdnssmsaddtb>  findAllByDpDns(Pager page, Integer dpId, Long dnsId) {
+		log.info("findAllByDpDns,dpId:" + dpId+",dnsId:"+dnsId);
+		
+		CommFindEntity<Rsdnssmsaddtb> result = new CommFindEntity<Rsdnssmsaddtb>();
+		
+		RsdnssmsaddtbExample example =new RsdnssmsaddtbExample();
+		example.createCriteria().andDepartmentIdEqualTo(dpId).andDiagnosisIdEqualTo(dnsId);
+		
+		int count = rsdnssmsaddtbMapper.countByExample(example);
+		page.setCount(count);
+		result.setCount(count);
+		example.setLimitStart(page.getStartDataIndex());
+		example.setLimitEnd(page.getPageSize());
+
+		List<Rsdnssmsaddtb> lsAll =rsdnssmsaddtbMapper.selectByExample(example);
+		result.setResult(lsAll);
+
+		return result;
+	}
+
+	@Override
+	public int saveSmsForDpDns(Rsdnssmsaddtb rsdnssmsaddtb) {
+		log.info("saveSmsForDpDns:" +rsdnssmsaddtb.getSmstypeName());
+		return rsdnssmsaddtbMapper.insertSelective(rsdnssmsaddtb);
+	}
+
+	@Override
+	public int deleteSmsForDpDns(Rsdnssmsaddtb rsdnssmsaddtb) {
+		log.info("saveSmsForDpDns:" +rsdnssmsaddtb.getSmstypeName());
+		RsdnssmsaddtbExample example =new RsdnssmsaddtbExample();
+		example.createCriteria().andDepartmentIdEqualTo(rsdnssmsaddtb.getDepartmentId()).andDiagnosisIdEqualTo(rsdnssmsaddtb.getDiagnosisId())
+		.andSmsNameEqualTo(rsdnssmsaddtb.getSmsName()).andSmstypeNameEqualTo(rsdnssmsaddtb.getSmstypeName());
+		return rsdnssmsaddtbMapper.deleteByExample(example);
+		
 	}
 
 }

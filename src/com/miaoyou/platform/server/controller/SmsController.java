@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.miaoyou.platform.server.entity.Rsdnssmsaddtb;
 import com.miaoyou.platform.server.entity.child.SMSAll;
 import com.miaoyou.platform.server.entity.common.ComResponse;
 import com.miaoyou.platform.server.entity.common.CommFindEntity;
@@ -67,9 +68,9 @@ public class SmsController {
 		 //构造SQL，注意这里的string都是对应数据库中的字段名，不是entity名
         StringBuilder sb = new StringBuilder();
         String andSplit = " and ";
-        if(!name.equals("")){
-        	sb.append("(survery_name").append(" like ").append("\"%"+name+"%\"").append(" or ").append("zujima").append(" like ").append("\""+name+"%\")").append(andSplit);
-        }
+//        if(!name.equals("")){
+//        	sb.append("(survery_name").append(" like ").append("\"%"+name+"%\"").append(" or ").append("zujima").append(" like ").append("\""+name+"%\")").append(andSplit);
+//        }
         if(sb.length()>andSplit.length()){
         	sb.delete((sb.length()-andSplit.length()), sb.length()-1);
         }
@@ -145,6 +146,61 @@ public class SmsController {
 		log.debug("deleted:" + comResponse.getResponseStatus());
 
 		return comResponse;
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/sms/dpdnd/add", produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ComResponse<Rsdnssmsaddtb> addSmsForDnsSp(@RequestBody Rsdnssmsaddtb bean) {
+		if (bean != null) {
+			log.debug("addSmsForDnsSp:" + bean.getSmsName());
+		} else {
+			log.error("addSmsForDnsSp: bean is null!");
+		}
+
+		ComResponse<Rsdnssmsaddtb> comResponse = new ComResponse<Rsdnssmsaddtb>();
+		try {
+			int result = sMSService.saveSmsForDpDns(bean);
+			comResponse.setResponseStatus(ComResponse.STATUS_OK);
+			comResponse.setResponseEntity(bean);
+			logService.saveLog("新建科室疾病短信模版");
+			comResponse.setExtendResponseContext("创建科室疾病短信模版成功.");
+		} catch (Exception e) {
+			log.error(e);
+			comResponse.setResponseStatus(ComResponse.STATUS_FAIL);
+			comResponse.setErrorMessage("新建科室疾病短信模版失败." + e.getMessage());
+		}
+		log.debug("added:" + comResponse.getResponseStatus());
+
+		return comResponse;
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/sms/dpdnd/delete", produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ComResponse<Rsdnssmsaddtb> deleteSmsForDnsSp(@RequestBody Rsdnssmsaddtb bean) {
+		log.debug("deleteSmsForDnsSp:" + bean.getSmsName());
+		ComResponse<Rsdnssmsaddtb> comResponse = new ComResponse<Rsdnssmsaddtb>();
+		try {
+			int result = sMSService.deleteSmsForDpDns(bean);
+			comResponse.setResponseStatus(ComResponse.STATUS_OK);
+			logService.saveLog("删除科室疾病短信模版");
+			comResponse.setExtendResponseContext("删除科室疾病短信模版成功.");
+		} catch (Exception e) {
+			log.error(e);
+			comResponse.setResponseStatus(ComResponse.STATUS_FAIL);
+			comResponse.setErrorMessage("删除科室疾病短信模版失败." + e.getMessage());
+		}
+		log.debug("deleted:" + comResponse.getResponseStatus());
+
+		return comResponse;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/sms/dpdns/{dpId}/{dnsId}")
+	public @ResponseBody CommFindEntity<Rsdnssmsaddtb> getAllForDpDns(
+			@RequestParam(value = "psi", defaultValue = "0") int page,
+			@RequestParam(value = "pst", defaultValue = "20") int perPage,@PathVariable Integer dpId,@PathVariable Long dnsId) {
+		log.debug("getAllForDpDns.pageindex" + page + ",perPage:" + perPage);
+		Pager pager = new Pager(page, perPage);
+        
+		CommFindEntity<Rsdnssmsaddtb> result = sMSService.findAllByDpDns(pager, dpId, dnsId);
+		return result;
 	}
 
 }

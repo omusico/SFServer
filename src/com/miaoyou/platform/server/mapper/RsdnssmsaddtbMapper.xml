@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.miaoyou.platform.server.mapper.RsdnssmsaddtbMapper" >
+  <cache />
+  <resultMap id="BaseResultMap" type="com.miaoyou.platform.server.entity.Rsdnssmsaddtb" >
+    <result column="diagnosis_id" property="diagnosisId" jdbcType="BIGINT" />
+    <result column="department_id" property="departmentId" jdbcType="INTEGER" />
+    <result column="sms_name" property="smsName" jdbcType="VARCHAR" />
+    <result column="smstype_name" property="smstypeName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    diagnosis_id, department_id, sms_name, smstype_name
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.miaoyou.platform.server.entity.RsdnssmsaddtbExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from rs_dns_sms_add
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="groupby != null" >
+      group by ${groupby}
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.miaoyou.platform.server.entity.RsdnssmsaddtbExample" >
+    delete from rs_dns_sms_add
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.miaoyou.platform.server.entity.Rsdnssmsaddtb" >
+    insert into rs_dns_sms_add (diagnosis_id, department_id, sms_name, 
+      smstype_name)
+    values (#{diagnosisId,jdbcType=BIGINT}, #{departmentId,jdbcType=INTEGER}, #{smsName,jdbcType=VARCHAR}, 
+      #{smstypeName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.miaoyou.platform.server.entity.Rsdnssmsaddtb" >
+    insert into rs_dns_sms_add
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="diagnosisId != null" >
+        diagnosis_id,
+      </if>
+      <if test="departmentId != null" >
+        department_id,
+      </if>
+      <if test="smsName != null" >
+        sms_name,
+      </if>
+      <if test="smstypeName != null" >
+        smstype_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="diagnosisId != null" >
+        #{diagnosisId,jdbcType=BIGINT},
+      </if>
+      <if test="departmentId != null" >
+        #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="smsName != null" >
+        #{smsName,jdbcType=VARCHAR},
+      </if>
+      <if test="smstypeName != null" >
+        #{smstypeName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.miaoyou.platform.server.entity.RsdnssmsaddtbExample" resultType="java.lang.Integer" >
+    select count(*) from rs_dns_sms_add
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update rs_dns_sms_add
+    <set >
+      <if test="record.diagnosisId != null" >
+        diagnosis_id = #{record.diagnosisId,jdbcType=BIGINT},
+      </if>
+      <if test="record.departmentId != null" >
+        department_id = #{record.departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.smsName != null" >
+        sms_name = #{record.smsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smstypeName != null" >
+        smstype_name = #{record.smstypeName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update rs_dns_sms_add
+    set diagnosis_id = #{record.diagnosisId,jdbcType=BIGINT},
+      department_id = #{record.departmentId,jdbcType=INTEGER},
+      sms_name = #{record.smsName,jdbcType=VARCHAR},
+      smstype_name = #{record.smstypeName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

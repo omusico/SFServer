@@ -40,28 +40,7 @@
 		</javaClientGenerator>
 
 
-		<table schema="hpsf" tableName="roletb" domainObjectName="Roletb" />
-		<table schema="hpsf" tableName="logtb" domainObjectName="Logtb" />
-		<table schema="hpsf" tableName="pkgenerator" domainObjectName="Pkgenerator" />
-		<table schema="hpsf" tableName="appparamtb" domainObjectName="Appparamtb" />
-		<table schema="hpsf" tableName="departmenttb" domainObjectName="Departmenttb" />
-		<table schema="hpsf" tableName="usertb" domainObjectName="Usertb" />
-		<table schema="hpsf" tableName="diagnosistb" domainObjectName="Diagnosistb" />
-		<table schema="hpsf" tableName="rs_dns_sv" domainObjectName="Rsdnssvtb" />
-		<table schema="hpsf" tableName="rs_dns_sv_add" domainObjectName="Rsdnssvtbadd" />
-		<table schema="hpsf" tableName="rs_sv_svd" domainObjectName="Rssvsvdtb" />
-		<table schema="hpsf" tableName="rs_plan_tel_sv" domainObjectName="Rsplantelsv" />
-		<table schema="hpsf" tableName="sfplantb" domainObjectName="Sfplantb" />
-		<table schema="hpsf" tableName="surveytb" domainObjectName="Surveytb" />
-		<table schema="hpsf" tableName="surveydetailtb" domainObjectName="SurveyDetailtb" />
-		<table schema="hpsf" tableName="patienttb" domainObjectName="Patienttb" />	
-		<table schema="hpsf" tableName="recordcasetb" domainObjectName="Recordcasetb" />
-		<table schema="hpsf" tableName="patientsurveytb" domainObjectName="Patientsurveytb" />		
-		<table schema="hpsf" tableName="rs_patient_survey_sv" domainObjectName="Rspatientsurveysv" />	
-		<table schema="hpsf" tableName="rs_keshi_dns" domainObjectName="Rskeshidns" />		
-		<table schema="hpsf" tableName="rs_patient_sv_add" domainObjectName="Rspatientsvadd" />	
-		<table schema="hpsf" tableName="rs_patient_dp_dns" domainObjectName="Rspatientdpdns" />	
-		<table schema="hpsf" tableName="smstypetb" domainObjectName="Smstypetb" />		
-		<table schema="hpsf" tableName="smstb" domainObjectName="Smstb" />	
+	
+		<table schema="hpsf" tableName="sfplansmstb" domainObjectName="Sfplansmstb" />
 	</context>
 </generatorConfiguration>  

@@ -211,15 +211,15 @@ public class GenData extends PluginAdapter {
     	String path = System.getProperty("user.dir")+"/src/com/miaoyou/platform/server/mapper";
     	File files = new File(path);
     	System.out.println("::::::::::mapper path:"+path);
-    	if(files.exists()){
-    		File[] fileChilds = files.listFiles();
-    		for(File f:fileChilds){
-    			System.out.println("::::::::::try to delete file:"+f.getName());
-        		f.delete();
-    		}
-    		
-    	}
-    	
+//    	if(files.exists()){
+//    		File[] fileChilds = files.listFiles();
+//    		for(File f:fileChilds){
+//    			System.out.println("::::::::::try to delete file:"+f.getName());
+//        		f.delete();
+//    		}
+//    		
+//    	}
+//    	
     	
         String config = GenData.class.getResource("databaseGen.xml").getFile();
         String[] arg = {"-configfile", config, "-overwrite"};

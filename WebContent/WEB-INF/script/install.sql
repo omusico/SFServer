@@ -343,7 +343,7 @@ DROP TABLE IF EXISTS `smstb`;
 CREATE TABLE `smstb` (
   `sms_id` BIGINT NOT NULL COMMENT '短消息ID',
   `smstype_id` BIGINT NOT NULL COMMENT '短消息类型ID',
-  `sms_name` varchar(30) NOT NULL COMMENT '短消息',
+  `sms_name` varchar(500) NOT NULL COMMENT '短消息',
   `zujima` varchar(100) DEFAULT '' COMMENT '助记码',
   `delete_flag` int(2) DEFAULT 0 COMMENT '是否删除标志，1，已经删除，0：没有删除',
   `createdate` datetime COMMENT '创建时间',
@@ -354,6 +354,40 @@ CREATE TABLE `smstb` (
   `ext2` varchar(1000) DEFAULT '' COMMENT '扩展字段2',
   `ext3` varchar(500) DEFAULT '' COMMENT '扩展字段3',
   PRIMARY KEY (`sms_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `rs_dns_sms_add`;
+CREATE TABLE `rs_dns_sms_add` (
+  `diagnosis_id` BIGINT NOT NULL COMMENT '诊断ID',
+  `department_id` int(20) NOT NULL COMMENT '科室编号',
+  `sms_name` varchar(500) NOT NULL COMMENT '短消息',
+  `smstype_name` varchar(30) NOT NULL COMMENT '短消息类型名'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `sfplansmstb`;
+CREATE TABLE `sfplansmstb` (
+  `smsplan_id` BIGINT NOT NULL COMMENT '计划ID',
+  `patientid` BIGINT NOT NULL COMMENT '病案D',
+  `smscontext` varchar(500) NOT NULL  COMMENT '短信内容',
+  `smstype_name` varchar(30) NOT NULL COMMENT '短消息类型名',
+  `plantype` int(2) DEFAULT 1 COMMENT '计划类型  1.短信，0。电话',
+  `status` int(2) DEFAULT 0 COMMENT '状态，3.自动过期。2.手动作废。  1.已经完成，0。计划中',
+  `planfreq` int(5) DEFAULT 0 COMMENT '计划执行的频率',
+  `plannumber` int(5) DEFAULT 0 COMMENT '计划执行的次数',
+  `plannexttime` datetime COMMENT '下一次计划开始的时间',
+  `user_id` int(20) DEFAULT 0 COMMENT '医生ID',
+  `remark` varchar(500) DEFAULT '' COMMENT '描述',
+  `zujima` varchar(500) DEFAULT '' COMMENT '助记码',
+  `delete_flag` int(2) DEFAULT 0 COMMENT '是否删除标志，1.已经删除，0.没有删除',
+  `createdate` datetime COMMENT '创建时间',
+  `createperson` varchar(50) COMMENT '创建时间',
+  `updatedate` datetime COMMENT '创建时间',
+  `updateperson` varchar(50) COMMENT '创建时间',
+  `ext1` varchar(1000) DEFAULT '' COMMENT '扩展字段1',
+  `ext2` varchar(1000) DEFAULT '' COMMENT '扩展字段2',
+  `ext3` varchar(500) DEFAULT '' COMMENT '扩展字段3',
+  PRIMARY KEY (`smsplan_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 /*init value*/
