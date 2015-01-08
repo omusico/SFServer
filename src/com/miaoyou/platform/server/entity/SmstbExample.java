@@ -135,66 +135,6 @@ public class SmstbExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andSmstypeIdIsNull() {
-            addCriterion("smstype_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSmstypeIdIsNotNull() {
-            addCriterion("smstype_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSmstypeIdEqualTo(Long value) {
-            addCriterion("smstype_id =", value, "smstypeId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSmstypeIdNotEqualTo(Long value) {
-            addCriterion("smstype_id <>", value, "smstypeId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSmstypeIdGreaterThan(Long value) {
-            addCriterion("smstype_id >", value, "smstypeId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSmstypeIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("smstype_id >=", value, "smstypeId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSmstypeIdLessThan(Long value) {
-            addCriterion("smstype_id <", value, "smstypeId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSmstypeIdLessThanOrEqualTo(Long value) {
-            addCriterion("smstype_id <=", value, "smstypeId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSmstypeIdIn(List<Long> values) {
-            addCriterion("smstype_id in", values, "smstypeId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSmstypeIdNotIn(List<Long> values) {
-            addCriterion("smstype_id not in", values, "smstypeId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSmstypeIdBetween(Long value1, Long value2) {
-            addCriterion("smstype_id between", value1, value2, "smstypeId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSmstypeIdNotBetween(Long value1, Long value2) {
-            addCriterion("smstype_id not between", value1, value2, "smstypeId");
-            return (Criteria) this;
-        }
-
         public Criteria andSmsIdIsNull() {
             addCriterion("sms_id is null");
             return (Criteria) this;
@@ -252,6 +192,66 @@ public class SmstbExample {
 
         public Criteria andSmsIdNotBetween(Long value1, Long value2) {
             addCriterion("sms_id not between", value1, value2, "smsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSmstypeIdIsNull() {
+            addCriterion("smstype_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSmstypeIdIsNotNull() {
+            addCriterion("smstype_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSmstypeIdEqualTo(Long value) {
+            addCriterion("smstype_id =", value, "smstypeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSmstypeIdNotEqualTo(Long value) {
+            addCriterion("smstype_id <>", value, "smstypeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSmstypeIdGreaterThan(Long value) {
+            addCriterion("smstype_id >", value, "smstypeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSmstypeIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("smstype_id >=", value, "smstypeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSmstypeIdLessThan(Long value) {
+            addCriterion("smstype_id <", value, "smstypeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSmstypeIdLessThanOrEqualTo(Long value) {
+            addCriterion("smstype_id <=", value, "smstypeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSmstypeIdIn(List<Long> values) {
+            addCriterion("smstype_id in", values, "smstypeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSmstypeIdNotIn(List<Long> values) {
+            addCriterion("smstype_id not in", values, "smstypeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSmstypeIdBetween(Long value1, Long value2) {
+            addCriterion("smstype_id between", value1, value2, "smstypeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSmstypeIdNotBetween(Long value1, Long value2) {
+            addCriterion("smstype_id not between", value1, value2, "smstypeId");
             return (Criteria) this;
         }
 

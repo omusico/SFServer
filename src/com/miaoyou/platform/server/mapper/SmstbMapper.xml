@@ -3,8 +3,8 @@
 <mapper namespace="com.miaoyou.platform.server.mapper.SmstbMapper" >
   <cache />
   <resultMap id="BaseResultMap" type="com.miaoyou.platform.server.entity.Smstb" >
-    <id column="smstype_id" property="smstypeId" jdbcType="BIGINT" />
-    <result column="sms_id" property="smsId" jdbcType="BIGINT" />
+    <id column="sms_id" property="smsId" jdbcType="BIGINT" />
+    <result column="smstype_id" property="smstypeId" jdbcType="BIGINT" />
     <result column="sms_name" property="smsName" jdbcType="VARCHAR" />
     <result column="zujima" property="zujima" jdbcType="VARCHAR" />
     <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
@@ -75,7 +75,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    smstype_id, sms_id, sms_name, zujima, delete_flag, createdate, createperson, updatedate, 
+    sms_id, smstype_id, sms_name, zujima, delete_flag, createdate, createperson, updatedate, 
     updateperson, ext1, ext2, ext3
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.miaoyou.platform.server.entity.SmstbExample" >
@@ -102,11 +102,11 @@
     select 
     <include refid="Base_Column_List" />
     from smstb
-    where smstype_id = #{smstypeId,jdbcType=BIGINT}
+    where sms_id = #{smsId,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from smstb
-    where smstype_id = #{smstypeId,jdbcType=BIGINT}
+    where sms_id = #{smsId,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.miaoyou.platform.server.entity.SmstbExample" >
     delete from smstb
@@ -115,11 +115,11 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.miaoyou.platform.server.entity.Smstb" >
-    insert into smstb (smstype_id, sms_id, sms_name, 
+    insert into smstb (sms_id, smstype_id, sms_name, 
       zujima, delete_flag, createdate, 
       createperson, updatedate, updateperson, 
       ext1, ext2, ext3)
-    values (#{smstypeId,jdbcType=BIGINT}, #{smsId,jdbcType=BIGINT}, #{smsName,jdbcType=VARCHAR}, 
+    values (#{smsId,jdbcType=BIGINT}, #{smstypeId,jdbcType=BIGINT}, #{smsName,jdbcType=VARCHAR}, 
       #{zujima,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=INTEGER}, #{createdate,jdbcType=TIMESTAMP}, 
       #{createperson,jdbcType=VARCHAR}, #{updatedate,jdbcType=TIMESTAMP}, #{updateperson,jdbcType=VARCHAR}, 
       #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR})
@@ -127,11 +127,11 @@
   <insert id="insertSelective" parameterType="com.miaoyou.platform.server.entity.Smstb" >
     insert into smstb
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="smstypeId != null" >
-        smstype_id,
-      </if>
       <if test="smsId != null" >
         sms_id,
+      </if>
+      <if test="smstypeId != null" >
+        smstype_id,
       </if>
       <if test="smsName != null" >
         sms_name,
@@ -165,11 +165,11 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="smstypeId != null" >
-        #{smstypeId,jdbcType=BIGINT},
-      </if>
       <if test="smsId != null" >
         #{smsId,jdbcType=BIGINT},
+      </if>
+      <if test="smstypeId != null" >
+        #{smstypeId,jdbcType=BIGINT},
       </if>
       <if test="smsName != null" >
         #{smsName,jdbcType=VARCHAR},
@@ -212,11 +212,11 @@
   <update id="updateByExampleSelective" parameterType="map" >
     update smstb
     <set >
-      <if test="record.smstypeId != null" >
-        smstype_id = #{record.smstypeId,jdbcType=BIGINT},
-      </if>
       <if test="record.smsId != null" >
         sms_id = #{record.smsId,jdbcType=BIGINT},
+      </if>
+      <if test="record.smstypeId != null" >
+        smstype_id = #{record.smstypeId,jdbcType=BIGINT},
       </if>
       <if test="record.smsName != null" >
         sms_name = #{record.smsName,jdbcType=VARCHAR},
@@ -255,8 +255,8 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update smstb
-    set smstype_id = #{record.smstypeId,jdbcType=BIGINT},
-      sms_id = #{record.smsId,jdbcType=BIGINT},
+    set sms_id = #{record.smsId,jdbcType=BIGINT},
+      smstype_id = #{record.smstypeId,jdbcType=BIGINT},
       sms_name = #{record.smsName,jdbcType=VARCHAR},
       zujima = #{record.zujima,jdbcType=VARCHAR},
       delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
@@ -274,8 +274,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.miaoyou.platform.server.entity.Smstb" >
     update smstb
     <set >
-      <if test="smsId != null" >
-        sms_id = #{smsId,jdbcType=BIGINT},
+      <if test="smstypeId != null" >
+        smstype_id = #{smstypeId,jdbcType=BIGINT},
       </if>
       <if test="smsName != null" >
         sms_name = #{smsName,jdbcType=VARCHAR},
@@ -308,11 +308,11 @@
         ext3 = #{ext3,jdbcType=VARCHAR},
       </if>
     </set>
-    where smstype_id = #{smstypeId,jdbcType=BIGINT}
+    where sms_id = #{smsId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.miaoyou.platform.server.entity.Smstb" >
     update smstb
-    set sms_id = #{smsId,jdbcType=BIGINT},
+    set smstype_id = #{smstypeId,jdbcType=BIGINT},
       sms_name = #{smsName,jdbcType=VARCHAR},
       zujima = #{zujima,jdbcType=VARCHAR},
       delete_flag = #{deleteFlag,jdbcType=INTEGER},
@@ -323,6 +323,6 @@
       ext1 = #{ext1,jdbcType=VARCHAR},
       ext2 = #{ext2,jdbcType=VARCHAR},
       ext3 = #{ext3,jdbcType=VARCHAR}
-    where smstype_id = #{smstypeId,jdbcType=BIGINT}
+    where sms_id = #{smsId,jdbcType=BIGINT}
   </update>
 </mapper>

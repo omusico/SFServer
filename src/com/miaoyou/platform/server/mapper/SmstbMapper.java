@@ -10,7 +10,7 @@ public interface SmstbMapper {
 
     int deleteByExample(SmstbExample example);
 
-    int deleteByPrimaryKey(Long smstypeId);
+    int deleteByPrimaryKey(Long smsId);
 
     int insert(Smstb record);
 
@@ -18,7 +18,7 @@ public interface SmstbMapper {
 
     List<Smstb> selectByExample(SmstbExample example);
 
-    Smstb selectByPrimaryKey(Long smstypeId);
+    Smstb selectByPrimaryKey(Long smsId);
 
     int updateByExampleSelective(@Param("record") Smstb record, @Param("example") SmstbExample example);
 

@@ -353,7 +353,7 @@ CREATE TABLE `smstb` (
   `ext1` varchar(1000) DEFAULT '' COMMENT '扩展字段1',
   `ext2` varchar(1000) DEFAULT '' COMMENT '扩展字段2',
   `ext3` varchar(500) DEFAULT '' COMMENT '扩展字段3',
-  PRIMARY KEY (`smstype_id`)
+  PRIMARY KEY (`sms_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 /*init value*/

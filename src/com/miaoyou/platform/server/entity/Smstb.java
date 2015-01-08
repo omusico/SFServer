@@ -6,9 +6,9 @@ import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Smstb implements Serializable {
-    private Long smstypeId;
-
     private Long smsId;
+
+    private Long smstypeId;
 
     private String smsName;
 
@@ -30,20 +30,20 @@ public class Smstb implements Serializable {
 
     private String ext3;
 
-    public Long getSmstypeId() {
-        return smstypeId;
-    }
-
-    public void setSmstypeId(Long smstypeId) {
-        this.smstypeId = smstypeId;
-    }
-
     public Long getSmsId() {
         return smsId;
     }
 
     public void setSmsId(Long smsId) {
         this.smsId = smsId;
+    }
+
+    public Long getSmstypeId() {
+        return smstypeId;
+    }
+
+    public void setSmstypeId(Long smstypeId) {
+        this.smstypeId = smstypeId;
     }
 
     public String getSmsName() {

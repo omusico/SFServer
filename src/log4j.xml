@@ -19,7 +19,7 @@
     </appender>
   
 
-    <category name="com.miaoyou.platform.server">
+    <category name="com.miaoyou">
         <priority value="debug" />
         <appender-ref ref="console" />
     </category>
