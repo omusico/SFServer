@@ -8,6 +8,8 @@ import com.miaoyou.platform.server.utils.Pager;
 
 public interface SMSServiceIF extends CommServiceIF<SMSAll, Long> {
 
+	public CommFindEntity<SMSAll> findAll(String smsType);
+	
 	public  CommFindEntity<Rsdnssmsaddtb> findAllByDpDns(Pager page,Integer dpId,Long dnsId);
 	
 	public int saveSmsForDpDns(Rsdnssmsaddtb rsdnssmsaddtb);

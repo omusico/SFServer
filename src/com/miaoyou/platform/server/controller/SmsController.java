@@ -68,9 +68,9 @@ public class SmsController {
 		 //构造SQL，注意这里的string都是对应数据库中的字段名，不是entity名
         StringBuilder sb = new StringBuilder();
         String andSplit = " and ";
-//        if(!name.equals("")){
-//        	sb.append("(survery_name").append(" like ").append("\"%"+name+"%\"").append(" or ").append("zujima").append(" like ").append("\""+name+"%\")").append(andSplit);
-//        }
+        if(!name.equals("")){
+        	sb.append("(sms_name").append(" like ").append("\"%"+name+"%\"").append(" or ").append("zujima").append(" like ").append("\""+name+"%\")").append(andSplit);
+        }
         if(sb.length()>andSplit.length()){
         	sb.delete((sb.length()-andSplit.length()), sb.length()-1);
         }
@@ -200,6 +200,14 @@ public class SmsController {
 		Pager pager = new Pager(page, perPage);
         
 		CommFindEntity<Rsdnssmsaddtb> result = sMSService.findAllByDpDns(pager, dpId, dnsId);
+		return result;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/sms/type/{name}")
+	public @ResponseBody CommFindEntity<SMSAll> getAllBySmsType( @PathVariable String name) {
+		log.debug("getAll.getAllBySmsType,type" + name );
+
+		CommFindEntity<SMSAll> result = sMSService.findAll(name);
 		return result;
 	}
 

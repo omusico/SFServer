@@ -18,12 +18,14 @@ import com.miaoyou.platform.server.entity.RsdnssmsaddtbExample;
 import com.miaoyou.platform.server.entity.Smstb;
 import com.miaoyou.platform.server.entity.SmstbExample;
 import com.miaoyou.platform.server.entity.Smstypetb;
+import com.miaoyou.platform.server.entity.SmstypetbExample;
 import com.miaoyou.platform.server.entity.child.SMSAll;
 import com.miaoyou.platform.server.entity.child.UserAll;
 import com.miaoyou.platform.server.entity.common.CommFindEntity;
 import com.miaoyou.platform.server.entity.common.CommUserDetails;
 import com.miaoyou.platform.server.mapper.RsdnssmsaddtbMapper;
 import com.miaoyou.platform.server.mapper.SmstbMapper;
+import com.miaoyou.platform.server.mapper.SmstypetbMapper;
 import com.miaoyou.platform.server.service.pkkey.PkgeneratorServiceIF;
 import com.miaoyou.platform.server.utils.Pager;
 import com.miaoyou.platform.server.utils.PingYinUtil;
@@ -45,6 +47,9 @@ public class SMSService implements SMSServiceIF {
 	
 	@Resource
 	RsdnssmsaddtbMapper rsdnssmsaddtbMapper;
+	
+	@Resource
+	SmstypetbMapper smstypetbMapper;
 	
 	@Override
 	public SMSAll findDataByKey(Long id) {
@@ -193,6 +198,37 @@ public class SMSService implements SMSServiceIF {
 		.andSmsNameEqualTo(rsdnssmsaddtb.getSmsName()).andSmstypeNameEqualTo(rsdnssmsaddtb.getSmstypeName());
 		return rsdnssmsaddtbMapper.deleteByExample(example);
 		
+	}
+
+	@Override
+	public CommFindEntity<SMSAll> findAll(String smsType) {
+		log.info("findAll:" +smsType);
+		CommFindEntity<SMSAll> result = new CommFindEntity<SMSAll>();
+		List<SMSAll> lsArray = new ArrayList<>();
+		SmstypetbExample example = new SmstypetbExample();
+		example.createCriteria().andSmstypeNameEqualTo(smsType);
+		List<Smstypetb> smstypeArray = smstypetbMapper.selectByExample(example);
+		if(smstypeArray!=null){
+			for(Smstypetb smstypetb:smstypeArray){
+				
+				SmstbExample smsExample = new SmstbExample();
+				smsExample.createCriteria().andSmstypeIdEqualTo(smstypetb.getSmstypeId());
+				List<Smstb> lsAll = smstbMapper.selectByExample(smsExample);
+				if (lsAll != null) {
+					for (Smstb smstb : lsAll) {
+						SMSAll smsall = new SMSAll();
+						copier.copy(smstb, smsall, null);
+						if (smstb.getSmstypeId() != null && smstb.getSmstypeId() > 0) {
+							Smstypetb smstype = sMSTypeService.findDataByKey(smstb
+									.getSmstypeId());
+							smsall.setSmstypetb(smstype);
+						}
+						lsArray.add(smsall);
+					}
+				}
+			}
+		}
+		return result;
 	}
 
 }
