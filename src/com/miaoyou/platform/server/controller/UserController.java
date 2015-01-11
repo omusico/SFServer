@@ -61,23 +61,32 @@ public class UserController {
 	public @ResponseBody CommFindEntity<UserAll> getAllUsers(
 			@RequestParam(value = "psi", defaultValue = "0") int page,
 			@RequestParam(value = "pst", defaultValue = "10") int perPage,
-			@RequestParam(value = "key", defaultValue = "") String name) {
+			@RequestParam(value = "key", defaultValue = "") String name,
+			@RequestParam(value = "dpid", defaultValue = "0") int dpid,
+			@RequestParam(value = "dpName", defaultValue = "") String dpName) {
 		log.debug("UserController,getAllUser.pageindex" + page + ",perPage:"
 				+ perPage);
 		Pager pager = new Pager(page, perPage);
 		CommFindEntity<UserAll> users = null;
-		if (name.trim().equals("")) {
+		if (name.trim().equals("") && dpName.trim().equals("") && dpid <= 0) {
 			users = userService.findAllUsers(pager);
 		} else {
 			 //构造SQL，注意这里的string都是对应数据库中的字段名，不是entity名
 	        StringBuilder sb = new StringBuilder();
 	        String andSplit = " and ";
-	        if(!name.equals("")){
+	        if(!name.trim().equals("")){
 	        	sb.append("(user_name").append(" like ").append("\"%"+name+"%\"").append(" or ").append("zujima").append(" like ").append("\""+name+"%\")").append(andSplit);
 	        }
-	        if(sb.length()>andSplit.length()){
-	        	sb.delete((sb.length()-andSplit.length())-1, sb.length()-1);
+	        if(dpid>0){
+	        	sb.append("department_id").append(" = ").append(dpid).append(andSplit);
 	        }
+	        if(!dpName.trim().equals("")){
+	        	sb.append("department_id").append(" = ").append("(select department_id from hpsf.departmenttb where department_name like \"%"+dpName+"%\" )").append(andSplit);
+	        }
+	        if(sb.length()>andSplit.length()){
+	        	sb.delete((sb.length()-andSplit.length()), sb.length()-1);
+	        }
+	        log.debug("sql:"+sb);
 			users = userService.findAllUsers(pager, sb.toString());
 		}
 		return users;

@@ -29,6 +29,8 @@
     <security:http pattern="/service/toppage" security="none"/>
     <security:http pattern="/service/m/**" security="none"/>
     <security:http pattern="/service/m/*" security="none"/>
+    <security:http pattern="/service/dp/" security="none"/>
+    <security:http pattern="/service/user/" security="none"/>
     <security:http pattern="/service/logout/clear" security="none"/>
     <security:http pattern="/service/timeout" security="none"/>
     <security:http pattern="/service/prod/upgrade" security="none"/>
