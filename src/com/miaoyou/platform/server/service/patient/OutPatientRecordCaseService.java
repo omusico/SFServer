@@ -19,15 +19,15 @@ import com.miaoyou.platform.server.entity.Diagnosistb;
 import com.miaoyou.platform.server.entity.DiagnosistbExample;
 import com.miaoyou.platform.server.entity.Patienttb;
 import com.miaoyou.platform.server.entity.PatienttbExample;
-import com.miaoyou.platform.server.entity.RecordcasetbExample;
-import com.miaoyou.platform.server.entity.RecordcasetbExample.Criteria;
-import com.miaoyou.platform.server.entity.RecordcasetbWithBLOBs;
-import com.miaoyou.platform.server.entity.Rspatientdpdns;
+import com.miaoyou.platform.server.entity.RecordcaseopdtbExample;
 import com.miaoyou.platform.server.entity.RspatientdpdnsExample;
+import com.miaoyou.platform.server.entity.RecordcaseopdtbExample.Criteria;
+import com.miaoyou.platform.server.entity.RecordcaseopdtbWithBLOBs;
+import com.miaoyou.platform.server.entity.Rspatientdpdns;
 import com.miaoyou.platform.server.entity.Surveytb;
 import com.miaoyou.platform.server.entity.Usertb;
 import com.miaoyou.platform.server.entity.UsertbExample;
-import com.miaoyou.platform.server.entity.child.PatienttbRecordCase;
+import com.miaoyou.platform.server.entity.child.OutPatienttbRecordCase;
 import com.miaoyou.platform.server.entity.child.PlanAll;
 import com.miaoyou.platform.server.entity.child.UserAll;
 import com.miaoyou.platform.server.entity.common.CommFindEntity;
@@ -35,7 +35,7 @@ import com.miaoyou.platform.server.entity.common.CommUserDetails;
 import com.miaoyou.platform.server.mapper.DepartmenttbMapper;
 import com.miaoyou.platform.server.mapper.DiagnosistbMapper;
 import com.miaoyou.platform.server.mapper.PatienttbMapper;
-import com.miaoyou.platform.server.mapper.RecordcasetbMapper;
+import com.miaoyou.platform.server.mapper.RecordcaseopdtbMapper;
 import com.miaoyou.platform.server.mapper.RspatientdpdnsMapper;
 import com.miaoyou.platform.server.mapper.UsertbMapper;
 import com.miaoyou.platform.server.service.diagnosis.DiagnosisSurveyServiceIF;
@@ -45,13 +45,13 @@ import com.miaoyou.platform.server.utils.Pager;
 import com.miaoyou.platform.server.utils.PingYinUtil;
 
 @Service
-public class PatientRecordCaseService implements PatientRecordCaseServiceIF {
+public class OutPatientRecordCaseService implements OutPatientRecordCaseServiceIF {
 
 	public static BeanCopier copier = BeanCopier.create(
-			RecordcasetbWithBLOBs.class, PatienttbRecordCase.class, false);
+			RecordcaseopdtbWithBLOBs.class, OutPatienttbRecordCase.class, false);
 
 	private static final Log log = LogFactory
-			.getLog(PatientRecordCaseService.class);
+			.getLog(OutPatientRecordCaseService.class);
 	@Resource
 	PkgeneratorServiceIF pkgeneratorService;
 	@Resource
@@ -76,16 +76,16 @@ public class PatientRecordCaseService implements PatientRecordCaseServiceIF {
 	private UsertbMapper mapper;
 
 	@Resource
-	private RecordcasetbMapper recordcasetbMapper;
+	private RecordcaseopdtbMapper recordcaseopdtbMapper;
 
 	@Resource
 	PatienttbMapper patienttbMapper;
 
 	@Override
-	public PatienttbRecordCase findDataByKey(Long id) {
-		PatienttbRecordCase all = new PatienttbRecordCase();
+	public OutPatienttbRecordCase findDataByKey(Long id) {
+		OutPatienttbRecordCase all = new OutPatienttbRecordCase();
 		log.info("find data:" + id);
-		RecordcasetbWithBLOBs records = recordcasetbMapper
+		RecordcaseopdtbWithBLOBs records = recordcaseopdtbMapper
 				.selectByPrimaryKey(id);
 		copier.copy(records, all, null);
 		if (records != null) {
@@ -98,10 +98,10 @@ public class PatientRecordCaseService implements PatientRecordCaseServiceIF {
 	}
 
 	@Override
-	public CommFindEntity<PatienttbRecordCase> findAll(Pager page,
+	public CommFindEntity<OutPatienttbRecordCase> findAll(Pager page,
 			String conditionSql) {
-		CommFindEntity<PatienttbRecordCase> result = new CommFindEntity<PatienttbRecordCase>();
-		RecordcasetbExample example = new RecordcasetbExample();
+		CommFindEntity<OutPatienttbRecordCase> result = new CommFindEntity<OutPatienttbRecordCase>();
+		RecordcaseopdtbExample example = new RecordcaseopdtbExample();
 		if (conditionSql != null && !conditionSql.trim().equals("")) {
 			log.info("conditionSql:" + conditionSql);
 			example.createCriteria().addConditionSql(conditionSql);
@@ -110,7 +110,7 @@ public class PatientRecordCaseService implements PatientRecordCaseServiceIF {
 		}
 
 		// 必须先设置count数，再设置limtStart/limitEnd
-		int count = recordcasetbMapper.countByExample(example);
+		int count = recordcaseopdtbMapper.countByExample(example);
 		log.info("findAll count:" + count);
 		result.setCount(count);
 		page.setCount(count);
@@ -119,17 +119,17 @@ public class PatientRecordCaseService implements PatientRecordCaseServiceIF {
 		// 排序
 		example.setOrderByClause("recordcaseid DESC");
 
-		List<RecordcasetbWithBLOBs> ls = recordcasetbMapper
+		List<RecordcaseopdtbWithBLOBs> ls = recordcaseopdtbMapper
 				.selectByExampleWithBLOBs(example);
-		List<PatienttbRecordCase> allResult = new ArrayList<>();
+		List<OutPatienttbRecordCase> allResult = new ArrayList<>();
 
 		if (ls != null) {
-			for (RecordcasetbWithBLOBs recordcasetbWithBLOBs : ls) {
-				PatienttbRecordCase all = new PatienttbRecordCase();
-				copier.copy(recordcasetbWithBLOBs, all, null);
+			for (RecordcaseopdtbWithBLOBs recordcaseopdtbWithBLOBs : ls) {
+				OutPatienttbRecordCase all = new OutPatienttbRecordCase();
+				copier.copy(recordcaseopdtbWithBLOBs, all, null);
 
 				Patienttb patient = patientService
-						.findDataByKey(recordcasetbWithBLOBs.getPatientid());
+						.findDataByKey(recordcaseopdtbWithBLOBs.getPatientid());
 				all.setPatienttb(patient);
 
 				allResult.add(all);
@@ -142,8 +142,8 @@ public class PatientRecordCaseService implements PatientRecordCaseServiceIF {
 	}
 
 	@Override
-	public int saveData(PatienttbRecordCase bean) {
-		log.info("save PatienttbRecordCase:" + bean.getKeshi());
+	public int saveData(OutPatienttbRecordCase bean) {
+		log.info("save OutPatienttbRecordCase:" + bean.getKeshi());
 
 		Patienttb patient = bean.getPatienttb();
 		if (patient != null) {
@@ -161,7 +161,7 @@ public class PatientRecordCaseService implements PatientRecordCaseServiceIF {
 							.selectByExample(pexample);
 					patient.setPatientid(lsPatient.get(0).getPatientid()); //获取得到的病人ID
 					bean.setPatientid(lsPatient.get(0).getPatientid()); // 获取得到的病人ID
-					patient.setZhuyuancishu(String.valueOf((pcount+1)));
+					patient.setMenzhencishu(String.valueOf((pcount+1)));
 					patientService.updateData(patient);
 				} else {
 					log.info("patient id is null,and patient name or phone is not existing, create new patient."
@@ -181,10 +181,10 @@ public class PatientRecordCaseService implements PatientRecordCaseServiceIF {
 			bean.setPatientid(patient.getPatientid());
 			bean.setDeleteFlag(0);
 			bean.setCreatedate(new Date());
-			if (bean.getChuyuanzhengduan() != null) {
+			if (bean.getMenzhenzhengduan() != null) {
 				// 得到汉字的首字母。，这里还有bug，一些多音字不好区分，以后improve
 				String zujima = PingYinUtil.getFirstSpell(bean
-						.getChuyuanzhengduan());
+						.getMenzhenzhengduan());
 				bean.setZujima(zujima);
 			}
 
@@ -209,7 +209,7 @@ public class PatientRecordCaseService implements PatientRecordCaseServiceIF {
 			log.error("no patient data.");
 		}
 
-		return recordcasetbMapper.insertSelective(bean);
+		return recordcaseopdtbMapper.insertSelective(bean);
 	}
 
 	/**
@@ -217,9 +217,9 @@ public class PatientRecordCaseService implements PatientRecordCaseServiceIF {
 	 * 
 	 * @param bean
 	 */
-	private void savePatientDpDns(PatienttbRecordCase bean) {
+	private void savePatientDpDns(OutPatienttbRecordCase bean) {
 		long patientId = bean.getPatientid();
-		String dnsList = bean.getChuyuanzhengduan();
+		String dnsList = bean.getMenzhenzhengduan();
 		String department = bean.getKeshi();
 		log.info("try to insert relationship for patient,deparment,diagnosistb");
 		if (dnsList != null && !dnsList.trim().equals("") && department != null
@@ -239,16 +239,16 @@ public class PatientRecordCaseService implements PatientRecordCaseServiceIF {
 
 				/* 为每个患者默认创建一个计划 */
 				PlanAll sfPlan = new PlanAll();
-				sfPlan.setPlanname("[住院号:"+bean.getZhuyuanhao()+"]["+department+"]["+dnsList.replace("#", "|")+"]电话随访计划");
+				sfPlan.setPlanname("[门诊号:"+bean.getMenzhenhao()+"]["+department+"]["+dnsList.replace("#", "|")+"]电话随访计划");
 				sfPlan.setPatientid(patientId);
 
-				// 这里应该把任务默认分配给该用户的住院医生
-				String zhuyuanyisheng = bean.getZhuyuanyisheng();
-				if (zhuyuanyisheng != null && !zhuyuanyisheng.trim().equals("")) {
+				// 这里应该把任务默认分配给该用户的门诊医生
+				String menzhenyisheng = bean.getMenzhenyisheng();
+				if (menzhenyisheng != null && !menzhenyisheng.trim().equals("")) {
 					log.info("try to find out the resident doctor.");
 					UsertbExample example = new UsertbExample();
 					example.createCriteria().andUserNameLike(
-							zhuyuanyisheng + "%");
+							menzhenyisheng + "%");
 					List<Usertb> usertbs = mapper.selectByExample(example);
 					if (usertbs != null && usertbs.size() > 0) {
 						Usertb user = usertbs.get(0);
@@ -290,6 +290,7 @@ public class PatientRecordCaseService implements PatientRecordCaseServiceIF {
 						}else{
 							log.info("already existing in rspatientdpdns table, does not insert into.");
 						}
+
 						try {
 							/* 为每个病患插入相关的调查问卷 */
 							CommFindEntity<Surveytb> modelEntity = diagnosisSurveyService
@@ -334,13 +335,13 @@ public class PatientRecordCaseService implements PatientRecordCaseServiceIF {
 	@Override
 	public int deleteDataByKey(Long id) {
 		log.info("deleteDataByKey:" + id);
-		RecordcasetbWithBLOBs tb = recordcasetbMapper.selectByPrimaryKey(id);
+		RecordcaseopdtbWithBLOBs tb = recordcaseopdtbMapper.selectByPrimaryKey(id);
 		tb.setDeleteFlag(1);
-		return recordcasetbMapper.updateByPrimaryKeySelective(tb);
+		return recordcaseopdtbMapper.updateByPrimaryKeySelective(tb);
 	}
 
 	@Override
-	public int updateData(PatienttbRecordCase bean) {
+	public int updateData(OutPatienttbRecordCase bean) {
 		log.info("updateData:" + bean.getPatientid());
 
 		Patienttb patient = bean.getPatienttb();
@@ -351,9 +352,9 @@ public class PatientRecordCaseService implements PatientRecordCaseServiceIF {
 
 		bean.setUpdatedate(new Date());
 		// 得到汉字的首字母。，这里还有bug，一些多音字不好区分，以后improve
-		if (bean.getChuyuanzhengduan() != null) {
+		if (bean.getMenzhenzhengduan() != null) {
 			String zujima = PingYinUtil.getFirstSpell(bean
-					.getChuyuanzhengduan());
+					.getMenzhenzhengduan());
 			bean.setZujima(zujima);
 		}
 
@@ -369,15 +370,15 @@ public class PatientRecordCaseService implements PatientRecordCaseServiceIF {
 				}
 			}
 		}
-		return recordcasetbMapper.updateByPrimaryKeySelective(bean);
+		return recordcaseopdtbMapper.updateByPrimaryKeySelective(bean);
 	}
 
 	@Override
-	public CommFindEntity<PatienttbRecordCase> findAll(Pager page,int type,
+	public CommFindEntity<OutPatienttbRecordCase> findAll(Pager page,int type,
 			Long patientid, String zhuyuanhao, String keshi,
 			Date chuyuanriqi, String zujima) {
-		CommFindEntity<PatienttbRecordCase> result = new CommFindEntity<PatienttbRecordCase>();
-		RecordcasetbExample example = new RecordcasetbExample();
+		CommFindEntity<OutPatienttbRecordCase> result = new CommFindEntity<OutPatienttbRecordCase>();
+		RecordcaseopdtbExample example = new RecordcaseopdtbExample();
 
         Criteria criteria = example.createCriteria();
 		
@@ -388,7 +389,7 @@ public class PatientRecordCaseService implements PatientRecordCaseServiceIF {
 			criteria.andPatientidEqualTo(patientid);
 		}
 		if(!zhuyuanhao.trim().equals("")){
-			criteria.andZhuyuanhaoEqualTo(zhuyuanhao);
+			criteria.andMenzhenhaoEqualTo(zhuyuanhao);
 		}
 		if(!keshi.trim().equals("")){
 			criteria.andKeshiEqualTo(keshi);
@@ -401,7 +402,7 @@ public class PatientRecordCaseService implements PatientRecordCaseServiceIF {
 		}
 
 		// 必须先设置count数，再设置limtStart/limitEnd
-		int count = recordcasetbMapper.countByExample(example);
+		int count = recordcaseopdtbMapper.countByExample(example);
 		log.info("findAll count:" + count);
 		result.setCount(count);
 		page.setCount(count);
@@ -410,17 +411,17 @@ public class PatientRecordCaseService implements PatientRecordCaseServiceIF {
 		// 排序
 		example.setOrderByClause("recordcaseid DESC");
 
-		List<RecordcasetbWithBLOBs> ls = recordcasetbMapper
+		List<RecordcaseopdtbWithBLOBs> ls = recordcaseopdtbMapper
 				.selectByExampleWithBLOBs(example);
-		List<PatienttbRecordCase> allResult = new ArrayList<>();
+		List<OutPatienttbRecordCase> allResult = new ArrayList<>();
 
 		if (ls != null) {
-			for (RecordcasetbWithBLOBs recordcasetbWithBLOBs : ls) {
-				PatienttbRecordCase all = new PatienttbRecordCase();
-				copier.copy(recordcasetbWithBLOBs, all, null);
+			for (RecordcaseopdtbWithBLOBs recordcaseopdtbExample : ls) {
+				OutPatienttbRecordCase all = new OutPatienttbRecordCase();
+				copier.copy(recordcaseopdtbExample, all, null);
 
 				Patienttb patient = patientService
-						.findDataByKey(recordcasetbWithBLOBs.getPatientid());
+						.findDataByKey(recordcaseopdtbExample.getPatientid());
 				all.setPatienttb(patient);
 
 				allResult.add(all);

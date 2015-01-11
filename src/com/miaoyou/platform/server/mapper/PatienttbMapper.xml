@@ -25,6 +25,7 @@
     <result column="ext1" property="ext1" jdbcType="VARCHAR" />
     <result column="ext2" property="ext2" jdbcType="VARCHAR" />
     <result column="ext3" property="ext3" jdbcType="VARCHAR" />
+    <result column="menzhencishu" property="menzhencishu" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -87,7 +88,7 @@
   <sql id="Base_Column_List" >
     patientid, name, nianling, xingbie, zhengjianhaoma, telphone, address, phone, ophone, 
     oname, orelationship, zhuyuancishu, suifangbeizhu, zujima, delete_flag, createdate, 
-    createperson, updatedate, updateperson, ext1, ext2, ext3
+    createperson, updatedate, updateperson, ext1, ext2, ext3, menzhencishu
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.miaoyou.platform.server.entity.PatienttbExample" >
     select
@@ -133,7 +134,7 @@
       suifangbeizhu, zujima, delete_flag, 
       createdate, createperson, updatedate, 
       updateperson, ext1, ext2, 
-      ext3)
+      ext3, menzhencishu)
     values (#{patientid,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{nianling,jdbcType=VARCHAR}, 
       #{xingbie,jdbcType=VARCHAR}, #{zhengjianhaoma,jdbcType=VARCHAR}, #{telphone,jdbcType=VARCHAR}, 
       #{address,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{ophone,jdbcType=VARCHAR}, 
@@ -141,7 +142,7 @@
       #{suifangbeizhu,jdbcType=VARCHAR}, #{zujima,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=INTEGER}, 
       #{createdate,jdbcType=TIMESTAMP}, #{createperson,jdbcType=VARCHAR}, #{updatedate,jdbcType=TIMESTAMP}, 
       #{updateperson,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, 
-      #{ext3,jdbcType=VARCHAR})
+      #{ext3,jdbcType=VARCHAR}, #{menzhencishu,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.miaoyou.platform.server.entity.Patienttb" >
     insert into patienttb
@@ -212,6 +213,9 @@
       <if test="ext3 != null" >
         ext3,
       </if>
+      <if test="menzhencishu != null" >
+        menzhencishu,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="patientid != null" >
@@ -279,6 +283,9 @@
       </if>
       <if test="ext3 != null" >
         #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="menzhencishu != null" >
+        #{menzhencishu,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -357,6 +364,9 @@
       <if test="record.ext3 != null" >
         ext3 = #{record.ext3,jdbcType=VARCHAR},
       </if>
+      <if test="record.menzhencishu != null" >
+        menzhencishu = #{record.menzhencishu,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -385,7 +395,8 @@
       updateperson = #{record.updateperson,jdbcType=VARCHAR},
       ext1 = #{record.ext1,jdbcType=VARCHAR},
       ext2 = #{record.ext2,jdbcType=VARCHAR},
-      ext3 = #{record.ext3,jdbcType=VARCHAR}
+      ext3 = #{record.ext3,jdbcType=VARCHAR},
+      menzhencishu = #{record.menzhencishu,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -456,6 +467,9 @@
       <if test="ext3 != null" >
         ext3 = #{ext3,jdbcType=VARCHAR},
       </if>
+      <if test="menzhencishu != null" >
+        menzhencishu = #{menzhencishu,jdbcType=VARCHAR},
+      </if>
     </set>
     where patientid = #{patientid,jdbcType=BIGINT}
   </update>
@@ -481,7 +495,8 @@
       updateperson = #{updateperson,jdbcType=VARCHAR},
       ext1 = #{ext1,jdbcType=VARCHAR},
       ext2 = #{ext2,jdbcType=VARCHAR},
-      ext3 = #{ext3,jdbcType=VARCHAR}
+      ext3 = #{ext3,jdbcType=VARCHAR},
+      menzhencishu = #{menzhencishu,jdbcType=VARCHAR}
     where patientid = #{patientid,jdbcType=BIGINT}
   </update>
 </mapper>

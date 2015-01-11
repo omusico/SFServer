@@ -1,6 +1,11 @@
 package com.miaoyou.platform.server.entity;
 
-public class RecordcasetbWithBLOBs extends Recordcasetb {
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class RecordcasetbWithBLOBs extends Recordcasetb implements Serializable{
     private String zhiyuqingkuang;
 
     private String chuyuanxiaojie;

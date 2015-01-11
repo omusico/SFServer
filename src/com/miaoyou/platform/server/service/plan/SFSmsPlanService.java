@@ -84,7 +84,7 @@ public class SFSmsPlanService implements SFSmsPlanServiceIF {
 		example.setLimitStart(page.getStartDataIndex());
 		example.setLimitEnd(page.getPageSize());
 		// 排序
-		example.setOrderByClause("plan_id DESC");
+		example.setOrderByClause("smsplan_id DESC");
 
 		List<Sfplansmstb> ls = sfplansmstbMapper.selectByExample(example);
 		if (ls != null) {

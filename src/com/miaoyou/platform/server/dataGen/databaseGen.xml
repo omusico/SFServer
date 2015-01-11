@@ -65,5 +65,6 @@
 		<table schema="hpsf" tableName="smstb" domainObjectName="Smstb" />	
 		<table schema="hpsf" tableName="rs_dns_sms_add" domainObjectName="Rsdnssmsaddtb" />
 		<table schema="hpsf" tableName="sfplansmstb" domainObjectName="sfplansmstb" />
+		<table schema="hpsf" tableName="recordcaseopdtb" domainObjectName="Recordcaseopdtb" />
 	</context>
 </generatorConfiguration>  

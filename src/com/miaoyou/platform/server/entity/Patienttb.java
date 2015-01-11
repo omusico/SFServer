@@ -50,6 +50,8 @@ public class Patienttb implements Serializable {
 
     private String ext3;
 
+    private String menzhencishu;
+
     public Long getPatientid() {
         return patientid;
     }
@@ -224,5 +226,13 @@ public class Patienttb implements Serializable {
 
     public void setExt3(String ext3) {
         this.ext3 = ext3 == null ? null : ext3.trim();
+    }
+
+    public String getMenzhencishu() {
+        return menzhencishu;
+    }
+
+    public void setMenzhencishu(String menzhencishu) {
+        this.menzhencishu = menzhencishu == null ? null : menzhencishu.trim();
     }
 }

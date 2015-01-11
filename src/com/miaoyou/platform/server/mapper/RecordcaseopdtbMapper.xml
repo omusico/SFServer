@@ -1,0 +1,602 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.miaoyou.platform.server.mapper.RecordcaseopdtbMapper" >
+  <cache />
+  <resultMap id="BaseResultMap" type="com.miaoyou.platform.server.entity.Recordcaseopdtb" >
+    <id column="recordcaseid" property="recordcaseid" jdbcType="BIGINT" />
+    <result column="patientid" property="patientid" jdbcType="BIGINT" />
+    <result column="keshi" property="keshi" jdbcType="VARCHAR" />
+    <result column="menzhenhao" property="menzhenhao" jdbcType="VARCHAR" />
+    <result column="menzhenriqi" property="menzhenriqi" jdbcType="DATE" />
+    <result column="menzhenzhengduan" property="menzhenzhengduan" jdbcType="VARCHAR" />
+    <result column="chuyuanriqi" property="chuyuanriqi" jdbcType="TIMESTAMP" />
+    <result column="menzhenyisheng" property="menzhenyisheng" jdbcType="VARCHAR" />
+    <result column="bingliezhuangtai" property="bingliezhuangtai" jdbcType="VARCHAR" />
+    <result column="zujima" property="zujima" jdbcType="VARCHAR" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
+    <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="createperson" property="createperson" jdbcType="VARCHAR" />
+    <result column="updatedate" property="updatedate" jdbcType="TIMESTAMP" />
+    <result column="updateperson" property="updateperson" jdbcType="VARCHAR" />
+    <result column="ext1" property="ext1" jdbcType="VARCHAR" />
+    <result column="ext2" property="ext2" jdbcType="VARCHAR" />
+    <result column="ext3" property="ext3" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.miaoyou.platform.server.entity.RecordcaseopdtbWithBLOBs" extends="BaseResultMap" >
+    <result column="zhushu" property="zhushu" jdbcType="LONGVARCHAR" />
+    <result column="bingshi" property="bingshi" jdbcType="LONGVARCHAR" />
+    <result column="chati" property="chati" jdbcType="LONGVARCHAR" />
+    <result column="jiancha" property="jiancha" jdbcType="LONGVARCHAR" />
+    <result column="yizhu" property="yizhu" jdbcType="LONGVARCHAR" />
+    <result column="guoqushi" property="guoqushi" jdbcType="LONGVARCHAR" />
+    <result column="yaowuguominshi" property="yaowuguominshi" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    recordcaseid, patientid, keshi, menzhenhao, menzhenriqi, menzhenzhengduan, chuyuanriqi, 
+    menzhenyisheng, bingliezhuangtai, zujima, delete_flag, createdate, createperson, 
+    updatedate, updateperson, ext1, ext2, ext3
+  </sql>
+  <sql id="Blob_Column_List" >
+    zhushu, bingshi, chati, jiancha, yizhu, guoqushi, yaowuguominshi
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.miaoyou.platform.server.entity.RecordcaseopdtbExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from recordcaseopdtb
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.miaoyou.platform.server.entity.RecordcaseopdtbExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from recordcaseopdtb
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="groupby != null" >
+      group by ${groupby}
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from recordcaseopdtb
+    where recordcaseid = #{recordcaseid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from recordcaseopdtb
+    where recordcaseid = #{recordcaseid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.miaoyou.platform.server.entity.RecordcaseopdtbExample" >
+    delete from recordcaseopdtb
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.miaoyou.platform.server.entity.RecordcaseopdtbWithBLOBs" >
+    insert into recordcaseopdtb (recordcaseid, patientid, keshi, 
+      menzhenhao, menzhenriqi, menzhenzhengduan, 
+      chuyuanriqi, menzhenyisheng, bingliezhuangtai, 
+      zujima, delete_flag, createdate, 
+      createperson, updatedate, updateperson, 
+      ext1, ext2, ext3, zhushu, 
+      bingshi, chati, jiancha, 
+      yizhu, guoqushi, yaowuguominshi
+      )
+    values (#{recordcaseid,jdbcType=BIGINT}, #{patientid,jdbcType=BIGINT}, #{keshi,jdbcType=VARCHAR}, 
+      #{menzhenhao,jdbcType=VARCHAR}, #{menzhenriqi,jdbcType=DATE}, #{menzhenzhengduan,jdbcType=VARCHAR}, 
+      #{chuyuanriqi,jdbcType=TIMESTAMP}, #{menzhenyisheng,jdbcType=VARCHAR}, #{bingliezhuangtai,jdbcType=VARCHAR}, 
+      #{zujima,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=INTEGER}, #{createdate,jdbcType=TIMESTAMP}, 
+      #{createperson,jdbcType=VARCHAR}, #{updatedate,jdbcType=TIMESTAMP}, #{updateperson,jdbcType=VARCHAR}, 
+      #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{zhushu,jdbcType=LONGVARCHAR}, 
+      #{bingshi,jdbcType=LONGVARCHAR}, #{chati,jdbcType=LONGVARCHAR}, #{jiancha,jdbcType=LONGVARCHAR}, 
+      #{yizhu,jdbcType=LONGVARCHAR}, #{guoqushi,jdbcType=LONGVARCHAR}, #{yaowuguominshi,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.miaoyou.platform.server.entity.RecordcaseopdtbWithBLOBs" >
+    insert into recordcaseopdtb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recordcaseid != null" >
+        recordcaseid,
+      </if>
+      <if test="patientid != null" >
+        patientid,
+      </if>
+      <if test="keshi != null" >
+        keshi,
+      </if>
+      <if test="menzhenhao != null" >
+        menzhenhao,
+      </if>
+      <if test="menzhenriqi != null" >
+        menzhenriqi,
+      </if>
+      <if test="menzhenzhengduan != null" >
+        menzhenzhengduan,
+      </if>
+      <if test="chuyuanriqi != null" >
+        chuyuanriqi,
+      </if>
+      <if test="menzhenyisheng != null" >
+        menzhenyisheng,
+      </if>
+      <if test="bingliezhuangtai != null" >
+        bingliezhuangtai,
+      </if>
+      <if test="zujima != null" >
+        zujima,
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag,
+      </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+      <if test="createperson != null" >
+        createperson,
+      </if>
+      <if test="updatedate != null" >
+        updatedate,
+      </if>
+      <if test="updateperson != null" >
+        updateperson,
+      </if>
+      <if test="ext1 != null" >
+        ext1,
+      </if>
+      <if test="ext2 != null" >
+        ext2,
+      </if>
+      <if test="ext3 != null" >
+        ext3,
+      </if>
+      <if test="zhushu != null" >
+        zhushu,
+      </if>
+      <if test="bingshi != null" >
+        bingshi,
+      </if>
+      <if test="chati != null" >
+        chati,
+      </if>
+      <if test="jiancha != null" >
+        jiancha,
+      </if>
+      <if test="yizhu != null" >
+        yizhu,
+      </if>
+      <if test="guoqushi != null" >
+        guoqushi,
+      </if>
+      <if test="yaowuguominshi != null" >
+        yaowuguominshi,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recordcaseid != null" >
+        #{recordcaseid,jdbcType=BIGINT},
+      </if>
+      <if test="patientid != null" >
+        #{patientid,jdbcType=BIGINT},
+      </if>
+      <if test="keshi != null" >
+        #{keshi,jdbcType=VARCHAR},
+      </if>
+      <if test="menzhenhao != null" >
+        #{menzhenhao,jdbcType=VARCHAR},
+      </if>
+      <if test="menzhenriqi != null" >
+        #{menzhenriqi,jdbcType=DATE},
+      </if>
+      <if test="menzhenzhengduan != null" >
+        #{menzhenzhengduan,jdbcType=VARCHAR},
+      </if>
+      <if test="chuyuanriqi != null" >
+        #{chuyuanriqi,jdbcType=TIMESTAMP},
+      </if>
+      <if test="menzhenyisheng != null" >
+        #{menzhenyisheng,jdbcType=VARCHAR},
+      </if>
+      <if test="bingliezhuangtai != null" >
+        #{bingliezhuangtai,jdbcType=VARCHAR},
+      </if>
+      <if test="zujima != null" >
+        #{zujima,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createperson != null" >
+        #{createperson,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedate != null" >
+        #{updatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateperson != null" >
+        #{updateperson,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="zhushu != null" >
+        #{zhushu,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="bingshi != null" >
+        #{bingshi,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="chati != null" >
+        #{chati,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="jiancha != null" >
+        #{jiancha,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="yizhu != null" >
+        #{yizhu,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="guoqushi != null" >
+        #{guoqushi,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="yaowuguominshi != null" >
+        #{yaowuguominshi,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.miaoyou.platform.server.entity.RecordcaseopdtbExample" resultType="java.lang.Integer" >
+    select count(*) from recordcaseopdtb
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update recordcaseopdtb
+    <set >
+      <if test="record.recordcaseid != null" >
+        recordcaseid = #{record.recordcaseid,jdbcType=BIGINT},
+      </if>
+      <if test="record.patientid != null" >
+        patientid = #{record.patientid,jdbcType=BIGINT},
+      </if>
+      <if test="record.keshi != null" >
+        keshi = #{record.keshi,jdbcType=VARCHAR},
+      </if>
+      <if test="record.menzhenhao != null" >
+        menzhenhao = #{record.menzhenhao,jdbcType=VARCHAR},
+      </if>
+      <if test="record.menzhenriqi != null" >
+        menzhenriqi = #{record.menzhenriqi,jdbcType=DATE},
+      </if>
+      <if test="record.menzhenzhengduan != null" >
+        menzhenzhengduan = #{record.menzhenzhengduan,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chuyuanriqi != null" >
+        chuyuanriqi = #{record.chuyuanriqi,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.menzhenyisheng != null" >
+        menzhenyisheng = #{record.menzhenyisheng,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bingliezhuangtai != null" >
+        bingliezhuangtai = #{record.bingliezhuangtai,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zujima != null" >
+        zujima = #{record.zujima,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleteFlag != null" >
+        delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.createdate != null" >
+        createdate = #{record.createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createperson != null" >
+        createperson = #{record.createperson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedate != null" >
+        updatedate = #{record.updatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateperson != null" >
+        updateperson = #{record.updateperson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ext1 != null" >
+        ext1 = #{record.ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ext2 != null" >
+        ext2 = #{record.ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ext3 != null" >
+        ext3 = #{record.ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zhushu != null" >
+        zhushu = #{record.zhushu,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.bingshi != null" >
+        bingshi = #{record.bingshi,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.chati != null" >
+        chati = #{record.chati,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.jiancha != null" >
+        jiancha = #{record.jiancha,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.yizhu != null" >
+        yizhu = #{record.yizhu,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.guoqushi != null" >
+        guoqushi = #{record.guoqushi,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.yaowuguominshi != null" >
+        yaowuguominshi = #{record.yaowuguominshi,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update recordcaseopdtb
+    set recordcaseid = #{record.recordcaseid,jdbcType=BIGINT},
+      patientid = #{record.patientid,jdbcType=BIGINT},
+      keshi = #{record.keshi,jdbcType=VARCHAR},
+      menzhenhao = #{record.menzhenhao,jdbcType=VARCHAR},
+      menzhenriqi = #{record.menzhenriqi,jdbcType=DATE},
+      menzhenzhengduan = #{record.menzhenzhengduan,jdbcType=VARCHAR},
+      chuyuanriqi = #{record.chuyuanriqi,jdbcType=TIMESTAMP},
+      menzhenyisheng = #{record.menzhenyisheng,jdbcType=VARCHAR},
+      bingliezhuangtai = #{record.bingliezhuangtai,jdbcType=VARCHAR},
+      zujima = #{record.zujima,jdbcType=VARCHAR},
+      delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
+      createdate = #{record.createdate,jdbcType=TIMESTAMP},
+      createperson = #{record.createperson,jdbcType=VARCHAR},
+      updatedate = #{record.updatedate,jdbcType=TIMESTAMP},
+      updateperson = #{record.updateperson,jdbcType=VARCHAR},
+      ext1 = #{record.ext1,jdbcType=VARCHAR},
+      ext2 = #{record.ext2,jdbcType=VARCHAR},
+      ext3 = #{record.ext3,jdbcType=VARCHAR},
+      zhushu = #{record.zhushu,jdbcType=LONGVARCHAR},
+      bingshi = #{record.bingshi,jdbcType=LONGVARCHAR},
+      chati = #{record.chati,jdbcType=LONGVARCHAR},
+      jiancha = #{record.jiancha,jdbcType=LONGVARCHAR},
+      yizhu = #{record.yizhu,jdbcType=LONGVARCHAR},
+      guoqushi = #{record.guoqushi,jdbcType=LONGVARCHAR},
+      yaowuguominshi = #{record.yaowuguominshi,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update recordcaseopdtb
+    set recordcaseid = #{record.recordcaseid,jdbcType=BIGINT},
+      patientid = #{record.patientid,jdbcType=BIGINT},
+      keshi = #{record.keshi,jdbcType=VARCHAR},
+      menzhenhao = #{record.menzhenhao,jdbcType=VARCHAR},
+      menzhenriqi = #{record.menzhenriqi,jdbcType=DATE},
+      menzhenzhengduan = #{record.menzhenzhengduan,jdbcType=VARCHAR},
+      chuyuanriqi = #{record.chuyuanriqi,jdbcType=TIMESTAMP},
+      menzhenyisheng = #{record.menzhenyisheng,jdbcType=VARCHAR},
+      bingliezhuangtai = #{record.bingliezhuangtai,jdbcType=VARCHAR},
+      zujima = #{record.zujima,jdbcType=VARCHAR},
+      delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
+      createdate = #{record.createdate,jdbcType=TIMESTAMP},
+      createperson = #{record.createperson,jdbcType=VARCHAR},
+      updatedate = #{record.updatedate,jdbcType=TIMESTAMP},
+      updateperson = #{record.updateperson,jdbcType=VARCHAR},
+      ext1 = #{record.ext1,jdbcType=VARCHAR},
+      ext2 = #{record.ext2,jdbcType=VARCHAR},
+      ext3 = #{record.ext3,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.miaoyou.platform.server.entity.RecordcaseopdtbWithBLOBs" >
+    update recordcaseopdtb
+    <set >
+      <if test="patientid != null" >
+        patientid = #{patientid,jdbcType=BIGINT},
+      </if>
+      <if test="keshi != null" >
+        keshi = #{keshi,jdbcType=VARCHAR},
+      </if>
+      <if test="menzhenhao != null" >
+        menzhenhao = #{menzhenhao,jdbcType=VARCHAR},
+      </if>
+      <if test="menzhenriqi != null" >
+        menzhenriqi = #{menzhenriqi,jdbcType=DATE},
+      </if>
+      <if test="menzhenzhengduan != null" >
+        menzhenzhengduan = #{menzhenzhengduan,jdbcType=VARCHAR},
+      </if>
+      <if test="chuyuanriqi != null" >
+        chuyuanriqi = #{chuyuanriqi,jdbcType=TIMESTAMP},
+      </if>
+      <if test="menzhenyisheng != null" >
+        menzhenyisheng = #{menzhenyisheng,jdbcType=VARCHAR},
+      </if>
+      <if test="bingliezhuangtai != null" >
+        bingliezhuangtai = #{bingliezhuangtai,jdbcType=VARCHAR},
+      </if>
+      <if test="zujima != null" >
+        zujima = #{zujima,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createperson != null" >
+        createperson = #{createperson,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedate != null" >
+        updatedate = #{updatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateperson != null" >
+        updateperson = #{updateperson,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        ext1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        ext2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        ext3 = #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="zhushu != null" >
+        zhushu = #{zhushu,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="bingshi != null" >
+        bingshi = #{bingshi,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="chati != null" >
+        chati = #{chati,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="jiancha != null" >
+        jiancha = #{jiancha,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="yizhu != null" >
+        yizhu = #{yizhu,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="guoqushi != null" >
+        guoqushi = #{guoqushi,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="yaowuguominshi != null" >
+        yaowuguominshi = #{yaowuguominshi,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where recordcaseid = #{recordcaseid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.miaoyou.platform.server.entity.RecordcaseopdtbWithBLOBs" >
+    update recordcaseopdtb
+    set patientid = #{patientid,jdbcType=BIGINT},
+      keshi = #{keshi,jdbcType=VARCHAR},
+      menzhenhao = #{menzhenhao,jdbcType=VARCHAR},
+      menzhenriqi = #{menzhenriqi,jdbcType=DATE},
+      menzhenzhengduan = #{menzhenzhengduan,jdbcType=VARCHAR},
+      chuyuanriqi = #{chuyuanriqi,jdbcType=TIMESTAMP},
+      menzhenyisheng = #{menzhenyisheng,jdbcType=VARCHAR},
+      bingliezhuangtai = #{bingliezhuangtai,jdbcType=VARCHAR},
+      zujima = #{zujima,jdbcType=VARCHAR},
+      delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      createdate = #{createdate,jdbcType=TIMESTAMP},
+      createperson = #{createperson,jdbcType=VARCHAR},
+      updatedate = #{updatedate,jdbcType=TIMESTAMP},
+      updateperson = #{updateperson,jdbcType=VARCHAR},
+      ext1 = #{ext1,jdbcType=VARCHAR},
+      ext2 = #{ext2,jdbcType=VARCHAR},
+      ext3 = #{ext3,jdbcType=VARCHAR},
+      zhushu = #{zhushu,jdbcType=LONGVARCHAR},
+      bingshi = #{bingshi,jdbcType=LONGVARCHAR},
+      chati = #{chati,jdbcType=LONGVARCHAR},
+      jiancha = #{jiancha,jdbcType=LONGVARCHAR},
+      yizhu = #{yizhu,jdbcType=LONGVARCHAR},
+      guoqushi = #{guoqushi,jdbcType=LONGVARCHAR},
+      yaowuguominshi = #{yaowuguominshi,jdbcType=LONGVARCHAR}
+    where recordcaseid = #{recordcaseid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.miaoyou.platform.server.entity.Recordcaseopdtb" >
+    update recordcaseopdtb
+    set patientid = #{patientid,jdbcType=BIGINT},
+      keshi = #{keshi,jdbcType=VARCHAR},
+      menzhenhao = #{menzhenhao,jdbcType=VARCHAR},
+      menzhenriqi = #{menzhenriqi,jdbcType=DATE},
+      menzhenzhengduan = #{menzhenzhengduan,jdbcType=VARCHAR},
+      chuyuanriqi = #{chuyuanriqi,jdbcType=TIMESTAMP},
+      menzhenyisheng = #{menzhenyisheng,jdbcType=VARCHAR},
+      bingliezhuangtai = #{bingliezhuangtai,jdbcType=VARCHAR},
+      zujima = #{zujima,jdbcType=VARCHAR},
+      delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      createdate = #{createdate,jdbcType=TIMESTAMP},
+      createperson = #{createperson,jdbcType=VARCHAR},
+      updatedate = #{updatedate,jdbcType=TIMESTAMP},
+      updateperson = #{updateperson,jdbcType=VARCHAR},
+      ext1 = #{ext1,jdbcType=VARCHAR},
+      ext2 = #{ext2,jdbcType=VARCHAR},
+      ext3 = #{ext3,jdbcType=VARCHAR}
+    where recordcaseid = #{recordcaseid,jdbcType=BIGINT}
+  </update>
+</mapper>

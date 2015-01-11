@@ -228,6 +228,8 @@ public class SMSService implements SMSServiceIF {
 				}
 			}
 		}
+		result.setCount(lsArray.size());
+		result.setResult(lsArray);
 		return result;
 	}
 

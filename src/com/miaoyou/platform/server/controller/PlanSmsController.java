@@ -116,10 +116,10 @@ public class PlanSmsController {
 					.append("\"" + endDate + "\")").append(andSplit);
 		} else if (!startDate.equals("")) {
 			sb.append("(plannexttime").append(" >= ")
-					.append("\"" + startDate + "\"").append(andSplit);
+					.append("\"" + startDate + "\")").append(andSplit);
 		} else if (!endDate.equals("")) {
 			sb.append("(plannexttime").append(" <= ")
-					.append("\"" + endDate + "\"").append(andSplit);
+					.append("\"" + endDate + "\")").append(andSplit);
 		}
 
 		if (!name.equals("")) {

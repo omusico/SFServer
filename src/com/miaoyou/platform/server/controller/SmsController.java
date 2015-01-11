@@ -210,5 +210,13 @@ public class SmsController {
 		CommFindEntity<SMSAll> result = sMSService.findAll(name);
 		return result;
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/sms/type")
+	public @ResponseBody CommFindEntity<SMSAll> getAllBySmsType2(@RequestParam(value = "type", defaultValue = "-1") String type) {
+		log.debug("getAll.getAllBySmsType2,type" + type );
+
+		CommFindEntity<SMSAll> result = sMSService.findAll(type);
+		return result;
+	}
 
 }

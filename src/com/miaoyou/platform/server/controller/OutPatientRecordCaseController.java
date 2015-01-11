@@ -20,25 +20,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.miaoyou.platform.server.entity.child.OutPatienttbRecordCase;
 import com.miaoyou.platform.server.entity.child.PatienttbRecordCase;
 import com.miaoyou.platform.server.entity.common.ComResponse;
 import com.miaoyou.platform.server.entity.common.CommFindEntity;
 import com.miaoyou.platform.server.service.log.LogIF;
-import com.miaoyou.platform.server.service.patient.PatientRecordCaseServiceIF;
+import com.miaoyou.platform.server.service.patient.OutPatientRecordCaseServiceIF;
 import com.miaoyou.platform.server.utils.Pager;
 
 
 /**
- * 住院病案
+ * 门诊病案
  * @author 305027939
  *
  */
 @Controller
-public class PatientRecordCaseController {
-	  private static final Log log = LogFactory.getLog(PatientRecordCaseController.class);
+public class OutPatientRecordCaseController {
+	  private static final Log log = LogFactory.getLog(OutPatientRecordCaseController.class);
 	  
 	@Resource
-	PatientRecordCaseServiceIF patientRecordCaseService;
+	OutPatientRecordCaseServiceIF outpatientRecordCaseService;
 	
     @Resource
     LogIF logService;
@@ -50,11 +51,11 @@ public class PatientRecordCaseController {
 				new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), true));
 	}
     
-	 @RequestMapping(method = RequestMethod.GET, value = "/case/{id}")
+	 @RequestMapping(method = RequestMethod.GET, value = "/outcase/{id}")
 	    public @ResponseBody
-	    PatienttbRecordCase getById(@PathVariable Long id) {
+	    OutPatienttbRecordCase getById(@PathVariable Long id) {
 	        log.debug("get:" + id);
-	        PatienttbRecordCase bean = patientRecordCaseService.findDataByKey(id);
+	        OutPatienttbRecordCase bean = outpatientRecordCaseService.findDataByKey(id);
 	        return bean;
 	    }
 	    
@@ -70,9 +71,9 @@ public class PatientRecordCaseController {
 	     * @param zujima
 	     * @return
 	     */
-	    @RequestMapping(method = RequestMethod.GET, value = "/case")
+	    @RequestMapping(method = RequestMethod.GET, value = "/outcase")
 	    public @ResponseBody
-	    CommFindEntity<PatienttbRecordCase> getAll(
+	    CommFindEntity<OutPatienttbRecordCase> getAll(
 	            @RequestParam(value = "psi", defaultValue = "0") int page,
 	            @RequestParam(value = "pst", defaultValue = "20") int perPage,
 	            @RequestParam(value = "chuyuanriqi", defaultValue = "") Date chuyuanriqi,
@@ -89,75 +90,75 @@ public class PatientRecordCaseController {
 	        	zhuyuanhao = key;
 	        }
 	        
-	        CommFindEntity<PatienttbRecordCase> result = patientRecordCaseService.findAll(pager,type, patientid,zhuyuanhao,keshi,chuyuanriqi,zujima);
+	        CommFindEntity<OutPatienttbRecordCase> result = outpatientRecordCaseService.findAll(pager,type, patientid,zhuyuanhao,keshi,chuyuanriqi,zujima);
 	        return result;
 	    }
 
-	    @RequestMapping(method = RequestMethod.POST, value = "/case/add", produces = MediaType.APPLICATION_JSON_VALUE)
+	    @RequestMapping(method = RequestMethod.POST, value = "/outcase/add", produces = MediaType.APPLICATION_JSON_VALUE)
 	    public @ResponseBody
-	    ComResponse<PatienttbRecordCase> add(@RequestBody PatienttbRecordCase bean) {
+	    ComResponse<OutPatienttbRecordCase> add(@RequestBody OutPatienttbRecordCase bean) {
 	        if (bean.getPatienttb() != null) {
 	            log.debug("add:" + bean.getPatienttb().getName());
 	        } else {
 	            log.error("add: bean is null!");
 	        }
 
-	        ComResponse<PatienttbRecordCase> comResponse = new ComResponse<PatienttbRecordCase>();
+	        ComResponse<OutPatienttbRecordCase> comResponse = new ComResponse<OutPatienttbRecordCase>();
 	        try {
-	            int result = patientRecordCaseService.saveData(bean);
+	            int result = outpatientRecordCaseService.saveData(bean);
 	            comResponse.setResponseStatus(ComResponse.STATUS_OK);
 	            comResponse.setResponseEntity(bean);
-	            logService.saveLog("新建住院病案");
-	            comResponse.setExtendResponseContext("创建住院病案成功.");
+	            logService.saveLog("新建门诊病案");
+	            comResponse.setExtendResponseContext("创建门诊病案成功.");
 	        } catch (Exception e) {
 	            log.error(e);
 	            comResponse.setResponseStatus(ComResponse.STATUS_FAIL);
-	            comResponse.setErrorMessage("新建住院病案失败."+e.getMessage());
+	            comResponse.setErrorMessage("新建门诊病案失败."+e.getMessage());
 	        }
 	        log.debug("added:" + comResponse.getResponseStatus());
 	        
 	        return comResponse;
 	    }
 
-	    @RequestMapping(method = RequestMethod.POST, value = "/case/update", produces = MediaType.APPLICATION_JSON_VALUE)
+	    @RequestMapping(method = RequestMethod.POST, value = "/outcase/update", produces = MediaType.APPLICATION_JSON_VALUE)
 	    public @ResponseBody
-	    ComResponse<PatienttbRecordCase> update(@RequestBody PatienttbRecordCase bean) {
+	    ComResponse<OutPatienttbRecordCase> update(@RequestBody OutPatienttbRecordCase bean) {
 	        if (bean != null) {
 	            log.debug("update:" + bean.getPatientid());
 	        } else {
 	            log.error("update: bean is null!");
 	        }
-	        ComResponse<PatienttbRecordCase> comResponse = new ComResponse<PatienttbRecordCase>();
+	        ComResponse<OutPatienttbRecordCase> comResponse = new ComResponse<OutPatienttbRecordCase>();
 	        try {
-	            int result = patientRecordCaseService.updateData(bean);
+	            int result = outpatientRecordCaseService.updateData(bean);
 	            comResponse.setResponseStatus(ComResponse.STATUS_OK);
 	            comResponse.setResponseEntity(bean);
-	            logService.saveLog("更新住院病案模版");
-	            comResponse.setExtendResponseContext("更新住院病案成功.");
+	            logService.saveLog("更新门诊病案模版");
+	            comResponse.setExtendResponseContext("更新门诊病案成功.");
 	        } catch (Exception e) {
 	        	log.error(e);
 	            comResponse.setResponseStatus(ComResponse.STATUS_FAIL);
-	            comResponse.setErrorMessage("更新住院病案失败."+e.getMessage());
+	            comResponse.setErrorMessage("更新门诊病案失败."+e.getMessage());
 	        }
 	        log.debug("updated:" + comResponse.getResponseStatus());
 	        
 	        return comResponse;
 	    }
 
-	    @RequestMapping(method = RequestMethod.POST, value = "/case/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	    @RequestMapping(method = RequestMethod.POST, value = "/outcase/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	    public @ResponseBody
-	    ComResponse<PatienttbRecordCase> delete(@PathVariable Long id) {
+	    ComResponse<OutPatienttbRecordCase> delete(@PathVariable Long id) {
 	        log.debug("delete:" + id);
-	        ComResponse<PatienttbRecordCase> comResponse = new ComResponse<PatienttbRecordCase>();
+	        ComResponse<OutPatienttbRecordCase> comResponse = new ComResponse<OutPatienttbRecordCase>();
 	        try {
-	            int result =patientRecordCaseService.deleteDataByKey(id);
+	            int result =outpatientRecordCaseService.deleteDataByKey(id);
 	            comResponse.setResponseStatus(ComResponse.STATUS_OK);
-	            logService.saveLog("删除住院病案模版");
-	            comResponse.setExtendResponseContext("删除住院病案成功.");
+	            logService.saveLog("删除门诊病案模版");
+	            comResponse.setExtendResponseContext("删除门诊病案成功.");
 	        } catch (Exception e) {
 	        	log.error(e);
 	            comResponse.setResponseStatus(ComResponse.STATUS_FAIL);
-	            comResponse.setErrorMessage("删除住院病案失败."+e.getMessage());
+	            comResponse.setErrorMessage("删除门诊病案失败."+e.getMessage());
 	        }
 	        log.debug("deleted:" + comResponse.getResponseStatus());
 	         
