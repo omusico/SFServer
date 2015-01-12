@@ -46,10 +46,27 @@ public class AppparamController {
     CommFindEntity<Appparamtb> findAll(
             @RequestParam(value = "psi", defaultValue = "1") int startIndex,
             @RequestParam(value = "pst", defaultValue = "20") int perPage,
-            @RequestParam(value = "conditionSql", defaultValue = "") String conditionSql) {
+            @RequestParam(value = "type", defaultValue = "") String type,  
+            @RequestParam(value = "key", defaultValue = "") String key) {
         log.debug("AppparamtbController,getAllUser.startIndex:" + startIndex + ",perPage:" + perPage);
         Pager pager = new Pager(startIndex, perPage);
-        return appparamService.findAll(pager, conditionSql);
+        
+        //构造SQL，注意这里的string都是对应数据库中的字段名，不是entity名
+        StringBuilder sb = new StringBuilder();
+        String andSplit = " and ";
+        if(!type.trim().equals("")){
+        	sb.append("appparam_type").append(" = ").append("\""+type+"\"").append(andSplit);
+        }
+        if(!key.trim().equals("")){
+        	sb.append("(appparam_name").append(" = ").append("\"%"+key+"%\"").append(" or ").append("zujima").append(" like ").append("\""+key+"%\")").append(andSplit);
+        }
+       
+        if(sb.length()>andSplit.length()){
+        	sb.delete((sb.length()-andSplit.length()), sb.length()-1);
+        }
+        log.debug("sql:"+sb);
+        
+        return appparamService.findAll(pager, sb.toString());
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "add", produces = MediaType.APPLICATION_JSON_VALUE)
