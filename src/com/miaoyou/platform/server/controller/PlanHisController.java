@@ -22,11 +22,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.miaoyou.platform.server.entity.Sfplantb;
 import com.miaoyou.platform.server.entity.Surveytb;
-import com.miaoyou.platform.server.entity.child.PlanAll;
+import com.miaoyou.platform.server.entity.child.PlanHisAll;
 import com.miaoyou.platform.server.entity.common.ComResponse;
 import com.miaoyou.platform.server.entity.common.CommFindEntity;
 import com.miaoyou.platform.server.service.log.LogIF;
-import com.miaoyou.platform.server.service.plan.SFPlaneServiceIF;
+import com.miaoyou.platform.server.service.plan.SFPlanHisServiceIF;
 import com.miaoyou.platform.server.utils.Pager;
 
 /**
@@ -36,11 +36,11 @@ import com.miaoyou.platform.server.utils.Pager;
  *
  */
 @Controller
-public class PlanController {
-	private static final Log log = LogFactory.getLog(PlanController.class);
+public class PlanHisController {
+	private static final Log log = LogFactory.getLog(PlanHisController.class);
 
 	@Resource
-	SFPlaneServiceIF sFPlaneService;
+	SFPlanHisServiceIF sFPlanHisServiceIF;
 
 	@Resource
 	LogIF logService;
@@ -52,10 +52,10 @@ public class PlanController {
 				new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), true));
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/plan/{id}")
-	public @ResponseBody PlanAll getById(@PathVariable Long id) {
+	@RequestMapping(method = RequestMethod.GET, value = "/planhistory/{id}")
+	public @ResponseBody PlanHisAll getById(@PathVariable Long id) {
 		log.debug("get:" + id);
-		PlanAll bean = sFPlaneService.findDataByKey(id);
+		PlanHisAll bean = sFPlanHisServiceIF.findDataByKey(id);
 		return bean;
 	}
 	
@@ -72,8 +72,8 @@ public class PlanController {
 //		return result;
 //	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/plan")
-	public @ResponseBody CommFindEntity<PlanAll> getAll(
+	@RequestMapping(method = RequestMethod.GET, value = "/planhistory")
+	public @ResponseBody CommFindEntity<PlanHisAll> getAll(
 			@RequestParam(value = "psi", defaultValue = "0") int page,
 			@RequestParam(value = "pst", defaultValue = "20") int perPage,
 			@RequestParam(value = "type", defaultValue = "0") int type,
@@ -82,7 +82,6 @@ public class PlanController {
 			@RequestParam(value = "userid", defaultValue = "0") long userid,
 			@RequestParam(value = "startDate", defaultValue = "") String startDate,
 			@RequestParam(value = "endDate", defaultValue = "") String endDate,
-			@RequestParam(value = "expire", defaultValue = "") String expire,
 			@RequestParam(value = "key", defaultValue = "") String name) {
 		log.debug("getAll.pageindex" + page + ",perPage:" + perPage);
 		Pager pager = new Pager(page, perPage);
@@ -116,16 +115,11 @@ public class PlanController {
 					.append("\"" + startDate + "\"").append(andSplit)
 					.append("\"" + endDate + "\")").append(andSplit);
 		} else if (!startDate.equals("")) {
-			sb.append("plannexttime").append(" >= ")
+			sb.append("(plannexttime").append(" >= ")
 					.append("\"" + startDate + "\"").append(andSplit);
 		} else if (!endDate.equals("")) {
-			sb.append("plannexttime").append(" <= ")
+			sb.append("(plannexttime").append(" <= ")
 					.append("\"" + endDate + "\"").append(andSplit);
-		}
-		
-		if(!expire.equals("")){
-			sb.append("plannexttime").append(" <= ")
-			.append("\"" + expire + "\"").append(andSplit);
 		}
 
 		if (!name.equals("")) {
@@ -139,123 +133,123 @@ public class PlanController {
 			sb.delete((sb.length() - andSplit.length()), sb.length() - 1);
 		}
 
-		CommFindEntity<PlanAll> result = sFPlaneService.findAll(pager,
+		CommFindEntity<PlanHisAll> result = sFPlanHisServiceIF.findAll(pager,
 				sb.toString());
 		return result;
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/plan/add", produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ComResponse<PlanAll> add(@RequestBody PlanAll bean) {
+	@RequestMapping(method = RequestMethod.POST, value = "/planhistory/add", produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ComResponse<PlanHisAll> add(@RequestBody PlanHisAll bean) {
 		if (bean != null) {
 			log.debug("add:" + bean.getPlanname());
 		} else {
 			log.error("add: bean is null!");
 		}
 
-		ComResponse<PlanAll> comResponse = new ComResponse<PlanAll>();
+		ComResponse<PlanHisAll> comResponse = new ComResponse<PlanHisAll>();
 		try {
-			int result = sFPlaneService.saveData(bean);
+			int result = sFPlanHisServiceIF.saveData(bean);
 			comResponse.setResponseStatus(ComResponse.STATUS_OK);
 			comResponse.setResponseEntity(bean);
-			logService.saveLog("新建电话随访计划,病案ID:"+bean.getPatientid());
-			comResponse.setExtendResponseContext("创建电话随访计划成功.");
+			logService.saveLog("新建电话历史随访计划,病案ID:"+bean.getPatientid());
+			comResponse.setExtendResponseContext("创建电话历史随访计划成功.");
 		} catch (Exception e) {
 			log.error(e);
 			comResponse.setResponseStatus(ComResponse.STATUS_FAIL);
-			comResponse.setErrorMessage("新建电话随访计划失败." + e.getMessage());
+			comResponse.setErrorMessage("新建电话历史随访计划失败." + e.getMessage());
 		}
 		log.debug("added:" + comResponse.getResponseStatus());
 
 		return comResponse;
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/plan/update", produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ComResponse<PlanAll> update(@RequestBody PlanAll bean) {
+	@RequestMapping(method = RequestMethod.POST, value = "/planhistory/update", produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ComResponse<PlanHisAll> update(@RequestBody PlanHisAll bean) {
 		if (bean != null) {
 			log.debug("update:" + bean.getPlanname());
 		} else {
 			log.error("update: bean is null!");
 		}
-		ComResponse<PlanAll> comResponse = new ComResponse<PlanAll>();
+		ComResponse<PlanHisAll> comResponse = new ComResponse<PlanHisAll>();
 		try {
-			int result = sFPlaneService.updateData(bean);
+			int result = sFPlanHisServiceIF.updateData(bean);
 			comResponse.setResponseStatus(ComResponse.STATUS_OK);
 			comResponse.setResponseEntity(bean);
-			logService.saveLog("更新电话随访计划,病案ID:"+bean.getPatientid());
-			comResponse.setExtendResponseContext("更新电话随访计划成功.");
+			logService.saveLog("更新电话历史随访计划,病案ID:"+bean.getPatientid());
+			comResponse.setExtendResponseContext("更新电话历史随访计划成功.");
 		} catch (Exception e) {
 			log.error(e);
 			comResponse.setResponseStatus(ComResponse.STATUS_FAIL);
-			comResponse.setErrorMessage("更新电话随访计划失败." + e.getMessage());
+			comResponse.setErrorMessage("更新电话历史随访计划失败." + e.getMessage());
 		}
 		log.debug("updated:" + comResponse.getResponseStatus());
 
 		return comResponse;
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/plan/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ComResponse<PlanAll> delete(@PathVariable Long id) {
+	@RequestMapping(method = RequestMethod.POST, value = "/planhistory/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ComResponse<PlanHisAll> delete(@PathVariable Long id) {
 		log.debug("delete:" + id);
-		ComResponse<PlanAll> comResponse = new ComResponse<PlanAll>();
+		ComResponse<PlanHisAll> comResponse = new ComResponse<PlanHisAll>();
 		try {
-			int result = sFPlaneService.deleteDataByKey(id);
+			int result = sFPlanHisServiceIF.deleteDataByKey(id);
 			comResponse.setResponseStatus(ComResponse.STATUS_OK);
-			logService.saveLog("删除电话随访计划");
-			comResponse.setExtendResponseContext("删除电话随访计划成功.");
+			logService.saveLog("删除电话历史随访计划");
+			comResponse.setExtendResponseContext("删除电话历史随访计划成功.");
 		} catch (Exception e) {
 			log.error(e);
 			comResponse.setResponseStatus(ComResponse.STATUS_FAIL);
-			comResponse.setErrorMessage("删除电话随访计划失败." + e.getMessage());
+			comResponse.setErrorMessage("删除电话历史随访计划失败." + e.getMessage());
 		}
 		log.debug("deleted:" + comResponse.getResponseStatus());
 
 		return comResponse;
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/plan/survey/{planId}")
+	@RequestMapping(method = RequestMethod.GET, value = "/planhistory/survey/{planId}")
 	public  @ResponseBody CommFindEntity<Surveytb> getSurveyByDns(@PathVariable Long planId) {
 		log.debug("getSurveyByDns:" + planId);
-		return sFPlaneService.findSurveyByPlanId(planId);
+		return sFPlanHisServiceIF.findSurveyByPlanId(planId);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/plan/survey/{planId}/{status}")
+	@RequestMapping(method = RequestMethod.GET, value = "/planhistory/survey/{planId}/{status}")
 	public  @ResponseBody CommFindEntity<Surveytb> getSurveyByDns(@PathVariable Long planId,@PathVariable Integer status) {
 		log.debug("getSurveyByDns:" + planId+",status:"+status);
-		return sFPlaneService.findSurveyByPlanIdForCalling(status, planId);
+		return sFPlanHisServiceIF.findSurveyByPlanIdForCalling(status, planId);
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/plan/survey/delete/{planId}/{surveryId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, value = "/planhistory/survey/delete/{planId}/{surveryId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ComResponse<Sfplantb> deleteForPatientSurvey(@PathVariable Long planId,@PathVariable Long surveryId) {
 		log.debug("delete:" + surveryId);
 		ComResponse<Sfplantb> comResponse = new ComResponse<Sfplantb>();
 		try {
-			int result = sFPlaneService.deleteDataByKeyForPatientSurvey(planId, surveryId);
+			int result = sFPlanHisServiceIF.deleteDataByKeyForPatientSurvey(planId, surveryId);
 			comResponse.setResponseStatus(ComResponse.STATUS_OK);
-			logService.saveLog("删除电话随访计划问卷");
-			comResponse.setExtendResponseContext("删除电话随访计划问卷成功.");
+			logService.saveLog("删除电话历史随访计划问卷");
+			comResponse.setExtendResponseContext("删除电话历史随访计划问卷成功.");
 		} catch (Exception e) {
 			log.error(e);
 			comResponse.setResponseStatus(ComResponse.STATUS_FAIL);
-			comResponse.setErrorMessage("删除电话随访计划问卷失败." + e.getMessage());
+			comResponse.setErrorMessage("删除电话历史随访计划问卷失败." + e.getMessage());
 		}
 		log.debug("deleted:" + comResponse.getResponseStatus());
 
 		return comResponse;
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/plan/survey/add/{planId}/{surveryId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ComResponse<PlanAll> addForPatientSurvey(@PathVariable Long planId,@PathVariable Long surveryId) {
+	@RequestMapping(method = RequestMethod.POST, value = "/planhistory/survey/add/{planId}/{surveryId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ComResponse<PlanHisAll> addForPatientSurvey(@PathVariable Long planId,@PathVariable Long surveryId) {
 		log.debug("delete:" + surveryId);
-		ComResponse<PlanAll> comResponse = new ComResponse<PlanAll>();
+		ComResponse<PlanHisAll> comResponse = new ComResponse<PlanHisAll>();
 		try {
-			int result = sFPlaneService.saveDataForPatientSurvey(planId, surveryId);
+			int result = sFPlanHisServiceIF.saveDataForPatientSurvey(planId, surveryId);
 			comResponse.setResponseStatus(ComResponse.STATUS_OK);
-			logService.saveLog("增加电话随访计划问卷");
-			comResponse.setExtendResponseContext("增加电话随访计划问卷成功.");
+			logService.saveLog("增加电话历史随访计划问卷");
+			comResponse.setExtendResponseContext("增加电话历史随访计划问卷成功.");
 		} catch (Exception e) {
 			log.error(e);
 			comResponse.setResponseStatus(ComResponse.STATUS_FAIL);
-			comResponse.setErrorMessage("增加电话随访计划问卷失败." + e.getMessage());
+			comResponse.setErrorMessage("增加电话历史随访计划问卷失败." + e.getMessage());
 		}
 		log.debug("deleted:" + comResponse.getResponseStatus());
 

@@ -318,7 +318,7 @@ CREATE TABLE `patientsurveytb` (
   `calltime` BIGINT  DEFAULT 0 COMMENT '通话时长',
   `dialphone` varchar(30) DEFAULT ''  COMMENT '随访电话',
   `recordfile` varchar(100) DEFAULT ''  COMMENT '录音文件',
-  `status` int(2) DEFAULT 0 COMMENT '状态，1:随访完成，0:随访中，-1:异常',
+  `status` int(2) DEFAULT 0 COMMENT '状态，3.自动过期,2.手动作废,1:随访完成，0:随访中，-1:异常',
   `plan_id` BIGINT DEFAULT 0  COMMENT '计划ID',
   `department_id` int(20) DEFAULT 0 COMMENT '科室编号',
   `user_id` int(20) DEFAULT 0 COMMENT '创建人ID',
@@ -419,6 +419,62 @@ CREATE TABLE `sfplansmstb` (
   `ext2` varchar(1000) DEFAULT '' COMMENT '扩展字段2',
   `ext3` varchar(500) DEFAULT '' COMMENT '扩展字段3',
   PRIMARY KEY (`smsplan_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `sfplansms_historytb`;
+CREATE TABLE `sfplansms_historytb` (
+  `smsplan_id` BIGINT NOT NULL COMMENT '计划ID',
+  `patientid` BIGINT NOT NULL COMMENT '病案D',
+  `smscontext` varchar(500) NOT NULL  COMMENT '短信内容',
+  `smstype_name` varchar(30) DEFAULT '' COMMENT '短消息类型名',
+  `plantype` int(2) DEFAULT 1 COMMENT '计划类型  1.短信，0。电话',
+  `status` int(2) DEFAULT 0 COMMENT '状态，3.自动过期。2.手动作废。  1.已经完成，0。计划中',
+  `planfreq` int(5) DEFAULT 0 COMMENT '计划执行的频率',
+  `plannumber` int(5) DEFAULT 0 COMMENT '计划执行的次数',
+  `plannexttime` datetime COMMENT '下一次计划开始的时间',
+  `user_id` int(20) DEFAULT 0 COMMENT '医生ID',
+  `remark` varchar(500) DEFAULT '' COMMENT '描述',
+  `zujima` varchar(500) DEFAULT '' COMMENT '助记码',
+  `delete_flag` int(2) DEFAULT 0 COMMENT '是否删除标志，1.已经删除，0.没有删除',
+  `createdate` datetime COMMENT '创建时间',
+  `createperson` varchar(50) COMMENT '创建时间',
+  `updatedate` datetime COMMENT '创建时间',
+  `updateperson` varchar(50) COMMENT '创建时间',
+  `ext1` varchar(1000) DEFAULT '' COMMENT '扩展字段1',
+  `ext2` varchar(1000) DEFAULT '' COMMENT '扩展字段2',
+  `ext3` varchar(500) DEFAULT '' COMMENT '扩展字段3',
+  PRIMARY KEY (`smsplan_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `sfplan_historytb`;
+CREATE TABLE `sfplan_historytb` (
+  `plan_id` BIGINT NOT NULL COMMENT '计划ID',
+  `patientid` BIGINT NOT NULL COMMENT '病案D',
+  `planname` varchar(500) NOT NULL  COMMENT '计划名',
+  `plantype` int(2) DEFAULT 0 COMMENT '计划类型  1.短信，0。电话',
+  `status` int(2) DEFAULT 0 COMMENT '状态，3.自动过期。2.手动作废。  1.已经完成，0。计划中',
+  `planfreq` int(5) DEFAULT 0 COMMENT '计划执行的频率',
+  `plannumber` int(5) DEFAULT 0 COMMENT '计划执行的次数',
+  `plannexttime` datetime COMMENT '下一次计划开始的时间',
+  `user_id` int(20) DEFAULT 0 COMMENT '医生ID',
+  `remark` varchar(500) DEFAULT '' COMMENT '描述',
+  `zujima` varchar(500) DEFAULT '' COMMENT '助记码',
+  `delete_flag` int(2) DEFAULT 0 COMMENT '是否删除标志，1.已经删除，0.没有删除',
+  `createdate` datetime COMMENT '创建时间',
+  `createperson` varchar(50) COMMENT '创建时间',
+  `updatedate` datetime COMMENT '创建时间',
+  `updateperson` varchar(50) COMMENT '创建时间',
+  `ext1` varchar(1000) DEFAULT '' COMMENT '扩展字段1',
+  `ext2` varchar(1000) DEFAULT '' COMMENT '扩展字段2',
+  `ext3` varchar(500) DEFAULT '' COMMENT '扩展字段3',
+  PRIMARY KEY (`plan_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `rs_plan_tel_sv_history`;
+CREATE TABLE `rs_plan_tel_sv_history` (
+  `plan_id` BIGINT NOT NULL COMMENT '计划ID',
+  `survery_id` BIGINT NOT NULL COMMENT '问卷ID',
+   PRIMARY KEY (`plan_id`,`survery_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 /*init value*/

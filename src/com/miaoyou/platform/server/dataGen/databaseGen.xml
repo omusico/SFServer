@@ -5,7 +5,7 @@
 
 <generatorConfiguration>
 	<classPathEntry
-		location="D:\workspace\EclipseWorkSpace\SFServer\WebContent\WEB-INF\lib\mysql-connector-java-5.1.6-bin.jar" />
+		location="E:\workspace\EclipseWorkSpace\SFServer\WebContent\WEB-INF\lib\mysql-connector-java-5.1.6-bin.jar" />
 
 	<context id="DB2Tables" targetRuntime="MyBatis3">
 		<plugin type="com.miaoyou.platform.server.dataGen.GenData" />
@@ -24,23 +24,22 @@
 		</javaTypeResolver>
 
 		<javaModelGenerator targetPackage="com.miaoyou.platform.server.entity"
-			targetProject="D:\workspace\EclipseWorkSpace\SFServer\src\">
+			targetProject="E:\workspace\EclipseWorkSpace\SFServer\src\">
 			<property name="enableSubPackages" value="true" />
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
 
 		<sqlMapGenerator targetPackage="com.miaoyou.platform.server.mapper"
-			targetProject="D:\workspace\EclipseWorkSpace\SFServer\src\">
+			targetProject="E:\workspace\EclipseWorkSpace\SFServer\src\">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 
 		<javaClientGenerator type="XMLMAPPER"
-			targetPackage="com.miaoyou.platform.server.mapper" targetProject="D:\workspace\EclipseWorkSpace\SFServer\src\">
+			targetPackage="com.miaoyou.platform.server.mapper" targetProject="E:\workspace\EclipseWorkSpace\SFServer\src\">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
-
-		<table schema="hpsf" tableName="roletb" domainObjectName="Roletb" />
+        <table schema="hpsf" tableName="roletb" domainObjectName="Roletb" />
 		<table schema="hpsf" tableName="logtb" domainObjectName="Logtb" />
 		<table schema="hpsf" tableName="pkgenerator" domainObjectName="Pkgenerator" />
 		<table schema="hpsf" tableName="appparamtb" domainObjectName="Appparamtb" />
@@ -65,6 +64,10 @@
 		<table schema="hpsf" tableName="smstb" domainObjectName="Smstb" />	
 		<table schema="hpsf" tableName="rs_dns_sms_add" domainObjectName="Rsdnssmsaddtb" />
 		<table schema="hpsf" tableName="sfplansmstb" domainObjectName="sfplansmstb" />
-		<table schema="hpsf" tableName="recordcaseopdtb" domainObjectName="Recordcaseopdtb" />
+		<table schema="hpsf" tableName="recordcaseopdtb" domainObjectName="Recordcaseopdtb" /> 
+		
+		<table schema="hpsf" tableName="rs_plan_tel_sv_history" domainObjectName="RsplantelsvHistory" />
+		<table schema="hpsf" tableName="sfplansms_historytb" domainObjectName="sfplansmsHistorytb" />
+		<table schema="hpsf" tableName="sfplan_historytb" domainObjectName="SfplanHistorytb" />
 	</context>
 </generatorConfiguration>  

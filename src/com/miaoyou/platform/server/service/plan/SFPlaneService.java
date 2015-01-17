@@ -22,6 +22,7 @@ import com.miaoyou.platform.server.entity.Sfplantb;
 import com.miaoyou.platform.server.entity.SfplantbExample;
 import com.miaoyou.platform.server.entity.Surveytb;
 import com.miaoyou.platform.server.entity.child.PlanAll;
+import com.miaoyou.platform.server.entity.child.PlanHisAll;
 import com.miaoyou.platform.server.entity.child.UserAll;
 import com.miaoyou.platform.server.entity.common.CommFindEntity;
 import com.miaoyou.platform.server.entity.common.CommUserDetails;
@@ -29,6 +30,7 @@ import com.miaoyou.platform.server.mapper.PatientsurveytbMapper;
 import com.miaoyou.platform.server.mapper.RsplantelsvMapper;
 import com.miaoyou.platform.server.mapper.SfplantbMapper;
 import com.miaoyou.platform.server.service.patient.PatientServiceIF;
+import com.miaoyou.platform.server.service.patient.PatientSurveyServiceIF;
 import com.miaoyou.platform.server.service.pkkey.PkgeneratorServiceIF;
 import com.miaoyou.platform.server.service.survey.SurveyServiceIF;
 import com.miaoyou.platform.server.service.user.UserServiceIF;
@@ -39,6 +41,8 @@ import com.miaoyou.platform.server.utils.PingYinUtil;
 public class SFPlaneService implements SFPlaneServiceIF {
 	public static BeanCopier copier = BeanCopier.create(Sfplantb.class,
 			PlanAll.class, false);
+	public static BeanCopier copierToHisPlan = BeanCopier.create(PlanAll.class,
+			PlanHisAll.class, false);
 	private static final Log log = LogFactory.getLog(SFPlaneService.class);
 	@Resource
 	PkgeneratorServiceIF pkgeneratorService;
@@ -53,12 +57,15 @@ public class SFPlaneService implements SFPlaneServiceIF {
 
 	@Resource
 	UserServiceIF userService;
-	
+
 	@Resource
 	PatientServiceIF patientService;
-	
+
 	@Resource
 	PatientsurveytbMapper patientsurveytbMapper;
+
+	@Resource
+	SFPlanHisServiceIF sFPlanHisService;
 
 	@Override
 	public PlanAll findDataByKey(Long id) {
@@ -67,12 +74,13 @@ public class SFPlaneService implements SFPlaneServiceIF {
 		PlanAll planAll = new PlanAll();
 		if (plan != null) {
 			copier.copy(plan, planAll, null);
-			if (plan.getUserId()!=null&&plan.getUserId() > 0) {
+			if (plan.getUserId() != null && plan.getUserId() > 0) {
 				// 查询出用户用户信息
 				UserAll userAll = userService.findUserAll(plan.getUserId());
 				planAll.setUserAll(userAll);
-				
-				Patienttb patient = patientService.findDataByKey(plan.getPatientid());
+
+				Patienttb patient = patientService.findDataByKey(plan
+						.getPatientid());
 				planAll.setPatienttb(patient);
 			}
 		}
@@ -107,12 +115,13 @@ public class SFPlaneService implements SFPlaneServiceIF {
 				PlanAll planAll = new PlanAll();
 				copier.copy(plan, planAll, null);
 				// 查询出用户用户信息
-				if (plan.getUserId()!=null&&plan.getUserId() > 0) {
+				if (plan.getUserId() != null && plan.getUserId() > 0) {
 					// 查询出用户用户信息
 					UserAll userAll = userService.findUserAll(plan.getUserId());
 					planAll.setUserAll(userAll);
-					
-					Patienttb patient = patientService.findDataByKey(plan.getPatientid());
+
+					Patienttb patient = patientService.findDataByKey(plan
+							.getPatientid());
 					planAll.setPatienttb(patient);
 				}
 				temp.add(planAll);
@@ -164,9 +173,9 @@ public class SFPlaneService implements SFPlaneServiceIF {
 		log.info("updateData:" + bean.getPlanId());
 		bean.setUpdatedate(new Date());
 		// 得到汉字的首字母。，这里还有bug，一些多音字不好区分，以后improve
-		if(bean.getPlanname()!=null&&!bean.getPlanname().trim().equals("")){
-		String zujima = PingYinUtil.getFirstSpell(bean.getPlanname());
-		bean.setZujima(zujima);
+		if (bean.getPlanname() != null && !bean.getPlanname().trim().equals("")) {
+			String zujima = PingYinUtil.getFirstSpell(bean.getPlanname());
+			bean.setZujima(zujima);
 		}
 
 		/* 从session里面获取当前操作的用户 */
@@ -181,7 +190,64 @@ public class SFPlaneService implements SFPlaneServiceIF {
 				}
 			}
 		}
-		return sfplantbMapper.updateByPrimaryKeySelective(bean);
+		int result = sfplantbMapper.updateByPrimaryKeySelective(bean);
+		if (bean.getStatus() != 0) {
+			// 找出计划关系表中的的数据，该计划总共多少个问卷
+			RsplantelsvExample resplanExapl = new RsplantelsvExample();
+			resplanExapl.createCriteria().andPlanIdEqualTo(bean.getPlanId());
+			List<RsplantelsvKey> rsplanrvLs = rsplantelsvMapper
+					.selectByExample(resplanExapl);
+
+			if (rsplanrvLs != null) {
+				log.info("move plan data to history table.");
+				String[] STATUS_PLAN_TEL = new String[] { "计划中", "已经完成",
+						"手动作废", "自动过期" };
+				PatientsurveytbExample example = new PatientsurveytbExample();
+				example.createCriteria()
+						.andPatientidEqualTo(bean.getPatientid())
+						.andPlanIdEqualTo(bean.getPlanId());
+				List<Patientsurveytb> patientsurs = patientsurveytbMapper
+						.selectByExample(example);
+				if (patientsurs != null) {
+					for (Patientsurveytb ps : patientsurs) {
+						if (ps.getStatus() == 0) {// 把已经开始随访的计划，状态为随访中的病人问卷，状态设置为手动作废。
+							ps.setStatus(bean.getStatus());
+							log.debug("updated patientsurveytb because plan was canceled.");
+							patientsurveytbMapper.updateByPrimaryKey(ps);
+						}
+					}
+				}
+
+				// 把数据插入到历史表中
+				for (RsplantelsvKey rskey : rsplanrvLs) {
+					sFPlanHisService.saveDataForPatientSurvey(
+							rskey.getPlanId(), rskey.getSurveryId());
+					RsplantelsvKey key = new RsplantelsvKey();
+					key.setPlanId(rskey.getPlanId());
+					key.setSurveryId(rskey.getSurveryId());
+					rsplantelsvMapper.deleteByPrimaryKey(key);
+				}
+
+				PlanHisAll hisAll = new PlanHisAll();
+
+				PlanAll sfplan = findDataByKey(bean.getPlanId());
+				copierToHisPlan.copy(sfplan, hisAll, null);
+
+				hisAll.setStatus(bean.getStatus());
+				if (bean.getStatus() > 3) {
+					hisAll.setRemark(hisAll.getRemark() + ". 未知原因");
+				} else {
+					hisAll.setRemark(hisAll.getRemark() + ". "
+							+ STATUS_PLAN_TEL[bean.getStatus()]);
+				}
+				sFPlanHisService.saveData(hisAll);
+
+				deleteDataByKey(bean.getPlanId());// 删除已经移到历史表中的数据
+				log.info("move plan data to history table.==>done");
+			}
+		}
+
+		return result;
 	}
 
 	@Override
@@ -205,10 +271,10 @@ public class SFPlaneService implements SFPlaneServiceIF {
 		result.setCount(surveryArray.size());
 		return result;
 	}
-	
-	
+
 	@Override
-	public CommFindEntity<Surveytb> findSurveyByPlanIdForCalling(int status,Long planId) {
+	public CommFindEntity<Surveytb> findSurveyByPlanIdForCalling(int status,
+			Long planId) {
 		log.info("findSurveyByPlanId:" + planId);
 		CommFindEntity<Surveytb> result = new CommFindEntity<Surveytb>();
 		List<Surveytb> surveryArray = new ArrayList<>();
@@ -216,18 +282,20 @@ public class SFPlaneService implements SFPlaneServiceIF {
 
 		PatientsurveytbExample psurExample = new PatientsurveytbExample();
 		psurExample.createCriteria().andPlanIdEqualTo(planId);
-		List<Patientsurveytb> patientSurLs=patientsurveytbMapper.selectByExample(psurExample);
-		
-		
+		List<Patientsurveytb> patientSurLs = patientsurveytbMapper
+				.selectByExample(psurExample);
+
 		RsplantelsvExample example = new RsplantelsvExample();
 		example.createCriteria().andPlanIdEqualTo(planId);
-		List<RsplantelsvKey> plantelKey = rsplantelsvMapper.selectByExample(example);
+		List<RsplantelsvKey> plantelKey = rsplantelsvMapper
+				.selectByExample(example);
 		if (plantelKey != null) {
-			loop1:for (RsplantelsvKey key : plantelKey) {
+			loop1: for (RsplantelsvKey key : plantelKey) {
 				long surveyId = key.getSurveryId();
-				if(patientSurLs!=null&&patientSurLs.size()>0){
-					for(Patientsurveytb psui:patientSurLs){
-						if(psui.getSurveryId()==surveyId&&psui.getStatus()!=status){
+				if (patientSurLs != null && patientSurLs.size() > 0) {
+					for (Patientsurveytb psui : patientSurLs) {
+						if (psui.getSurveryId() == surveyId
+								&& psui.getStatus() != status) {
 							continue loop1;
 						}
 					}
@@ -240,7 +308,6 @@ public class SFPlaneService implements SFPlaneServiceIF {
 		result.setCount(surveryArray.size());
 		return result;
 	}
-	
 
 	@Override
 	public int saveDataForPatientSurvey(Long planId, Long surveryId) {
@@ -248,17 +315,17 @@ public class SFPlaneService implements SFPlaneServiceIF {
 		RsplantelsvKey sv = new RsplantelsvKey();
 		sv.setPlanId(planId);
 		sv.setSurveryId(surveryId);
-		
-		
-		//剔除一样的计划和调查问卷
+
+		// 剔除一样的计划和调查问卷
 		RsplantelsvExample example = new RsplantelsvExample();
-		example.createCriteria().andPlanIdEqualTo(planId).andSurveryIdEqualTo(surveryId);
+		example.createCriteria().andPlanIdEqualTo(planId)
+				.andSurveryIdEqualTo(surveryId);
 		int count = rsplantelsvMapper.countByExample(example);
-		if(count>0){
-			log.warn(""+count+" are existing here, not insert new.");
+		if (count > 0) {
+			log.warn("" + count + " are existing here, not insert new.");
 			return 0;
 		}
-		
+
 		return rsplantelsvMapper.insert(sv);
 	}
 

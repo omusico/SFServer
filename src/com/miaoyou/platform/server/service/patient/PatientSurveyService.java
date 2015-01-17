@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import net.sf.cglib.beans.BeanCopier;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -17,8 +19,10 @@ import com.miaoyou.platform.server.entity.Rspatientsurveysv;
 import com.miaoyou.platform.server.entity.RspatientsurveysvExample;
 import com.miaoyou.platform.server.entity.RsplantelsvExample;
 import com.miaoyou.platform.server.entity.RsplantelsvKey;
+import com.miaoyou.platform.server.entity.SfplanHistorytb;
 import com.miaoyou.platform.server.entity.SurveyDetailtb;
 import com.miaoyou.platform.server.entity.child.PlanAll;
+import com.miaoyou.platform.server.entity.child.PlanHisAll;
 import com.miaoyou.platform.server.entity.child.UserAll;
 import com.miaoyou.platform.server.entity.common.CommFindEntity;
 import com.miaoyou.platform.server.entity.common.CommUserDetails;
@@ -26,6 +30,7 @@ import com.miaoyou.platform.server.mapper.PatientsurveytbMapper;
 import com.miaoyou.platform.server.mapper.RspatientsurveysvMapper;
 import com.miaoyou.platform.server.mapper.RsplantelsvMapper;
 import com.miaoyou.platform.server.service.pkkey.PkgeneratorServiceIF;
+import com.miaoyou.platform.server.service.plan.SFPlanHisServiceIF;
 import com.miaoyou.platform.server.service.plan.SFPlaneServiceIF;
 import com.miaoyou.platform.server.utils.Pager;
 import com.miaoyou.platform.server.utils.PingYinUtil;
@@ -34,6 +39,8 @@ import com.miaoyou.platform.server.utils.PingYinUtil;
 public class PatientSurveyService implements PatientSurveyServiceIF {
 	private static final Log log = LogFactory
 			.getLog(PatientSurveyService.class);
+	public static BeanCopier copier = BeanCopier.create(PlanAll.class,
+			PlanHisAll.class, false);
 	@Resource
 	PkgeneratorServiceIF pkgeneratorService;
 	@Resource
@@ -45,6 +52,9 @@ public class PatientSurveyService implements PatientSurveyServiceIF {
 
 	@Resource
 	RsplantelsvMapper rsplantelsvMapper;
+	
+	@Resource
+	SFPlanHisServiceIF sFPlanHisService;
 
 	@Override
 	public Patientsurveytb findDataByKey(Long id) {
@@ -229,12 +239,30 @@ public class PatientSurveyService implements PatientSurveyServiceIF {
 
 				// 如果都完成，就把该计划做成完成状态
 				if (allFinished) {
-					PlanAll sfplan = new PlanAll();
-					sfplan.setPlanId(planid);
-					sfplan.setStatus(1);
-					log.debug("update plan status for " + planid);
-					sFPlaneService.updateData(sfplan);
+//					PlanAll sfplan = new PlanAll();
+//					sfplan.setPlanId(planid);
+//					sfplan.setStatus(1);
+//					log.debug("update plan status for " + planid);
+//					sFPlaneService.updateData(sfplan);
 					
+					log.info("move plan data to history table.");
+					//把数据插入到历史表中
+					for (RsplantelsvKey rskey : rsplanrvLs) {
+						sFPlanHisService.saveDataForPatientSurvey(rskey.getPlanId(), rskey.getSurveryId());
+						RsplantelsvKey key = new RsplantelsvKey();
+						key.setPlanId(rskey.getPlanId());
+						key.setSurveryId(rskey.getSurveryId());
+						rsplantelsvMapper.deleteByPrimaryKey(key);
+					}
+					
+					PlanAll sfplan = sFPlaneService.findDataByKey(planid);
+					sfplan.setStatus(1);
+					PlanHisAll hisAll = new PlanHisAll();
+					copier.copy(sfplan, hisAll, null);
+					sFPlanHisService.saveData(hisAll);
+					
+					sFPlaneService.deleteDataByKey(planid);
+					log.info("move plan data to history table.==>done");
 				}
 			}
 
