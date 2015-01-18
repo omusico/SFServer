@@ -14,15 +14,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.miaoyou.platform.server.entity.Patienttb;
-import com.miaoyou.platform.server.entity.Sfplansmstb;
-import com.miaoyou.platform.server.entity.SfplansmstbExample;
-import com.miaoyou.platform.server.entity.child.PlanSmsAll;
+import com.miaoyou.platform.server.entity.SfplansmsHistorytb;
+import com.miaoyou.platform.server.entity.SfplansmsHistorytbExample;
 import com.miaoyou.platform.server.entity.child.PlanSmsHisAll;
 import com.miaoyou.platform.server.entity.child.UserAll;
 import com.miaoyou.platform.server.entity.common.CommFindEntity;
 import com.miaoyou.platform.server.entity.common.CommUserDetails;
 import com.miaoyou.platform.server.mapper.SfplansmsHistorytbMapper;
-import com.miaoyou.platform.server.mapper.SfplansmstbMapper;
 import com.miaoyou.platform.server.service.patient.PatientServiceIF;
 import com.miaoyou.platform.server.service.pkkey.PkgeneratorServiceIF;
 import com.miaoyou.platform.server.service.user.UserServiceIF;
@@ -30,16 +28,14 @@ import com.miaoyou.platform.server.utils.Pager;
 import com.miaoyou.platform.server.utils.PingYinUtil;
 
 @Service
-public class SFSmsPlanService implements SFSmsPlanServiceIF {
-	public static BeanCopier copier = BeanCopier.create(Sfplansmstb.class,
-			PlanSmsAll.class, false);
-	public static BeanCopier hiscopier = BeanCopier.create(PlanSmsAll.class,
+public class SFSmsPlanHisService implements SFSmsPlanHisServiceIF {
+	public static BeanCopier copier = BeanCopier.create(SfplansmsHistorytb.class,
 			PlanSmsHisAll.class, false);
-	private static final Log log = LogFactory.getLog(SFSmsPlanService.class);
+	private static final Log log = LogFactory.getLog(SFSmsPlanHisService.class);
 	@Resource
 	PkgeneratorServiceIF pkgeneratorService;
 	@Resource
-	SfplansmstbMapper sfplansmstbMapper;
+	SfplansmsHistorytbMapper sfplansmsHistorytbMapper;
 
 	@Resource
 	UserServiceIF userService;
@@ -47,16 +43,13 @@ public class SFSmsPlanService implements SFSmsPlanServiceIF {
 	@Resource
 	PatientServiceIF patientService;
 	
-	@Resource
-	SfplansmsHistorytbMapper sfplansmsHistorytbMapper;
-	
 
 
 	@Override
-	public PlanSmsAll findDataByKey(Long id) {
+	public PlanSmsHisAll findDataByKey(Long id) {
 		log.info("find data:" + id);
-		Sfplansmstb plan = sfplansmstbMapper.selectByPrimaryKey(id);
-		PlanSmsAll planAll = new PlanSmsAll();
+		SfplansmsHistorytb plan = sfplansmsHistorytbMapper.selectByPrimaryKey(id);
+		PlanSmsHisAll planAll = new PlanSmsHisAll();
 		if (plan != null) {
 			copier.copy(plan, planAll, null);
 			if (plan.getUserId()!=null&&plan.getUserId() > 0) {
@@ -72,10 +65,10 @@ public class SFSmsPlanService implements SFSmsPlanServiceIF {
 	}
 
 	@Override
-	public CommFindEntity<PlanSmsAll> findAll(Pager page, String conditionSql) {
-		CommFindEntity<PlanSmsAll> result = new CommFindEntity<PlanSmsAll>();
-		List<PlanSmsAll> temp = new ArrayList<>();
-		SfplansmstbExample example = new SfplansmstbExample();
+	public CommFindEntity<PlanSmsHisAll> findAll(Pager page, String conditionSql) {
+		CommFindEntity<PlanSmsHisAll> result = new CommFindEntity<PlanSmsHisAll>();
+		List<PlanSmsHisAll> temp = new ArrayList<>();
+		SfplansmsHistorytbExample example = new SfplansmsHistorytbExample();
 		if (conditionSql != null && !conditionSql.trim().equals("")) {
 			log.info("conditionSql:" + conditionSql);
 			example.createCriteria().addConditionSql(conditionSql);
@@ -84,7 +77,7 @@ public class SFSmsPlanService implements SFSmsPlanServiceIF {
 		}
 
 		// 必须先设置count数，再设置limtStart/limitEnd
-		int count = sfplansmstbMapper.countByExample(example);
+		int count = sfplansmsHistorytbMapper.countByExample(example);
 		log.info("findAll count:" + count);
 		result.setCount(count);
 		page.setCount(count);
@@ -93,10 +86,10 @@ public class SFSmsPlanService implements SFSmsPlanServiceIF {
 		// 排序
 		example.setOrderByClause("smsplan_id DESC");
 
-		List<Sfplansmstb> ls = sfplansmstbMapper.selectByExample(example);
+		List<SfplansmsHistorytb> ls = sfplansmsHistorytbMapper.selectByExample(example);
 		if (ls != null) {
-			for (Sfplansmstb plan : ls) {
-				PlanSmsAll planAll = new PlanSmsAll();
+			for (SfplansmsHistorytb plan : ls) {
+				PlanSmsHisAll planAll = new PlanSmsHisAll();
 				copier.copy(plan, planAll, null);
 				// 查询出用户用户信息
 				if (plan.getUserId()!=null&&plan.getUserId() > 0) {
@@ -115,7 +108,7 @@ public class SFSmsPlanService implements SFSmsPlanServiceIF {
 	}
 
 	@Override
-	public int saveData(PlanSmsAll bean) {
+	public int saveData(PlanSmsHisAll bean) {
 		log.info("saveData:" + bean.getSmscontext());
 		long key = pkgeneratorService.getPrimaryKey("sfsmsplantb", "smsplan_id");
 		bean.setSmsplanId(key);
@@ -140,17 +133,17 @@ public class SFSmsPlanService implements SFSmsPlanServiceIF {
 			}
 		}
 
-		return sfplansmstbMapper.insertSelective(bean);
+		return sfplansmsHistorytbMapper.insertSelective(bean);
 	}
 
 	@Override
 	public int deleteDataByKey(Long id) {
 		log.info("deleteDataByKey:" + id);
-		return sfplansmstbMapper.deleteByPrimaryKey(id);
+		return sfplansmsHistorytbMapper.deleteByPrimaryKey(id);
 	}
 
 	@Override
-	public int updateData(PlanSmsAll bean) {
+	public int updateData(PlanSmsHisAll bean) {
 		log.info("updateData:" + bean.getSmsplanId());
 		bean.setUpdatedate(new Date());
 		// 得到汉字的首字母。，这里还有bug，一些多音字不好区分，以后improve
@@ -171,22 +164,7 @@ public class SFSmsPlanService implements SFSmsPlanServiceIF {
 				}
 			}
 		}
-		int result = sfplansmstbMapper.updateByPrimaryKeySelective(bean);
-		
-		if (bean.getStatus() != 0) {
-			// 找出计划关系表中的的数据，该计划总共多少个问卷
-			log.info("move sms plan data to history table.");
-			PlanSmsAll planSms = findDataByKey(bean.getSmsplanId());
-			PlanSmsHisAll hisPlansms = new PlanSmsHisAll(); 
-			hiscopier.copy(planSms, hisPlansms, null);
-			sfplansmsHistorytbMapper.insertSelective(hisPlansms);
-			deleteDataByKey(bean.getSmsplanId());
-		
-			log.info("move sms plan data to history table.==>done");
-			
-		}
-		
-		return result;
+		return sfplansmsHistorytbMapper.updateByPrimaryKeySelective(bean);
 	}
 
 	

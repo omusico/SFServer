@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class sfplansmsHistorytb implements Serializable {
+public class SfplansmsHistorytb implements Serializable {
     private Long smsplanId;
 
     private Long patientid;

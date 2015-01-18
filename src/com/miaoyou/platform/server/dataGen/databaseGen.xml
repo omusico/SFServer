@@ -67,7 +67,7 @@
 		<table schema="hpsf" tableName="recordcaseopdtb" domainObjectName="Recordcaseopdtb" /> 
 		
 		<table schema="hpsf" tableName="rs_plan_tel_sv_history" domainObjectName="RsplantelsvHistory" />
-		<table schema="hpsf" tableName="sfplansms_historytb" domainObjectName="sfplansmsHistorytb" />
+		<table schema="hpsf" tableName="sfplansms_historytb" domainObjectName="SfplansmsHistorytb" />
 		<table schema="hpsf" tableName="sfplan_historytb" domainObjectName="SfplanHistorytb" />
 	</context>
 </generatorConfiguration>  

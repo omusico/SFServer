@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.miaoyou.platform.server.mapper.sfplansmsHistorytbMapper" >
+<mapper namespace="com.miaoyou.platform.server.mapper.SfplansmsHistorytbMapper" >
   <cache />
-  <resultMap id="BaseResultMap" type="com.miaoyou.platform.server.entity.sfplansmsHistorytb" >
+  <resultMap id="BaseResultMap" type="com.miaoyou.platform.server.entity.SfplansmsHistorytb" >
     <id column="smsplan_id" property="smsplanId" jdbcType="BIGINT" />
     <result column="patientid" property="patientid" jdbcType="BIGINT" />
     <result column="smscontext" property="smscontext" jdbcType="VARCHAR" />
@@ -87,7 +87,7 @@
     plannexttime, user_id, remark, zujima, delete_flag, createdate, createperson, updatedate, 
     updateperson, ext1, ext2, ext3
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.miaoyou.platform.server.entity.sfplansmsHistorytbExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.miaoyou.platform.server.entity.SfplansmsHistorytbExample" >
     select
     <if test="distinct" >
       distinct
@@ -117,13 +117,13 @@
     delete from sfplansms_historytb
     where smsplan_id = #{smsplanId,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.miaoyou.platform.server.entity.sfplansmsHistorytbExample" >
+  <delete id="deleteByExample" parameterType="com.miaoyou.platform.server.entity.SfplansmsHistorytbExample" >
     delete from sfplansms_historytb
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.miaoyou.platform.server.entity.sfplansmsHistorytb" >
+  <insert id="insert" parameterType="com.miaoyou.platform.server.entity.SfplansmsHistorytb" >
     insert into sfplansms_historytb (smsplan_id, patientid, smscontext, 
       smstype_name, plantype, status, 
       planfreq, plannumber, plannexttime, 
@@ -139,7 +139,7 @@
       #{updatedate,jdbcType=TIMESTAMP}, #{updateperson,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, 
       #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.miaoyou.platform.server.entity.sfplansmsHistorytb" >
+  <insert id="insertSelective" parameterType="com.miaoyou.platform.server.entity.SfplansmsHistorytb" >
     insert into sfplansms_historytb
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="smsplanId != null" >
@@ -266,7 +266,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.miaoyou.platform.server.entity.sfplansmsHistorytbExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.miaoyou.platform.server.entity.SfplansmsHistorytbExample" resultType="java.lang.Integer" >
     select count(*) from sfplansms_historytb
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -366,7 +366,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.miaoyou.platform.server.entity.sfplansmsHistorytb" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.miaoyou.platform.server.entity.SfplansmsHistorytb" >
     update sfplansms_historytb
     <set >
       <if test="patientid != null" >
@@ -429,7 +429,7 @@
     </set>
     where smsplan_id = #{smsplanId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.miaoyou.platform.server.entity.sfplansmsHistorytb" >
+  <update id="updateByPrimaryKey" parameterType="com.miaoyou.platform.server.entity.SfplansmsHistorytb" >
     update sfplansms_historytb
     set patientid = #{patientid,jdbcType=BIGINT},
       smscontext = #{smscontext,jdbcType=VARCHAR},

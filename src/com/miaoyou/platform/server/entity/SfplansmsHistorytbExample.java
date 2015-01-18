@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class sfplansmsHistorytbExample {
+public class SfplansmsHistorytbExample {
     protected String orderByClause;
 
     protected boolean distinct;
@@ -17,7 +17,7 @@ public class sfplansmsHistorytbExample {
 
     protected Integer limitEnd;
 
-    public sfplansmsHistorytbExample() {
+    public SfplansmsHistorytbExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 

@@ -4,10 +4,10 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.miaoyou.platform.server.entity.Patienttb;
-import com.miaoyou.platform.server.entity.sfplansmsHistorytb;
+import com.miaoyou.platform.server.entity.SfplansmsHistorytb;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PlanSmsHisAll extends sfplansmsHistorytb implements Serializable{
+public class PlanSmsHisAll extends SfplansmsHistorytb implements Serializable{
 
 	private UserAll userAll;
 	

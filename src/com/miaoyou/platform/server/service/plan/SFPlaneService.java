@@ -28,6 +28,7 @@ import com.miaoyou.platform.server.entity.common.CommFindEntity;
 import com.miaoyou.platform.server.entity.common.CommUserDetails;
 import com.miaoyou.platform.server.mapper.PatientsurveytbMapper;
 import com.miaoyou.platform.server.mapper.RsplantelsvMapper;
+import com.miaoyou.platform.server.mapper.SfplanHistorytbMapper;
 import com.miaoyou.platform.server.mapper.SfplantbMapper;
 import com.miaoyou.platform.server.service.patient.PatientServiceIF;
 import com.miaoyou.platform.server.service.patient.PatientSurveyServiceIF;
@@ -67,6 +68,9 @@ public class SFPlaneService implements SFPlaneServiceIF {
 	@Resource
 	SFPlanHisServiceIF sFPlanHisService;
 
+	@Resource
+	SfplanHistorytbMapper sfplanHistorytbMapper;
+	
 	@Override
 	public PlanAll findDataByKey(Long id) {
 		log.info("find data:" + id);
@@ -240,7 +244,7 @@ public class SFPlaneService implements SFPlaneServiceIF {
 					hisAll.setRemark(hisAll.getRemark() + ". "
 							+ STATUS_PLAN_TEL[bean.getStatus()]);
 				}
-				sFPlanHisService.saveData(hisAll);
+				sfplanHistorytbMapper.insertSelective(hisAll);
 
 				deleteDataByKey(bean.getPlanId());// 删除已经移到历史表中的数据
 				log.info("move plan data to history table.==>done");
