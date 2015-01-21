@@ -34,6 +34,8 @@ public class Departmenttb implements Serializable {
 
     private String ext3;
 
+    private Integer parentId;
+
     public Integer getDepartmentId() {
         return departmentId;
     }
@@ -144,5 +146,13 @@ public class Departmenttb implements Serializable {
 
     public void setExt3(String ext3) {
         this.ext3 = ext3 == null ? null : ext3.trim();
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
     }
 }

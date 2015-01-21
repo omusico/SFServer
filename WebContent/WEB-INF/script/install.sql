@@ -70,6 +70,7 @@ DROP TABLE IF EXISTS `departmenttb`;
 CREATE TABLE `departmenttb` (
   `department_id` int(20) NOT NULL AUTO_INCREMENT COMMENT '科室编号',
   `department_name` varchar(50) NOT NULL COMMENT '科室名称',
+  `parent_id` int(20) DEFAULT 0 COMMENT '上级科室编号',
   `tel` varchar(50) DEFAULT '' COMMENT '科室电话',
   `sftel` varchar(50) DEFAULT '' COMMENT '随访电话',
   `department_remark` varchar(500) DEFAULT NULL COMMENT '备注',

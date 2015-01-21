@@ -1,9 +1,12 @@
 package com.miaoyou.platform.server.service.user;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+
+import net.sf.cglib.beans.BeanCopier;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.miaoyou.platform.server.entity.Departmenttb;
 import com.miaoyou.platform.server.entity.DepartmenttbExample;
+import com.miaoyou.platform.server.entity.child.DepartmentAll;
 import com.miaoyou.platform.server.entity.child.UserAll;
 import com.miaoyou.platform.server.entity.common.CommFindEntity;
 import com.miaoyou.platform.server.entity.common.CommUserDetails;
@@ -27,6 +31,7 @@ import com.miaoyou.platform.server.utils.PingYinUtil;
 public class DepartmentService implements DepartmentServiceIF {
 
 	private static final Log log = LogFactory.getLog(DepartmentService.class);
+    public static BeanCopier copier = BeanCopier.create(Departmenttb.class, DepartmentAll.class, false);
 	@Resource
 	DepartmenttbMapper departmenttbMapper;
 
@@ -34,7 +39,7 @@ public class DepartmentService implements DepartmentServiceIF {
 	UserServiceIF userService;
 
 	@Override
-	public int saveDepartment(Departmenttb departmenttb) {
+	public int saveDepartment(DepartmentAll departmenttb) {
 		log.debug("insert departmenttb:" + departmenttb.getDepartmentName());
 		departmenttb.setDeleteFlag(0);
 		departmenttb.setCreatedate(new Date());
@@ -59,7 +64,7 @@ public class DepartmentService implements DepartmentServiceIF {
 	}
 
 	@Override
-	public int updateDepartment(Departmenttb departmenttb) {
+	public int updateDepartment(DepartmentAll departmenttb) {
 		log.debug("update departmenttb:" + departmenttb.getDepartmentName());
 		departmenttb.setUpdatedate(new Date());
 		//得到汉字的首字母。，这里还有bug，一些多音字不好区分，以后improve
@@ -91,10 +96,10 @@ public class DepartmentService implements DepartmentServiceIF {
 	}
 
 	@Override
-	public CommFindEntity<Departmenttb> findDepartments(Pager page,
+	public CommFindEntity<DepartmentAll> findDepartments(Pager page,
 			String conditionSql) {
 		DepartmenttbExample example = new DepartmenttbExample();
-		CommFindEntity<Departmenttb> allEntity = new CommFindEntity<Departmenttb>();
+		CommFindEntity<DepartmentAll> allEntity = new CommFindEntity<DepartmentAll>();
 		if (conditionSql != null && !conditionSql.trim().equals("")) {
 			example.createCriteria().addConditionSql(conditionSql);
 		}else{
@@ -110,30 +115,68 @@ public class DepartmentService implements DepartmentServiceIF {
 
 		List<Departmenttb> result = departmenttbMapper.selectByExample(example);
 
+		List<DepartmentAll> dpAllArray = new ArrayList<>();
+		for(Departmenttb depart:result){
+			DepartmentAll   dpAll = new DepartmentAll();
+			
+			copier.copy(depart, dpAll, null);
+			
+			if(depart.getParentId()!=null&&depart.getParentId()>0){
+				DepartmentAll parentBean = findDepartmentById(depart.getParentId());
+				dpAll.setParentDp(parentBean);
+			}
+			
+			dpAllArray.add(dpAll);
+		}
+		
 		allEntity.setCount(count);
-		allEntity.setResult(result);
+		allEntity.setResult(dpAllArray);
 		return allEntity;
 	}
 
 	@Override
-	public CommFindEntity<Departmenttb> findDepartments() {
+	public CommFindEntity<DepartmentAll> findDepartments() {
 		DepartmenttbExample example = new DepartmenttbExample();
 		example.createCriteria().andDeleteFlagEqualTo(0);
-		CommFindEntity<Departmenttb> allEntity = new CommFindEntity<>();
+		CommFindEntity<DepartmentAll> allEntity = new CommFindEntity<>();
 		int count = departmenttbMapper.countByExample(example);
 		allEntity.setCount(count);
 		example.setOrderByClause("department_id DESC");
 		List<Departmenttb> result = departmenttbMapper.selectByExample(example);
-		allEntity.setResult(result);
+		
+		List<DepartmentAll> dpAllArray = new ArrayList<>();
+		for(Departmenttb depart:result){
+			DepartmentAll   dpAll = new DepartmentAll();
+			
+			copier.copy(depart, dpAll, null);
+			
+			if(depart.getParentId()!=null&&depart.getParentId()>0){
+				DepartmentAll parentBean = findDepartmentById(depart.getParentId());
+				dpAll.setParentDp(parentBean);
+			}
+			
+			dpAllArray.add(dpAll);
+		}
+		
+		allEntity.setResult(dpAllArray);
 		return allEntity;
 	}
 
 	@Override
-	public Departmenttb findDepartmentById(Integer id) {
+	public DepartmentAll findDepartmentById(Integer id) {
 		DepartmenttbExample example = new DepartmenttbExample();
 		example.createCriteria().andDepartmentIdEqualTo(id);
 		log.debug("findDepartmentById:" + id);
-		return departmenttbMapper.selectByPrimaryKey(id);
+		
+		Departmenttb dpbean = departmenttbMapper.selectByPrimaryKey(id);
+		DepartmentAll   dpAll = new DepartmentAll();
+		copier.copy(dpbean, dpAll, null);
+		if(dpbean.getParentId()!=null&&dpbean.getParentId()>0){
+			DepartmentAll parentBean = findDepartmentById(dpbean.getParentId());
+			dpAll.setParentDp(parentBean);
+		}
+		
+		return dpAll;
 	}
 
 }

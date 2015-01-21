@@ -17,6 +17,7 @@
     <result column="ext1" property="ext1" jdbcType="VARCHAR" />
     <result column="ext2" property="ext2" jdbcType="VARCHAR" />
     <result column="ext3" property="ext3" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -78,7 +79,7 @@
   </sql>
   <sql id="Base_Column_List" >
     department_id, department_name, tel, sftel, department_remark, zujima, delete_flag, 
-    createdate, createperson, updatedate, updateperson, ext1, ext2, ext3
+    createdate, createperson, updatedate, updateperson, ext1, ext2, ext3, parent_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.miaoyou.platform.server.entity.DepartmenttbExample" >
     select
@@ -121,12 +122,14 @@
       sftel, department_remark, zujima, 
       delete_flag, createdate, createperson, 
       updatedate, updateperson, ext1, 
-      ext2, ext3)
+      ext2, ext3, parent_id
+      )
     values (#{departmentId,jdbcType=INTEGER}, #{departmentName,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, 
       #{sftel,jdbcType=VARCHAR}, #{departmentRemark,jdbcType=VARCHAR}, #{zujima,jdbcType=VARCHAR}, 
       #{deleteFlag,jdbcType=INTEGER}, #{createdate,jdbcType=TIMESTAMP}, #{createperson,jdbcType=VARCHAR}, 
       #{updatedate,jdbcType=TIMESTAMP}, #{updateperson,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, 
-      #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR})
+      #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.miaoyou.platform.server.entity.Departmenttb" >
     insert into departmenttb
@@ -173,6 +176,9 @@
       <if test="ext3 != null" >
         ext3,
       </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="departmentId != null" >
@@ -216,6 +222,9 @@
       </if>
       <if test="ext3 != null" >
         #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -270,6 +279,9 @@
       <if test="record.ext3 != null" >
         ext3 = #{record.ext3,jdbcType=VARCHAR},
       </if>
+      <if test="record.parentId != null" >
+        parent_id = #{record.parentId,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -290,7 +302,8 @@
       updateperson = #{record.updateperson,jdbcType=VARCHAR},
       ext1 = #{record.ext1,jdbcType=VARCHAR},
       ext2 = #{record.ext2,jdbcType=VARCHAR},
-      ext3 = #{record.ext3,jdbcType=VARCHAR}
+      ext3 = #{record.ext3,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -337,6 +350,9 @@
       <if test="ext3 != null" >
         ext3 = #{ext3,jdbcType=VARCHAR},
       </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
     </set>
     where department_id = #{departmentId,jdbcType=INTEGER}
   </update>
@@ -354,7 +370,8 @@
       updateperson = #{updateperson,jdbcType=VARCHAR},
       ext1 = #{ext1,jdbcType=VARCHAR},
       ext2 = #{ext2,jdbcType=VARCHAR},
-      ext3 = #{ext3,jdbcType=VARCHAR}
+      ext3 = #{ext3,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER}
     where department_id = #{departmentId,jdbcType=INTEGER}
   </update>
 </mapper>

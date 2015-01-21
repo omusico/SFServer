@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.miaoyou.platform.server.entity.Departmenttb;
 import com.miaoyou.platform.server.entity.Usertb;
+import com.miaoyou.platform.server.entity.child.DepartmentAll;
 import com.miaoyou.platform.server.entity.child.UserAll;
 import com.miaoyou.platform.server.entity.common.ComResponse;
 import com.miaoyou.platform.server.entity.common.CommFindEntity;
@@ -164,22 +165,22 @@ public class UserController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/dp")
-	public @ResponseBody CommFindEntity<Departmenttb> getDepartments() {
+	public @ResponseBody CommFindEntity<DepartmentAll> getDepartments() {
 		log.debug("UserController,getDepartments");
-		CommFindEntity<Departmenttb> allDepartment = departmentService
+		CommFindEntity<DepartmentAll> allDepartment = departmentService
 				.findDepartments();
 		return allDepartment;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/finddp")
-	public @ResponseBody CommFindEntity<Departmenttb> findDepartments(
+	public @ResponseBody CommFindEntity<DepartmentAll> findDepartments(
 			@RequestParam(value = "psi", defaultValue = "1") int page,
 			@RequestParam(value = "pst", defaultValue = "100") int perPage,
 			@RequestParam(value = "name", defaultValue = "") String name) {
 		log.debug("UserController,findDepartments.pageindex" + page
 				+ ",perPage:" + perPage);
 		Pager pager = new Pager(page, perPage);
-		CommFindEntity<Departmenttb> departments = null;
+		CommFindEntity<DepartmentAll> departments = null;
 		if (name.trim().equals("")) {
 			departments = departmentService.findDepartments();
 		} else {
@@ -199,12 +200,12 @@ public class UserController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/dp/add", produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ComResponse<Departmenttb> saveDepartment(
-			@RequestBody Departmenttb department) {
+	public @ResponseBody ComResponse<DepartmentAll> saveDepartment(
+			@RequestBody DepartmentAll department) {
 		log.debug("UserController,save department:"
 				+ department.getDepartmentName());
 
-		ComResponse<Departmenttb> comResponse = new ComResponse<Departmenttb>();
+		ComResponse<DepartmentAll> comResponse = new ComResponse<DepartmentAll>();
 		try {
 			int result = departmentService.saveDepartment(department);
 			comResponse.setResponseStatus(ComResponse.STATUS_OK);
@@ -220,12 +221,12 @@ public class UserController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/dp/update", produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ComResponse<Departmenttb> updateDepartment(
-			@RequestBody Departmenttb department) {
+	public @ResponseBody ComResponse<DepartmentAll> updateDepartment(
+			@RequestBody DepartmentAll department) {
 		log.debug("UserController,update department:"
 				+ department.getDepartmentId());
 
-		ComResponse<Departmenttb> comResponse = new ComResponse<Departmenttb>();
+		ComResponse<DepartmentAll> comResponse = new ComResponse<DepartmentAll>();
 		try {
 			int result = departmentService.updateDepartment(department);
 			comResponse.setResponseStatus(ComResponse.STATUS_OK);

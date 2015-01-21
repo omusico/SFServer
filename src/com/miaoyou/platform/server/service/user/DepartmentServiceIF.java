@@ -4,7 +4,7 @@
 
 package com.miaoyou.platform.server.service.user;
 
-import com.miaoyou.platform.server.entity.Departmenttb;
+import com.miaoyou.platform.server.entity.child.DepartmentAll;
 import com.miaoyou.platform.server.entity.common.CommFindEntity;
 import com.miaoyou.platform.server.utils.Pager;
 
@@ -14,16 +14,16 @@ import com.miaoyou.platform.server.utils.Pager;
  */
 public interface DepartmentServiceIF {
     
-    public int saveDepartment(Departmenttb departmenttb);
+    public int saveDepartment(DepartmentAll departmenttb);
     
-    public int updateDepartment(Departmenttb departmenttb);
+    public int updateDepartment(DepartmentAll departmenttb);
     
     public int deleteDepartment(Integer userId);
     
-    public CommFindEntity<Departmenttb> findDepartments();
+    public CommFindEntity<DepartmentAll> findDepartments();
     
-    public CommFindEntity<Departmenttb> findDepartments(Pager page, String conditionSql);    
+    public CommFindEntity<DepartmentAll> findDepartments(Pager page, String conditionSql);    
     
-    public Departmenttb findDepartmentById(Integer id);
+    public DepartmentAll findDepartmentById(Integer id);
     
 }
