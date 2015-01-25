@@ -31,7 +31,8 @@ import com.miaoyou.platform.server.utils.PingYinUtil;
 public class DepartmentService implements DepartmentServiceIF {
 
 	private static final Log log = LogFactory.getLog(DepartmentService.class);
-    public static BeanCopier copier = BeanCopier.create(Departmenttb.class, DepartmentAll.class, false);
+	public static BeanCopier copier = BeanCopier.create(Departmenttb.class,
+			DepartmentAll.class, false);
 	@Resource
 	DepartmenttbMapper departmenttbMapper;
 
@@ -43,9 +44,10 @@ public class DepartmentService implements DepartmentServiceIF {
 		log.debug("insert departmenttb:" + departmenttb.getDepartmentName());
 		departmenttb.setDeleteFlag(0);
 		departmenttb.setCreatedate(new Date());
-		
-		//得到汉字的首字母。，这里还有bug，一些多音字不好区分，以后improve
-		String zujima = PingYinUtil.getFirstSpell(departmenttb.getDepartmentName());
+
+		// 得到汉字的首字母。，这里还有bug，一些多音字不好区分，以后improve
+		String zujima = PingYinUtil.getFirstSpell(departmenttb
+				.getDepartmentName());
 		departmenttb.setZujima(zujima);
 
 		/* 从session里面获取当前操作的用户 */
@@ -67,10 +69,11 @@ public class DepartmentService implements DepartmentServiceIF {
 	public int updateDepartment(DepartmentAll departmenttb) {
 		log.debug("update departmenttb:" + departmenttb.getDepartmentName());
 		departmenttb.setUpdatedate(new Date());
-		//得到汉字的首字母。，这里还有bug，一些多音字不好区分，以后improve
-		String zujima = PingYinUtil.getFirstSpell(departmenttb.getDepartmentName());
+		// 得到汉字的首字母。，这里还有bug，一些多音字不好区分，以后improve
+		String zujima = PingYinUtil.getFirstSpell(departmenttb
+				.getDepartmentName());
 		departmenttb.setZujima(zujima);
-		
+
 		/* 从session里面获取当前操作的用户 */
 		Object principal = SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();
@@ -102,7 +105,7 @@ public class DepartmentService implements DepartmentServiceIF {
 		CommFindEntity<DepartmentAll> allEntity = new CommFindEntity<DepartmentAll>();
 		if (conditionSql != null && !conditionSql.trim().equals("")) {
 			example.createCriteria().addConditionSql(conditionSql);
-		}else{
+		} else {
 			example.createCriteria().andDeleteFlagEqualTo(0);
 		}
 
@@ -116,19 +119,20 @@ public class DepartmentService implements DepartmentServiceIF {
 		List<Departmenttb> result = departmenttbMapper.selectByExample(example);
 
 		List<DepartmentAll> dpAllArray = new ArrayList<>();
-		for(Departmenttb depart:result){
-			DepartmentAll   dpAll = new DepartmentAll();
-			
+		for (Departmenttb depart : result) {
+			DepartmentAll dpAll = new DepartmentAll();
+
 			copier.copy(depart, dpAll, null);
-			
-			if(depart.getParentId()!=null&&depart.getParentId()>0){
-				DepartmentAll parentBean = findDepartmentById(depart.getParentId());
+
+			if (depart.getParentId() != null && depart.getParentId() > 0) {
+				DepartmentAll parentBean = findDepartmentById(depart
+						.getParentId());
 				dpAll.setParentDp(parentBean);
 			}
-			
+
 			dpAllArray.add(dpAll);
 		}
-		
+
 		allEntity.setCount(count);
 		allEntity.setResult(dpAllArray);
 		return allEntity;
@@ -143,21 +147,22 @@ public class DepartmentService implements DepartmentServiceIF {
 		allEntity.setCount(count);
 		example.setOrderByClause("department_id DESC");
 		List<Departmenttb> result = departmenttbMapper.selectByExample(example);
-		
+
 		List<DepartmentAll> dpAllArray = new ArrayList<>();
-		for(Departmenttb depart:result){
-			DepartmentAll   dpAll = new DepartmentAll();
-			
+		for (Departmenttb depart : result) {
+			DepartmentAll dpAll = new DepartmentAll();
+
 			copier.copy(depart, dpAll, null);
-			
-			if(depart.getParentId()!=null&&depart.getParentId()>0){
-				DepartmentAll parentBean = findDepartmentById(depart.getParentId());
+
+			if (depart.getParentId() != null && depart.getParentId() > 0) {
+				DepartmentAll parentBean = findDepartmentById(depart
+						.getParentId());
 				dpAll.setParentDp(parentBean);
 			}
-			
+
 			dpAllArray.add(dpAll);
 		}
-		
+
 		allEntity.setResult(dpAllArray);
 		return allEntity;
 	}
@@ -167,15 +172,18 @@ public class DepartmentService implements DepartmentServiceIF {
 		DepartmenttbExample example = new DepartmenttbExample();
 		example.createCriteria().andDepartmentIdEqualTo(id);
 		log.debug("findDepartmentById:" + id);
-		
+
 		Departmenttb dpbean = departmenttbMapper.selectByPrimaryKey(id);
-		DepartmentAll   dpAll = new DepartmentAll();
-		copier.copy(dpbean, dpAll, null);
-		if(dpbean.getParentId()!=null&&dpbean.getParentId()>0){
-			DepartmentAll parentBean = findDepartmentById(dpbean.getParentId());
-			dpAll.setParentDp(parentBean);
+		DepartmentAll dpAll = new DepartmentAll();
+		if (dpbean != null) {
+			
+			copier.copy(dpbean, dpAll, null);
+			if (dpbean.getParentId() != null && dpbean.getParentId() > 0) {
+				DepartmentAll parentBean = findDepartmentById(dpbean
+						.getParentId());
+				dpAll.setParentDp(parentBean);
+			}
 		}
-		
 		return dpAll;
 	}
 

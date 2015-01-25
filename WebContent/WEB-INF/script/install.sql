@@ -36,7 +36,7 @@ CREATE TABLE `appparamtb` (
   `appparam_id` int(20) NOT NULL COMMENT '系统参数id',
   `appparam_type` varchar(50) DEFAULT NULL COMMENT '参数类型',
   `appparam_name` varchar(50) DEFAULT NULL COMMENT '参数名',
-  `appparam_pid` int(20) DEFAULT NULL COMMENT '父参数',
+  `appparam_pid` int(20) DEFAULT 0 COMMENT '父参数',
   `appparam_desc` varchar(200) DEFAULT NULL COMMENT '参数描述',
   `systemparam` int(11) DEFAULT '0' COMMENT '是否是系统参数,0:是，1:用户定义的参数',
   `createdate` datetime COMMENT '创建时间',
