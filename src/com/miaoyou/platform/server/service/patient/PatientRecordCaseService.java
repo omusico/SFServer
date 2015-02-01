@@ -41,6 +41,7 @@ import com.miaoyou.platform.server.mapper.UsertbMapper;
 import com.miaoyou.platform.server.service.diagnosis.DiagnosisSurveyServiceIF;
 import com.miaoyou.platform.server.service.pkkey.PkgeneratorServiceIF;
 import com.miaoyou.platform.server.service.plan.SFPlaneServiceIF;
+import com.miaoyou.platform.server.utils.DateHelper;
 import com.miaoyou.platform.server.utils.Pager;
 import com.miaoyou.platform.server.utils.PingYinUtil;
 
@@ -131,6 +132,7 @@ public class PatientRecordCaseService implements PatientRecordCaseServiceIF {
 				Patienttb patient = patientService
 						.findDataByKey(recordcasetbWithBLOBs.getPatientid());
 				all.setPatienttb(patient);
+				all.setZhuyuantianshu("");
 
 				allResult.add(all);
 			}
@@ -207,6 +209,15 @@ public class PatientRecordCaseService implements PatientRecordCaseServiceIF {
 
 		} else {
 			log.error("no patient data.");
+		}
+		
+		if(bean.getRuyuanriqi()!=null&&bean.getChuyuanriqi()!=null){
+			try{
+			int days=DateHelper.diffDate( bean.getChuyuanriqi(),bean.getRuyuanriqi());
+			bean.setZhuyuantianshu(days+"");
+			}catch(Exception e){
+				log.error(e);
+			}
 		}
 
 		return recordcasetbMapper.insertSelective(bean);
