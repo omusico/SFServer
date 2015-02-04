@@ -491,3 +491,4 @@ insert  into `usertb`(`user_id`,`user_name`,`user_password`,`user_roles`,`user_s
 values 
 ('1','make','MTIzNDU2','1','男',NULL,'',1,'','','系统初始化','make');
 
+
