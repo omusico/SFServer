@@ -8,6 +8,7 @@
     <result column="survery_remark" property="surveryRemark" jdbcType="VARCHAR" />
     <result column="zujima" property="zujima" jdbcType="VARCHAR" />
     <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
+    <result column="svtype" property="svtype" jdbcType="INTEGER" />
     <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
     <result column="createperson" property="createperson" jdbcType="VARCHAR" />
     <result column="updatedate" property="updatedate" jdbcType="TIMESTAMP" />
@@ -75,8 +76,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    survery_id, survery_name, survery_remark, zujima, delete_flag, createdate, createperson, 
-    updatedate, updateperson, ext1, ext2, ext3
+    survery_id, survery_name, survery_remark, zujima, delete_flag, svtype, createdate, 
+    createperson, updatedate, updateperson, ext1, ext2, ext3
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.miaoyou.platform.server.entity.SurveytbExample" >
     select
@@ -116,13 +117,15 @@
   </delete>
   <insert id="insert" parameterType="com.miaoyou.platform.server.entity.Surveytb" >
     insert into surveytb (survery_id, survery_name, survery_remark, 
-      zujima, delete_flag, createdate, 
-      createperson, updatedate, updateperson, 
-      ext1, ext2, ext3)
+      zujima, delete_flag, svtype, 
+      createdate, createperson, updatedate, 
+      updateperson, ext1, ext2, 
+      ext3)
     values (#{surveryId,jdbcType=BIGINT}, #{surveryName,jdbcType=VARCHAR}, #{surveryRemark,jdbcType=VARCHAR}, 
-      #{zujima,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=INTEGER}, #{createdate,jdbcType=TIMESTAMP}, 
-      #{createperson,jdbcType=VARCHAR}, #{updatedate,jdbcType=TIMESTAMP}, #{updateperson,jdbcType=VARCHAR}, 
-      #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR})
+      #{zujima,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=INTEGER}, #{svtype,jdbcType=INTEGER}, 
+      #{createdate,jdbcType=TIMESTAMP}, #{createperson,jdbcType=VARCHAR}, #{updatedate,jdbcType=TIMESTAMP}, 
+      #{updateperson,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, 
+      #{ext3,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.miaoyou.platform.server.entity.Surveytb" >
     insert into surveytb
@@ -141,6 +144,9 @@
       </if>
       <if test="deleteFlag != null" >
         delete_flag,
+      </if>
+      <if test="svtype != null" >
+        svtype,
       </if>
       <if test="createdate != null" >
         createdate,
@@ -179,6 +185,9 @@
       </if>
       <if test="deleteFlag != null" >
         #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="svtype != null" >
+        #{svtype,jdbcType=INTEGER},
       </if>
       <if test="createdate != null" >
         #{createdate,jdbcType=TIMESTAMP},
@@ -227,6 +236,9 @@
       <if test="record.deleteFlag != null" >
         delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
       </if>
+      <if test="record.svtype != null" >
+        svtype = #{record.svtype,jdbcType=INTEGER},
+      </if>
       <if test="record.createdate != null" >
         createdate = #{record.createdate,jdbcType=TIMESTAMP},
       </if>
@@ -260,6 +272,7 @@
       survery_remark = #{record.surveryRemark,jdbcType=VARCHAR},
       zujima = #{record.zujima,jdbcType=VARCHAR},
       delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
+      svtype = #{record.svtype,jdbcType=INTEGER},
       createdate = #{record.createdate,jdbcType=TIMESTAMP},
       createperson = #{record.createperson,jdbcType=VARCHAR},
       updatedate = #{record.updatedate,jdbcType=TIMESTAMP},
@@ -285,6 +298,9 @@
       </if>
       <if test="deleteFlag != null" >
         delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="svtype != null" >
+        svtype = #{svtype,jdbcType=INTEGER},
       </if>
       <if test="createdate != null" >
         createdate = #{createdate,jdbcType=TIMESTAMP},
@@ -316,6 +332,7 @@
       survery_remark = #{surveryRemark,jdbcType=VARCHAR},
       zujima = #{zujima,jdbcType=VARCHAR},
       delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      svtype = #{svtype,jdbcType=INTEGER},
       createdate = #{createdate,jdbcType=TIMESTAMP},
       createperson = #{createperson,jdbcType=VARCHAR},
       updatedate = #{updatedate,jdbcType=TIMESTAMP},

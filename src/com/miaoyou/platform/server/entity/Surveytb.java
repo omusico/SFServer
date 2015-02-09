@@ -16,6 +16,8 @@ public class Surveytb implements Serializable {
 
     private Integer deleteFlag;
 
+    private Integer svtype;
+
     private Date createdate;
 
     private String createperson;
@@ -68,6 +70,14 @@ public class Surveytb implements Serializable {
 
     public void setDeleteFlag(Integer deleteFlag) {
         this.deleteFlag = deleteFlag;
+    }
+
+    public Integer getSvtype() {
+        return svtype;
+    }
+
+    public void setSvtype(Integer svtype) {
+        this.svtype = svtype;
     }
 
     public Date getCreatedate() {

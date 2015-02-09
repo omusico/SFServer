@@ -465,6 +465,66 @@ public class SurveytbExample {
             return (Criteria) this;
         }
 
+        public Criteria andSvtypeIsNull() {
+            addCriterion("svtype is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSvtypeIsNotNull() {
+            addCriterion("svtype is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSvtypeEqualTo(Integer value) {
+            addCriterion("svtype =", value, "svtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andSvtypeNotEqualTo(Integer value) {
+            addCriterion("svtype <>", value, "svtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andSvtypeGreaterThan(Integer value) {
+            addCriterion("svtype >", value, "svtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andSvtypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("svtype >=", value, "svtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andSvtypeLessThan(Integer value) {
+            addCriterion("svtype <", value, "svtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andSvtypeLessThanOrEqualTo(Integer value) {
+            addCriterion("svtype <=", value, "svtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andSvtypeIn(List<Integer> values) {
+            addCriterion("svtype in", values, "svtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andSvtypeNotIn(List<Integer> values) {
+            addCriterion("svtype not in", values, "svtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andSvtypeBetween(Integer value1, Integer value2) {
+            addCriterion("svtype between", value1, value2, "svtype");
+            return (Criteria) this;
+        }
+
+        public Criteria andSvtypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("svtype not between", value1, value2, "svtype");
+            return (Criteria) this;
+        }
+
         public Criteria andCreatedateIsNull() {
             addCriterion("createdate is null");
             return (Criteria) this;

@@ -227,6 +227,7 @@ CREATE TABLE `surveytb` (
   `survery_remark` varchar(500) DEFAULT NULL COMMENT '问卷描述',
   `zujima` varchar(100) DEFAULT '' COMMENT '助记码',
   `delete_flag` int(2) DEFAULT 0 COMMENT '是否删除标志，1，已经删除，0：没有删除',
+  `svtype` int(2) DEFAULT 0 COMMENT '问卷类型，1，临时问卷，0：普通问卷',
   `createdate` datetime COMMENT '创建时间',
   `createperson` varchar(50) COMMENT '创建时间',
   `updatedate` datetime COMMENT '创建时间',

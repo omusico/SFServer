@@ -61,7 +61,8 @@ public class SurveyController {
 	public @ResponseBody CommFindEntity<Surveytb> getAll(
 			@RequestParam(value = "psi", defaultValue = "0") int page,
 			@RequestParam(value = "pst", defaultValue = "20") int perPage,
-            @RequestParam(value = "key", defaultValue = "") String name) {
+            @RequestParam(value = "key", defaultValue = "") String name,
+            @RequestParam(value = "type", defaultValue = "-1") int type) {
 		log.debug("getAll.pageindex" + page + ",perPage:" + perPage);
 		Pager pager = new Pager(page, perPage);
 		 //构造SQL，注意这里的string都是对应数据库中的字段名，不是entity名
@@ -69,6 +70,10 @@ public class SurveyController {
         String andSplit = " and ";
         if(!name.equals("")){
         	sb.append("(survery_name").append(" like ").append("\"%"+name+"%\"").append(" or ").append("zujima").append(" like ").append("\""+name+"%\")").append(andSplit);
+        }
+       
+        if(type>-1){
+           sb.append("svtype").append(" = ").append(type).append(andSplit);
         }
         if(sb.length()>andSplit.length()){
         	sb.delete((sb.length()-andSplit.length()), sb.length()-1);
